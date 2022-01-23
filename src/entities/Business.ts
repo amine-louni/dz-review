@@ -1,5 +1,6 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "./User";
 
 
 
@@ -38,15 +39,22 @@ export class Business extends BaseEntity {
     website: string;
 
     @Column({
+        type: "varchar",
+        nullable: false
+    })
+    domains: string;
+
+    @Column({
         type: 'boolean',
         default: false
     })
     claimedByOwner: string;
 
-    @Column({
-        type: "varchar",
-    })
-    createdBy: string;
+    @ManyToOne(() => User, user => user.businesses)
+    created_by: User;
+
+    @OneToOne(() => User, user => user.businesses)
+    owner: User;
 
 
 

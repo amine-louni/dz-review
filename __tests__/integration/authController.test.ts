@@ -60,7 +60,7 @@ describe("Authenctication suit 🗝", () => {
             is_active: true,
             profilePictureUrl:
               "https://www.gravatar.com/avatar/?s=200&r=pg&d=mp",
-            created_at: expect.any(String),
+            createdAt: expect.any(String),
             updatedAt: expect.any(String),
           },
         });

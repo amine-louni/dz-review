@@ -5,6 +5,8 @@ import { createConnection } from "typeorm";
 import { config } from "dotenv";
 import { __prod__ } from "../constatns";
 import { User } from "../entities/User";
+import { Business } from "../entities/Business";
+import { Domain } from "domain";
 
 config();
 
@@ -18,7 +20,7 @@ export const databaseConnection = async (databaseName: string) => {
     password: process.env.DB_PASSWORD,
     synchronize: !__prod__,
     logger: __prod__ ? undefined : "simple-console",
-    entities: [User],
+    entities: [User, Business, Domain],
   });
 };
 

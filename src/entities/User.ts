@@ -5,6 +5,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -16,6 +17,7 @@ import {
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
 } from "../constatns";
 import EmailSender from "../helpers/EmailSender";
+import { Business } from "./Business";
 
 config();
 
@@ -150,8 +152,14 @@ export class User extends BaseEntity {
   })
   passwordResetPinExpiresAt: Date | null;
 
+  @OneToMany(() => Business, business => business.owner)
+  businesses: Business[];
+
+  @OneToMany(() => Business, business => business.created_by)
+  creations: Business[];
+
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ select: false })
   updatedAt: Date;
