@@ -32,8 +32,8 @@ export class User extends BaseEntity {
   async on_register() {
     this.password = await crypt.hash(this.password, 12);
     const pin = crypto.randomBytes(4).toString("hex");
-    this.email_validation_pin = await crypt.hash(pin, 12);
-    this.email_validation_pin_expires_at = await new Date(
+    this.emailValidationPin = await crypt.hash(pin, 12);
+    this.emailValidationPin_expires_at = await new Date(
       new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
     );
     new EmailSender(this, "", pin).sendValidationEmail();
@@ -67,7 +67,7 @@ export class User extends BaseEntity {
     type: "timestamptz",
     nullable: true,
   })
-  email_validate_at: Date | null;
+  emailValidateAt: Date | null;
 
   @Column({
     type: "varchar",
@@ -80,20 +80,20 @@ export class User extends BaseEntity {
     nullable: true,
     select: false,
   })
-  email_validation_pin: string | null;
+  emailValidationPin: string | null;
 
   @Column({
     type: "timestamptz",
     nullable: true,
     select: false,
   })
-  email_validation_pin_expires_at: Date | null;
+  emailValidationPin_expires_at: Date | null;
 
   @Column({
     type: "varchar",
     nullable: true,
   })
-  phone_number: string;
+  phoneNumber: string;
 
   @Column("date")
   dob: Date;
@@ -120,55 +120,55 @@ export class User extends BaseEntity {
     type: "varchar",
     default: "https://www.gravatar.com/avatar/?s=200&r=pg&d=mp",
   })
-  profile_picture_url: string;
+  profilePictureUrl: string;
 
   @Column({
     type: "timestamptz",
     nullable: true,
     select: false,
   })
-  password_changed_at: Date | null;
+  passwordChangedAt: Date | null;
 
   @Column({
     type: "varchar",
     nullable: true,
     select: false,
   })
-  password_reset_token: string | null;
+  passwordResetToken: string | null;
 
   @Column({
     type: "varchar",
     nullable: true,
     select: false,
   })
-  password_reset_pin: string | null;
+  passwordResetPin: string | null;
 
   @Column({
     type: "timestamptz",
     nullable: true,
     select: false,
   })
-  password_reset_pin_expires_at: Date | null;
+  passwordResetPinExpiresAt: Date | null;
 
   @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn({ select: false })
-  updated_at: Date;
+  updatedAt: Date;
 
   // Helpers
   public async createAndSendPasswordResetPin() {
     try {
       const pin = crypto.randomBytes(4).toString("hex");
-      this.password_reset_pin = await crypt.hash(pin, 12);
-      this.password_reset_pin_expires_at = await new Date(
+      this.passwordResetPin = await crypt.hash(pin, 12);
+      this.passwordResetPinExpiresAt = await new Date(
         new Date().getTime() + PASSWORD_PIN_EXPIRATION_IN_MINUTES * 60000
       );
       this.save();
       new EmailSender(this, "", pin).sendPasswordReset();
     } catch (e) {
-      this.password_reset_pin = null;
-      this.password_reset_pin_expires_at = null;
+      this.passwordResetPin = null;
+      this.passwordResetPinExpiresAt = null;
     }
   }
 }

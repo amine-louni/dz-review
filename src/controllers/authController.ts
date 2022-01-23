@@ -15,7 +15,7 @@ import {
   EMAIL_ALREADY_VALIDATED,
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
   NOT_FOUND,
-  PASSWORD_RESET_PIN_EXPIRED,
+  passwordResetPin_EXPIRED,
   SECRET_USER_FIELDS,
   SERVER_ERROR,
   VALIDATION_EMAIL_PIN_EXPIRED,
@@ -130,8 +130,8 @@ export const validateEmail = cathAsync(async (req, res, next) => {
     select: [
       ...ALLOWED_USER_FIELDS,
       "password",
-      "email_validation_pin",
-      "email_validation_pin_expires_at",
+      "emailValidationPin",
+      "emailValidationPin_expires_at",
     ],
     where: {
       uuid: req.currentUser?.uuid,
@@ -140,7 +140,7 @@ export const validateEmail = cathAsync(async (req, res, next) => {
 
   // 3)  Check if the user is not email validated yet
 
-  if (theUser?.email_validate_at) {
+  if (theUser?.emailValidateAt) {
     return next(
       new AppError("wrong validation pin", 422, EMAIL_ALREADY_VALIDATED)
     );
@@ -149,8 +149,8 @@ export const validateEmail = cathAsync(async (req, res, next) => {
   // 4 ) Check the correctness
   if (
     !theUser ||
-    !theUser?.email_validation_pin ||
-    !(await crypt.compare(pin, theUser?.email_validation_pin))
+    !theUser?.emailValidationPin ||
+    !(await crypt.compare(pin, theUser?.emailValidationPin))
   ) {
     return next(new AppError("wrong validation pin", 422, BAD_INPUT));
   }
@@ -158,8 +158,8 @@ export const validateEmail = cathAsync(async (req, res, next) => {
   // 4 ) Check if the pin still valid ⏲️
 
   if (
-    theUser.email_validation_pin_expires_at &&
-    new Date() > theUser.email_validation_pin_expires_at
+    theUser.emailValidationPin_expires_at &&
+    new Date() > theUser.emailValidationPin_expires_at
   ) {
     return next(
       new AppError("validation key expired", 422, VALIDATION_EMAIL_PIN_EXPIRED)
@@ -172,9 +172,9 @@ export const validateEmail = cathAsync(async (req, res, next) => {
   //  3 )  validate the email 👌
 
   const updatedUser = User.update(theUser.uuid, {
-    email_validation_pin: undefined,
-    email_validation_pin_expires_at: undefined,
-    email_validate_at: new Date(),
+    emailValidationPin: undefined,
+    emailValidationPin_expires_at: undefined,
+    emailValidateAt: new Date(),
   });
 
   res.status(201).json({
@@ -213,8 +213,8 @@ export const resetPassword = cathAsync(async (req, res, next) => {
   const theUser = await User.findOne({
     select: [
       ...ALLOWED_USER_FIELDS,
-      "password_reset_pin",
-      "password_reset_pin_expires_at",
+      "passwordResetPin",
+      "passwordResetPinExpiresAt",
     ],
     where: {
       email,
@@ -227,7 +227,7 @@ export const resetPassword = cathAsync(async (req, res, next) => {
 
   // 2)  Check if the user is not email validated yet
 
-  if (!theUser?.password_reset_pin) {
+  if (!theUser?.passwordResetPin) {
     return next(
       new AppError(
         "this user didn't requests to reset the password",
@@ -240,8 +240,8 @@ export const resetPassword = cathAsync(async (req, res, next) => {
   // 3 ) Check the correctness
   if (
     !theUser ||
-    !theUser?.password_reset_pin ||
-    !(await crypt.compare(pin, theUser?.password_reset_pin))
+    !theUser?.passwordResetPin ||
+    !(await crypt.compare(pin, theUser?.passwordResetPin))
   ) {
     return next(new AppError("wrong validation pin", 422, BAD_INPUT));
   }
@@ -249,11 +249,11 @@ export const resetPassword = cathAsync(async (req, res, next) => {
   // 4 ) Check if the pin still valid ⏲️
 
   if (
-    theUser.password_reset_pin_expires_at &&
-    new Date() > theUser.password_reset_pin_expires_at
+    theUser.passwordResetPinExpiresAt &&
+    new Date() > theUser.passwordResetPinExpiresAt
   ) {
     return next(
-      new AppError("validation key expired", 422, PASSWORD_RESET_PIN_EXPIRED)
+      new AppError("validation key expired", 422, passwordResetPin_EXPIRED)
     );
   }
 
@@ -261,9 +261,9 @@ export const resetPassword = cathAsync(async (req, res, next) => {
 
   const updatedUser = User.update(theUser.uuid, {
     password: hashed_password,
-    password_reset_pin: undefined,
-    password_reset_pin_expires_at: undefined,
-    password_changed_at: new Date(),
+    passwordResetPin: undefined,
+    passwordResetPinExpiresAt: undefined,
+    passwordChangedAt: new Date(),
   });
 
   res.status(201).json({
@@ -328,7 +328,7 @@ export const updateEmail = cathAsync(async (req, res, next) => {
     { uuid: theUser.uuid },
     {
       email,
-      email_validate_at: null
+      emailValidateAt: null
     }
   ).catch((e) =>
     next(
@@ -339,8 +339,8 @@ export const updateEmail = cathAsync(async (req, res, next) => {
 
   // 4) send validation email
   const pin = crypto.randomBytes(4).toString("hex");
-  theUser.email_validation_pin = await crypt.hash(pin, 12);
-  theUser.email_validation_pin_expires_at = await new Date(
+  theUser.emailValidationPin = await crypt.hash(pin, 12);
+  theUser.emailValidationPin_expires_at = await new Date(
     new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
   );
   new EmailSender(theUser, "", pin).sendValidationChangedEmail();
@@ -395,8 +395,8 @@ export const protect = cathAsync(async (req, _res, next) => {
 
   // 4) Check if user changed password after the token was issued
   if (
-    currentUser.password_changed_at &&
-    changedPasswordAfter(decoded.iat, currentUser.password_changed_at)
+    currentUser.passwordChangedAt &&
+    changedPasswordAfter(decoded.iat, currentUser.passwordChangedAt)
   ) {
     return next(
       new AppError(

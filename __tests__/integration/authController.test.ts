@@ -53,15 +53,15 @@ describe("Authenctication suit 🗝", () => {
             user_name: userExample.user_name,
             email: userExample.email,
             dob: userExample.dob,
-            phone_number: null,
+            phoneNumber: null,
             bio: null,
             id_verified_at: null,
             uuid: expect.any(String),
             is_active: true,
-            profile_picture_url:
+            profilePictureUrl:
               "https://www.gravatar.com/avatar/?s=200&r=pg&d=mp",
             created_at: expect.any(String),
-            updated_at: expect.any(String),
+            updatedAt: expect.any(String),
           },
         });
       });
@@ -72,7 +72,7 @@ describe("Authenctication suit 🗝", () => {
     await supertest(app)
       .post("/api/v1/users/auth/register")
       .send(userExampleInvalid)
-      .expect(422) 
+      .expect(422)
       .then((response) => {
         // Check type and length
         expect(response.body).toEqual({
@@ -81,14 +81,14 @@ describe("Authenctication suit 🗝", () => {
           isOperational: true,
           code: "validation_failed",
           errors: [
-              {
-                  value: "",
-                  msg: "last_name can not be empty!",
-                  param: "last_name",
-                  location: "body"
-              }
+            {
+              value: "",
+              msg: "last_name can not be empty!",
+              param: "last_name",
+              location: "body"
+            }
           ],
-          stack: "Error: validation  error"  
+          stack: "Error: validation  error"
 
         });
       });
@@ -117,12 +117,12 @@ describe("Authenctication suit 🗝", () => {
             user_name: userExample.user_name,
             email: userExample.email,
             dob: userExample.dob,
-            phone_number: null,
+            phoneNumber: null,
             bio: null,
             id_verified_at: null,
             uuid: expect.any(String),
             is_active: true,
-            profile_picture_url:
+            profilePictureUrl:
               "https://www.gravatar.com/avatar/?s=200&r=pg&d=mp",
           },
         });

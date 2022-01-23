@@ -7,19 +7,19 @@ export interface IUser {
   user_name: string;
   email: string;
   dob: Date;
-  phone_number: string | undefined;
-  email_validate_at: Date | undefined;
+  phoneNumber: string | undefined;
+  emailValidateAt: Date | undefined;
   bio: string | undefined;
   password?: string;
   id_verified_at: Date | undefined;
-  password_changed_at?: Date | undefined;
-  password_reset_token?: string | undefined;
-  password_reset_pin?: string | undefined;
+  passwordChangedAt?: Date | undefined;
+  passwordResetToken?: string | undefined;
+  passwordResetPin?: string | undefined;
   is_active: boolean;
-  profile_picture_url: string;
-  email_validation_pin: string | undefined;
-  email_validation_pin_expires_at: Date | undefined;
-  password_reset_pin_expires_at: Date | undefined;
+  profilePictureUrl: string;
+  emailValidationPin: string | undefined;
+  emailValidationPin_expires_at: Date | undefined;
+  passwordResetPinExpiresAt: Date | undefined;
 }
 
 type secretUserFields = typeof SECRET_USER_FIELDS[number];
