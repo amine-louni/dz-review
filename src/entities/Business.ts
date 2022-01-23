@@ -1,5 +1,5 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from "./User";
 
 
@@ -57,9 +57,10 @@ export class Business extends BaseEntity {
     owner: User;
 
 
+    @CreateDateColumn()
+    createdAt: Date;
 
-
-
-
+    @UpdateDateColumn()
+    updatedAt: Date;
 
 }
