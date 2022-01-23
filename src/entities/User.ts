@@ -35,7 +35,7 @@ export class User extends BaseEntity {
     this.password = await crypt.hash(this.password, 12);
     const pin = crypto.randomBytes(4).toString("hex");
     this.emailValidationPin = await crypt.hash(pin, 12);
-    this.emailValidationPin_expires_at = await new Date(
+    this.emailValidationPinExpiresAt = await new Date(
       new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
     );
     new EmailSender(this, "", pin).sendValidationEmail();
@@ -47,15 +47,15 @@ export class User extends BaseEntity {
   // required fields
   @Length(2, 20)
   @Column("varchar")
-  first_name: string;
+  firstName: string;
 
   @Column("varchar")
   @Length(2, 20)
-  last_name: string;
+  lastName: string;
 
   @Column()
   @Length(5, 20)
-  user_name: string;
+  userName: string;
 
   // Email fields
   @Column({
@@ -89,7 +89,7 @@ export class User extends BaseEntity {
     nullable: true,
     select: false,
   })
-  emailValidationPin_expires_at: Date | null;
+  emailValidationPinExpiresAt: Date | null;
 
   @Column({
     type: "varchar",
@@ -110,7 +110,7 @@ export class User extends BaseEntity {
     type: "boolean",
     default: true,
   })
-  is_active: boolean;
+  isActive: boolean;
 
   @Column({
     type: "timestamptz",

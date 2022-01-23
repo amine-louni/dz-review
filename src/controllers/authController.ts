@@ -70,13 +70,13 @@ const createSendToken = async (
 };
 
 export const register = cathAsync(async (req, res, next) => {
-  const { first_name, last_name, user_name, email, dob, password } = req.body;
+  const { firstName, lastName, userName, email, dob, password } = req.body;
 
   // create user
   const newUser = await User.create({
-    first_name,
-    last_name,
-    user_name,
+    firstName,
+    lastName,
+    userName,
     email,
     dob,
     password,
@@ -102,14 +102,14 @@ export const register = cathAsync(async (req, res, next) => {
 });
 
 export const login = cathAsync(async (req, res, next) => {
-  const { email, password, user_name } = req.body;
+  const { email, password, userName } = req.body;
 
   // 2 ) Check if user & password exits
 
   const theUser = await User.findOne({
     select: [...ALLOWED_USER_FIELDS, "password"],
     where: {
-      ...(user_name && { user_name: user_name }),
+      ...(userName && { userName: userName }),
       ...(email && { email: email }),
     },
   });
@@ -131,7 +131,7 @@ export const validateEmail = cathAsync(async (req, res, next) => {
       ...ALLOWED_USER_FIELDS,
       "password",
       "emailValidationPin",
-      "emailValidationPin_expires_at",
+      "emailValidationPinExpiresAt",
     ],
     where: {
       uuid: req.currentUser?.uuid,
@@ -158,8 +158,8 @@ export const validateEmail = cathAsync(async (req, res, next) => {
   // 4 ) Check if the pin still valid ⏲️
 
   if (
-    theUser.emailValidationPin_expires_at &&
-    new Date() > theUser.emailValidationPin_expires_at
+    theUser.emailValidationPinExpiresAt &&
+    new Date() > theUser.emailValidationPinExpiresAt
   ) {
     return next(
       new AppError("validation key expired", 422, VALIDATION_EMAIL_PIN_EXPIRED)
@@ -173,7 +173,7 @@ export const validateEmail = cathAsync(async (req, res, next) => {
 
   const updatedUser = User.update(theUser.uuid, {
     emailValidationPin: undefined,
-    emailValidationPin_expires_at: undefined,
+    emailValidationPinExpiresAt: undefined,
     emailValidateAt: new Date(),
   });
 
@@ -340,7 +340,7 @@ export const updateEmail = cathAsync(async (req, res, next) => {
   // 4) send validation email
   const pin = crypto.randomBytes(4).toString("hex");
   theUser.emailValidationPin = await crypt.hash(pin, 12);
-  theUser.emailValidationPin_expires_at = await new Date(
+  theUser.emailValidationPinExpiresAt = await new Date(
     new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
   );
   new EmailSender(theUser, "", pin).sendValidationChangedEmail();

@@ -56,7 +56,6 @@ export class Business extends BaseEntity {
     @OneToOne(() => User, user => user.businesses)
     owner: User;
 
-
     @CreateDateColumn()
     createdAt: Date;
 

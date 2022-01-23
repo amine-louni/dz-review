@@ -7,17 +7,17 @@ config();
 
 describe("Authenctication suit 🗝", () => {
   const userExample = {
-    first_name: "john",
-    last_name: "doe",
-    user_name: "floki",
+    firstName: "john",
+    lastName: "doe",
+    userName: "floki",
     email: "john@gmail.com",
     password: "12345678s",
     dob: "1995-10-10",
   };
 
   const userExampleInvalid = {
-    first_name: "john",
-    user_name: "floki",
+    firstName: "john",
+    userName: "floki",
     email: "john@gmail.com",
     password: "12345678s",
     dob: "1995-10-10",
@@ -48,16 +48,16 @@ describe("Authenctication suit 🗝", () => {
           status: "success",
           token: expect.any(String),
           data: {
-            first_name: userExample.first_name,
-            last_name: userExample.last_name,
-            user_name: userExample.user_name,
+            firstName: userExample.firstName,
+            lastName: userExample.lastName,
+            userName: userExample.userName,
             email: userExample.email,
             dob: userExample.dob,
             phoneNumber: null,
             bio: null,
             id_verified_at: null,
             uuid: expect.any(String),
-            is_active: true,
+            isActive: true,
             profilePictureUrl:
               "https://www.gravatar.com/avatar/?s=200&r=pg&d=mp",
             createdAt: expect.any(String),
@@ -83,8 +83,8 @@ describe("Authenctication suit 🗝", () => {
           errors: [
             {
               value: "",
-              msg: "last_name can not be empty!",
-              param: "last_name",
+              msg: "lastName can not be empty!",
+              param: "lastName",
               location: "body"
             }
           ],
@@ -112,16 +112,16 @@ describe("Authenctication suit 🗝", () => {
           status: "success",
           token: expect.any(String),
           data: {
-            first_name: userExample.first_name,
-            last_name: userExample.last_name,
-            user_name: userExample.user_name,
+            firstName: userExample.firstName,
+            lastName: userExample.lastName,
+            userName: userExample.userName,
             email: userExample.email,
             dob: userExample.dob,
             phoneNumber: null,
             bio: null,
             id_verified_at: null,
             uuid: expect.any(String),
-            is_active: true,
+            isActive: true,
             profilePictureUrl:
               "https://www.gravatar.com/avatar/?s=200&r=pg&d=mp",
           },

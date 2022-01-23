@@ -13,7 +13,7 @@ export default class EmailSender {
   pin?: string;
   constructor(user: User, url: string, pin?: string) {
     this.to = user.email;
-    this.firstName = user.first_name;
+    this.firstName = user.firstName;
     this.url = url;
     this.from = `"Amine Louni" <${process.env.EMAIL_FROM}>`;
     this.pin = pin;

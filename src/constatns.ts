@@ -10,16 +10,16 @@ export const PASSWORD_PIN_EXPIRATION_IN_MINUTES = 10;
 
 export const ALLOWED_USER_FIELDS = [
   "uuid",
-  "first_name",
-  "last_name",
-  "user_name",
+  "firstName",
+  "lastName",
+  "userName",
   "email",
   "dob",
   "phoneNumber",
   "emailValidateAt",
   "bio",
   "id_verified_at",
-  "is_active",
+  "isActive",
   "profilePictureUrl",
 ] as const;
 
@@ -32,19 +32,19 @@ export const SECRET_USER_FIELDS = [
 
   "emailValidateAt",
   "emailValidationPin",
-  "emailValidationPin_expires_at",
+  "emailValidationPinExpiresAt",
 ] as const;
 
 export const FORBIDDEN_USER_FIELDS_TO_UPDATE = [
   ...SECRET_USER_FIELDS,
   "email",
-  "is_active",
+  "isActive",
 ] as const;
 
 export const ALLOWED_USER_FIELDS_TO_UPDATE = [
-  "first_name",
-  "last_name",
-  "user_name",
+  "firstName",
+  "lastName",
+  "userName",
   "dob",
   "phoneNumber",
   "bio",

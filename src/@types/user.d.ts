@@ -2,9 +2,9 @@ import { SECRET_USER_FIELDS } from "../constatns";
 
 export interface IUser {
   uuid: string;
-  first_name: string;
-  last_name: string;
-  user_name: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
   email: string;
   dob: Date;
   phoneNumber: string | undefined;
@@ -15,10 +15,10 @@ export interface IUser {
   passwordChangedAt?: Date | undefined;
   passwordResetToken?: string | undefined;
   passwordResetPin?: string | undefined;
-  is_active: boolean;
+  isActive: boolean;
   profilePictureUrl: string;
   emailValidationPin: string | undefined;
-  emailValidationPin_expires_at: Date | undefined;
+  emailValidationPinExpiresAt: Date | undefined;
   passwordResetPinExpiresAt: Date | undefined;
 }
 
