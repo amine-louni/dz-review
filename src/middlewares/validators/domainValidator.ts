@@ -11,11 +11,11 @@ export const domainValidator = [
         .isEmpty()
         .withMessage("name can not be empty!")
         .bail()
-        .isLength({ min: 2 })
+        .isLength({ min: 2, max: 40 })
         .withMessage("Minimum 5 characters required!")
         .bail()
 
-        .withMessage("Minimum eight characters, at least one letter and one number")
+        .withMessage("Minimum 2 characters")
         .bail(),
 
     (req: Request, _res: Response, next: NextFunction) => {
