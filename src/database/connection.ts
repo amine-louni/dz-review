@@ -6,7 +6,8 @@ import { config } from "dotenv";
 import { __prod__ } from "../constatns";
 import { User } from "../entities/User";
 import { Business } from "../entities/Business";
-import { Domain } from "domain";
+import { Domain } from "../entities/Domain";
+
 
 config();
 
@@ -33,8 +34,12 @@ export const databasePurge = async () => {
   // Fetch all the entities
   const entities = getConnection().entityMetadatas;
 
-  for (const entity of entities) {
-    const repository = getConnection().getRepository(entity.name);
-    await repository.clear();
+  try {
+    for (const entity of entities) {
+      const repository = await getConnection().getRepository(entity.name);
+      await repository.query(`DELETE FROM ${entity.tableName};`);
+    }
+  } catch (error) {
+    throw new Error(`ERROR: Cleaning test db: ${error}`);
   }
 };

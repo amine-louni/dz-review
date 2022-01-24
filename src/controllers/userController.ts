@@ -1,14 +1,13 @@
-import { cathAsync } from "../helpers/catchAsync";
+import { catchAsync } from "../helpers/catchAsync";
 import { User } from "../entities/User";
 import AppError from "../helpers/AppError";
 import { ALLOWED_USER_FIELDS_TO_UPDATE, NOT_FOUND } from "../constatns";
 import { allowFieldsType } from "../@types/user";
 
-export const getUser = cathAsync(async (req, res, next) => {
+export const getUser = catchAsync(async (req, res, next) => {
   const { uuid } = req.params;
 
   // 1 ) find the user  &  check if exists
-
   const theUser = await User.findOne({ uuid: uuid });
 
   if (!theUser) {
@@ -22,7 +21,7 @@ export const getUser = cathAsync(async (req, res, next) => {
   });
 });
 
-export const updateMe = cathAsync(async (req, res, next) => {
+export const updateMe = catchAsync(async (req, res, next) => {
   const { body } = req;
 
   // 1) Create error if user POSTs password data

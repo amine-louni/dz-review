@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 import crypto from "crypto";
 
-import { cathAsync } from "../helpers/catchAsync";
+import { catchAsync } from "../helpers/catchAsync";
 import { User } from "../entities/User";
 
 import crypt from "bcryptjs";
@@ -69,7 +69,7 @@ const createSendToken = async (
   });
 };
 
-export const register = cathAsync(async (req, res, next) => {
+export const register = catchAsync(async (req, res, next) => {
   const { firstName, lastName, userName, email, dob, password } = req.body;
 
   // create user
@@ -101,7 +101,7 @@ export const register = cathAsync(async (req, res, next) => {
   return;
 });
 
-export const login = cathAsync(async (req, res, next) => {
+export const login = catchAsync(async (req, res, next) => {
   const { email, password, userName } = req.body;
 
   // 2 ) Check if user & password exits
@@ -122,7 +122,7 @@ export const login = cathAsync(async (req, res, next) => {
   createSendToken(theUser, 200, req, res);
 });
 
-export const validateEmail = cathAsync(async (req, res, next) => {
+export const validateEmail = catchAsync(async (req, res, next) => {
   const { pin } = req.body;
 
   // 2 ) Check if user exits
@@ -182,7 +182,7 @@ export const validateEmail = cathAsync(async (req, res, next) => {
   });
 });
 
-export const forgotPassword = cathAsync(async (req, res, next) => {
+export const forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
   const theUser = await User.findOne({ email: req.body.email });
   if (!theUser) {
@@ -206,7 +206,7 @@ export const forgotPassword = cathAsync(async (req, res, next) => {
   });
 });
 
-export const resetPassword = cathAsync(async (req, res, next) => {
+export const resetPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
   const { pin, email, password } = req.body;
 
@@ -271,8 +271,8 @@ export const resetPassword = cathAsync(async (req, res, next) => {
   });
 });
 
-export const updatePassword = cathAsync(async (req, res, next) => {
-  const { password, current_password } = req.body;
+export const updatePassword = catchAsync(async (req, res, next) => {
+  const { password, currentPassword } = req.body;
 
   // 1) Get user from collection
   const theUser = await User.findOne({
@@ -283,7 +283,7 @@ export const updatePassword = cathAsync(async (req, res, next) => {
   });
 
   // 2) Check if POSTed current password is correct
-  if (!theUser || !(await crypt.compare(current_password, theUser?.password))) {
+  if (!theUser || !(await crypt.compare(currentPassword, theUser?.password))) {
     return next(new AppError("wrong login credeintials", 401, BAD_AUTH));
   }
 
@@ -306,7 +306,7 @@ export const updatePassword = cathAsync(async (req, res, next) => {
   if (updatedUser) createSendToken(updatedUser, 200, req, res);
 });
 
-export const updateEmail = cathAsync(async (req, res, next) => {
+export const updateEmail = catchAsync(async (req, res, next) => {
   const { email } = req.body;
 
   // 1) Get user from collection
@@ -355,7 +355,7 @@ export const updateEmail = cathAsync(async (req, res, next) => {
 
 });
 
-export const protect = cathAsync(async (req, _res, next) => {
+export const protect = catchAsync(async (req, _res, next) => {
   // 1) Getting token and check of it's there
   let token;
   if (

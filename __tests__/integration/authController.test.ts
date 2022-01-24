@@ -23,6 +23,7 @@ describe("Authenctication suit 🗝", () => {
     dob: "1995-10-10",
   };
 
+
   beforeAll(async () => {
     await databaseConnection(process.env.DB_NAME_TEST).catch((e) =>
       console.error(e)

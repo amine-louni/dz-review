@@ -147,12 +147,12 @@ export const userLoginValidator = [
 ];
 
 export const updatePasswordValidator = [
-  check("current_password")
+  check("currentPassword")
     .trim()
     .escape()
     .not()
     .isEmpty()
-    .withMessage("current_password can not be empty!")
+    .withMessage("currentPassword can not be empty!")
     .bail()
     .isLength({ min: 5 })
     .withMessage("Minimum 5 characters required!")

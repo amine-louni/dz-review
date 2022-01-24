@@ -5,7 +5,7 @@ import { User } from "./User";
 
 
 
-@Entity("Businesses")
+@Entity("businesses")
 export class Business extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     uuid: string;

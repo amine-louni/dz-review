@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-export const cathAsync = (
+export const catchAsync = (
   fn: (
     req: Request,
     res: Response,
