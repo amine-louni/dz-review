@@ -357,14 +357,16 @@ export const updateEmail = catchAsync(async (req, res, next) => {
 
 export const protect = catchAsync(async (req, _res, next) => {
   // 1) Getting token and check of it's there
+
+  const headerTokens = req?.headers?.authorization;
+  console.log(headerTokens, 'token');
   let token;
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    headerTokens &&
+    headerTokens.startsWith("Bearer")
   ) {
-    token = req.headers.authorization.split(" ")[1];
-  } else if (req.cookies.jwt) {
-    token = req.cookies.jwt;
+    console.log('passed here');
+    token = headerTokens.split(" ")[1];
   }
 
   if (!token) {
@@ -377,6 +379,7 @@ export const protect = catchAsync(async (req, _res, next) => {
     );
   }
 
+  console.log('passed here also');
   // 2) Verification token
   const decoded = jwt_decode<{ id: string; iat: number; exp: number }>(token);
 
