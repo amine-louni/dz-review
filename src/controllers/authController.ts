@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import jwt_decode from "jwt-decode";
 import crypto from "crypto";
 
@@ -25,6 +25,7 @@ import { validate } from "class-validator";
 import formatValidationErrors from "../helpers/formatValidationErrors";
 import changedPasswordAfter from "../helpers/changedPasswordAfter";
 import EmailSender from "../helpers/EmailSender";
+import { promisify } from "util";
 
 export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
   itemsToFilterOut.forEach((secretField) => {
@@ -359,13 +360,12 @@ export const protect = catchAsync(async (req, _res, next) => {
   // 1) Getting token and check of it's there
 
   const headerTokens = req?.headers?.authorization;
-  console.log(headerTokens, 'token');
+
   let token;
   if (
     headerTokens &&
     headerTokens.startsWith("Bearer")
   ) {
-    console.log('passed here');
     token = headerTokens.split(" ")[1];
   }
 
@@ -379,9 +379,21 @@ export const protect = catchAsync(async (req, _res, next) => {
     );
   }
 
-  console.log('passed here also');
-  // 2) Verification token
-  const decoded = jwt_decode<{ id: string; iat: number; exp: number }>(token);
+
+
+  let decoded: JwtPayload;
+
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET_KEY) as JwtPayload
+  } catch {
+    return next(
+      new AppError(
+        "the user belonging to this token does no longer exist.",
+        401,
+        BAD_AUTH
+      )
+    );
+  }
 
   // 3) Check if user still exists
   const currentUser = await User.findOne({ uuid: decoded.id });
@@ -399,6 +411,7 @@ export const protect = catchAsync(async (req, _res, next) => {
   // 4) Check if user changed password after the token was issued
   if (
     currentUser.passwordChangedAt &&
+    decoded.iat &&
     changedPasswordAfter(decoded.iat, currentUser.passwordChangedAt)
   ) {
     return next(
