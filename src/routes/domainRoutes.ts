@@ -10,6 +10,7 @@ const router: Router = express.Router();
 
 
 router.post('/', protect, domainValidator, createDomain);
+router.patch('/:id', protect, domainValidator, createDomain);
 
 
 

@@ -45,7 +45,6 @@ describe("Domain CRUD suit", () => {
     test("it should create a domain  successfully", async () => {
 
         //Create a user
-
         const { body } = await supertest(app)
             .post("/api/v1/users/auth/register")
             .send(userExample)
@@ -68,9 +67,15 @@ describe("Domain CRUD suit", () => {
     });
 
 
-    test.skip("it should return 422 ", async () => {
+    test("it should return 422 when creating domain", async () => {
+        //Create a user
+        const { body } = await supertest(app)
+            .post("/api/v1/users/auth/register")
+            .send(userExample)
+
         await supertest(app)
             .post("/api/v1/domains")
+            .set("Authorization", `Bearer ${body.token}`)
             .send(domainExampleInvalid)
             .expect(422)
             .then((response) => {
@@ -97,12 +102,19 @@ describe("Domain CRUD suit", () => {
 
 
 
-    test.skip("it should update a domain  successfully", async () => {
+    test("it should update a domain  successfully", async () => {
+        // user created
+        const { body } = await supertest(app)
+            .post("/api/v1/users/auth/register")
+            .send(userExample)
+
+        // domain created
         const domianCreated = await Domain.create(domainExample)
         await supertest(app)
             .patch(`/api/v1/domains/${domianCreated.uuid}`)
+            .set("Authorization", `Bearer ${body.token}`)
             .send(domainExample)
-            .expect(200)
+            .expect(201)
             .then((response) => {
                 // Check type and length
                 expect(response.body).toEqual({
