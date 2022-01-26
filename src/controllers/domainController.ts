@@ -34,3 +34,14 @@ export const updateDomain = catchAsync(async (req, res, _next) => {
         },
     })
 })
+
+
+export const getAllDomains = catchAsync(async (_req, res, _next) => {
+    const allDomains = await Domain.find();
+    return res.status(200).json({
+        status: "success",
+        data: [
+            ...allDomains
+        ],
+    })
+})

@@ -68,7 +68,6 @@ describe("Domain CRUD suit", () => {
             });
     });
 
-
     test("it should return 422 when creating domain", async () => {
         //Create a user
         const { body } = await supertest(app)
@@ -101,9 +100,6 @@ describe("Domain CRUD suit", () => {
             });
     });
 
-
-
-
     test("it should update a domain  successfully", async () => {
         // user created
         const { body } = await supertest(app)
@@ -125,6 +121,36 @@ describe("Domain CRUD suit", () => {
                     data: {
                         name: domainExample.name
                     },
+                });
+            });
+
+
+
+
+    });
+
+    test("it should read all domains  successfully", async () => {
+        // create domain
+
+        const testDomain = await Domain.create({
+            "name": "test",
+            "createdAt": "2022-01-24T13:03:14.699Z",
+            "updatedAt": "2022-01-24T13:03:14.699Z"
+        })
+
+        await testDomain.save()
+        await supertest(app)
+            .get('/api/v1/domains')
+            .expect(200)
+            .then((response) => {
+                expect(response.body).toEqual({
+                    status: "success",
+                    data: [{
+                        "uuid": expect.any(String),
+                        "name": "test",
+                        "createdAt": "2022-01-24T13:03:14.699Z",
+                        "updatedAt": "2022-01-24T13:03:14.699Z"
+                    }],
                 });
             });
 
