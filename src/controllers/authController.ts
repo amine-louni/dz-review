@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import jwt_decode from "jwt-decode";
 import crypto from "crypto";
 
 import { catchAsync } from "../helpers/catchAsync";
@@ -25,7 +24,7 @@ import { validate } from "class-validator";
 import formatValidationErrors from "../helpers/formatValidationErrors";
 import changedPasswordAfter from "../helpers/changedPasswordAfter";
 import EmailSender from "../helpers/EmailSender";
-import { promisify } from "util";
+
 
 export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
   itemsToFilterOut.forEach((secretField) => {
@@ -33,7 +32,7 @@ export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
   });
 };
 
-const singingToken = (id: string): string => {
+export const singingToken = (id: string): string => {
   return jwt.sign(
     {
       id,

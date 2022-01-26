@@ -56,6 +56,7 @@ describe("Authenctication suit 🗝", () => {
             dob: userExample.dob,
             phoneNumber: null,
             bio: null,
+            role: 'user',
             id_verified_at: null,
             uuid: expect.any(String),
             isActive: true,
