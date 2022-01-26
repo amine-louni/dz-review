@@ -28,6 +28,13 @@ config();
  * when the user try to reset his password
  *
  */
+
+export enum UserRole {
+  ADMIN = "admin",
+  EDITOR = "editor",
+  User = "user"
+}
+
 @Entity("users")
 export class User extends BaseEntity {
   @BeforeInsert()
@@ -76,6 +83,13 @@ export class User extends BaseEntity {
     select: false,
   })
   password: string;
+
+  @Column({
+    type: "enum",
+    enum: UserRole,
+    default: UserRole.User
+  })
+  role: UserRole;
 
   @Column({
     type: "varchar",
