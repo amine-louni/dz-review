@@ -427,3 +427,29 @@ export const protect = catchAsync(async (req, _res, next) => {
 
   next();
 });
+
+export const isAdmin = catchAsync(async (req, _res, next) => {
+
+  if (!req.currentUser) {
+    return next(
+      new AppError(
+        "Need authorization to preform this action",
+        401,
+        BAD_AUTH
+      )
+    );
+  }
+
+  if (req.currentUser.role !== 'admin') {
+    return next(
+      new AppError(
+        "Need admin authorization to preform this action",
+        401,
+        BAD_AUTH
+      )
+    );
+  }
+
+  return next()
+
+})

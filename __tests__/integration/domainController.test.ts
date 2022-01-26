@@ -4,6 +4,7 @@ import supertest from "supertest";
 import app from "../../src/app";
 import { config } from "dotenv";
 import { Domain } from "../../src/entities/Domain";
+import { User } from "../../src/entities/User";
 
 config();
 
@@ -49,6 +50,7 @@ describe("Domain CRUD suit", () => {
             .post("/api/v1/users/auth/register")
             .send(userExample)
 
+        await User.update({ uuid: body.data.uuid }, { role: 'admin' })
 
         await supertest(app)
             .post("/api/v1/domains")
@@ -72,7 +74,7 @@ describe("Domain CRUD suit", () => {
         const { body } = await supertest(app)
             .post("/api/v1/users/auth/register")
             .send(userExample)
-
+        await User.update({ uuid: body.data.uuid }, { role: 'admin' })
         await supertest(app)
             .post("/api/v1/domains")
             .set("Authorization", `Bearer ${body.token}`)
@@ -107,6 +109,7 @@ describe("Domain CRUD suit", () => {
         const { body } = await supertest(app)
             .post("/api/v1/users/auth/register")
             .send(userExample)
+        await User.update({ uuid: body.data.uuid }, { role: 'admin' })
 
         // domain created
         const domianCreated = await Domain.create(domainExample)

@@ -89,7 +89,7 @@ export class User extends BaseEntity {
     enum: UserRole,
     default: UserRole.User
   })
-  role: UserRole;
+  role: string;
 
   @Column({
     type: "varchar",
