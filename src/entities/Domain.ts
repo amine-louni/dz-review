@@ -9,6 +9,12 @@ export class Domain extends BaseEntity {
     @Column('varchar')
     name: string
 
+    @Column({
+        type: "boolean",
+        default: false
+    })
+    archived: boolean
+
     @CreateDateColumn()
     createdAt: Date;
 

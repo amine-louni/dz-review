@@ -21,6 +21,9 @@ export class Business extends BaseEntity {
     about: string;
 
     @Column("varchar")
+    email: string;
+
+    @Column("varchar")
     state: string;
 
     @Column("varchar")
@@ -51,10 +54,10 @@ export class Business extends BaseEntity {
     claimedByOwner: string;
 
     @ManyToOne(() => User, user => user.businesses)
-    created_by: User;
+    created_by: User | null;
 
     @OneToOne(() => User, user => user.businesses)
-    owner: User;
+    owner: User | null;
 
     @CreateDateColumn()
     createdAt: Date;

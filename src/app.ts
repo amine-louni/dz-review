@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import userRoutes from "./routes/userRoutes";
 import domainRoutes from "./routes/domainRoutes";
+import businessRoutes from "./routes/businessRoutes";
 import { NOT_FOUND, __dev__ } from "./constatns";
 import AppError from "./helpers/AppError";
 import errorController from "./controllers/errorController";
@@ -44,6 +45,7 @@ app.use((req: Request, _res: Response, next: NextFunction) => {
 // MOUNTING  ROUTERS
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/domains", domainRoutes);
+app.use("/api/v1/business", businessRoutes);
 
 //Error Handling (if the route is not  of the previous ones (not found))
 app.all("*", (req, _res, next) => {

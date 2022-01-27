@@ -148,6 +148,7 @@ describe("Domain CRUD suit", () => {
                     data: [{
                         "uuid": expect.any(String),
                         "name": "test",
+                        "archived": false,
                         "createdAt": "2022-01-24T13:03:14.699Z",
                         "updatedAt": "2022-01-24T13:03:14.699Z"
                     }],
