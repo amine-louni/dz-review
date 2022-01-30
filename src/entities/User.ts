@@ -29,7 +29,7 @@ config();
  *
  */
 
-export enum UserRole {
+export enum UserRoles {
   ADMIN = "admin",
   EDITOR = "editor",
   User = "user"
@@ -86,8 +86,8 @@ export class User extends BaseEntity {
 
   @Column({
     type: "enum",
-    enum: UserRole,
-    default: UserRole.User
+    enum: UserRoles,
+    default: UserRoles.User
   })
   role: string;
 
@@ -169,7 +169,7 @@ export class User extends BaseEntity {
   @OneToMany(() => Business, business => business.owner)
   businesses: Business[];
 
-  @OneToMany(() => Business, business => business.created_by)
+  @OneToMany(() => Business, business => business.createdBy)
   creations: Business[];
 
   @CreateDateColumn()

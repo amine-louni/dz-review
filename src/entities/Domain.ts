@@ -1,4 +1,5 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Business } from "./Business";
 
 
 @Entity('domains')
@@ -14,6 +15,10 @@ export class Domain extends BaseEntity {
         default: false
     })
     archived: boolean
+
+    @ManyToMany(() => Business)
+    businesses: Business[]
+
 
     @CreateDateColumn()
     createdAt: Date;

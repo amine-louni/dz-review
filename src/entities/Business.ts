@@ -1,5 +1,6 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Domain } from "./Domain";
 import { User } from "./User";
 
 
@@ -15,12 +16,17 @@ export class Business extends BaseEntity {
     name: string;
 
     @Column({
-        type: "text",
+        type: "varchar",
         nullable: true
     })
     about: string;
 
-    @Column("varchar")
+    @Column({
+        type: 'varchar',
+        nullable: true,
+        unique: true
+
+    })
     email: string;
 
     @Column("varchar")
@@ -41,11 +47,7 @@ export class Business extends BaseEntity {
     })
     website: string;
 
-    @Column({
-        type: "varchar",
-        nullable: false
-    })
-    domains: string;
+
 
     @Column({
         type: 'boolean',
@@ -53,11 +55,34 @@ export class Business extends BaseEntity {
     })
     claimedByOwner: string;
 
-    @ManyToOne(() => User, user => user.businesses)
-    created_by: User | null;
 
-    @OneToOne(() => User, user => user.businesses)
-    owner: User | null;
+
+    @ManyToMany(() => Domain)
+    @JoinTable({
+        name: "BusinessesDomains",
+        joinColumn: {
+            name: 'business',
+            referencedColumnName: 'uuid'
+        },
+        inverseJoinColumn: {
+            name: 'domain',
+            referencedColumnName: "uuid"
+        }
+    })
+    domains: Domain[]
+
+    @ManyToOne(() => User, user => user.businesses)
+    @JoinColumn({
+        name: 'createdBy',
+    })
+    createdBy: User;
+
+
+    @ManyToOne(() => User, user => user.businesses)
+    @JoinColumn({
+        name: 'owner',
+    })
+    owner: User;
 
     @CreateDateColumn()
     createdAt: Date;

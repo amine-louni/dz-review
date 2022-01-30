@@ -28,7 +28,7 @@ describe("Business CRUD suit", () => {
         city: "tenes",
         phone: "0555123456",
         website: "https://aminelouni.com/",
-        email: "del@gmail.com",
+        email: "delcora@gmail.com",
         googleMapsUrl: "https://www.google.com/maps/dir//orcloud/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x128fadae211261fd:0x75db15dec911d09d?sa=X&ved=2ahUKEwjXuMjk7tH1AhV3gv0HHbS5CJkQ9Rd6BAgtEAQ",
         domains: ['Restaurants']
     }
@@ -60,14 +60,22 @@ describe("Business CRUD suit", () => {
             .post("/api/v1/business")
             .set("Authorization", `Bearer ${body.token}`)
             .send(businessExample)
-
+            .expect(201)
             .then((response) => {
                 // Check type and length
                 console.log(response.body, 'response');
                 expect(response.body).toEqual({
                     status: "success",
                     data: {
-                        name: businessExample.name
+                        name: businessExample.name,
+                        about: businessExample.about,
+                        state: businessExample.state,
+                        city: businessExample.city,
+                        phone: businessExample.phone,
+                        website: businessExample.website,
+                        email: businessExample.email,
+                        googleMapsUrl: businessExample.googleMapsUrl,
+                        domains: businessExample.domains
                     },
                 });
             });
