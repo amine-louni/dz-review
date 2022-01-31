@@ -1,26 +1,35 @@
-import { databaseClose, databasePurge } from "../../src/database/connection";
+import { databaseClose } from "../../src/database/connection";
 import { databaseConnection } from "../../src/database/connection";
 import supertest from "supertest";
 import app from "../../src/app";
 import { config } from "dotenv";
+import faker from 'faker';
 config();
 
 describe("Authenctication suit 🗝", () => {
   const userExample = {
-    firstName: "john",
-    lastName: "doe",
-    userName: "floki",
-    email: "john@gmail.com",
-    password: "12345678s",
-    dob: "1995-10-10",
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'LoremIpsum1993',
+    dob: "1995-10-10"
+  };
+  const userExampleLogin = {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'LoremIpsum1993',
+    dob: "1995-10-10"
   };
 
   const userExampleInvalid = {
-    firstName: "john",
-    userName: "floki",
-    email: "john@gmail.com",
-    password: "12345678s",
-    dob: "1995-10-10",
+    firstName: faker.name.firstName(),
+    userName: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'LoremIpsum1993',
+    dob: "1995-10-10"
   };
 
 
@@ -34,9 +43,7 @@ describe("Authenctication suit 🗝", () => {
     await databaseClose().catch((e) => console.error(e));
   });
 
-  beforeEach(async () => {
-    await databasePurge().catch((e) => console.error(e));
-  });
+
 
   test("it should register successfully", async () => {
     await supertest(app)
@@ -45,6 +52,7 @@ describe("Authenctication suit 🗝", () => {
       .expect(201)
       .then((response) => {
         // Check type and length
+
         expect(response.body).toEqual({
           status: "success",
           token: expect.any(String),
@@ -99,26 +107,28 @@ describe("Authenctication suit 🗝", () => {
   test("it should login successfully", async () => {
     await supertest(app)
       .post("/api/v1/users/auth/register")
-      .send(userExample)
+      .send(userExampleLogin)
       .expect(201);
 
     await supertest(app)
       .post("/api/v1/users/auth/login")
       .send({
-        email: userExample.email,
-        password: userExample.password,
+        email: userExampleLogin.email,
+        password: userExampleLogin.password,
       })
       .expect(200)
       .then((response) => {
+
         expect(response.body).toEqual({
           status: "success",
           token: expect.any(String),
           data: {
-            firstName: userExample.firstName,
-            lastName: userExample.lastName,
-            userName: userExample.userName,
-            email: userExample.email,
-            dob: userExample.dob,
+            firstName: userExampleLogin.firstName,
+            lastName: userExampleLogin.lastName,
+            userName: userExampleLogin.userName,
+            email: userExampleLogin.email,
+            dob: userExampleLogin.dob,
+            role: 'user',
             phoneNumber: null,
             bio: null,
             id_verified_at: null,

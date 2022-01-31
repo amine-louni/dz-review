@@ -1,12 +1,13 @@
 import { Length } from "class-validator";
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Domain } from "./Domain";
+import { Review } from "./Review";
 import { User } from "./User";
 
 
 
 
-@Entity("businesses")
+@Entity("business")
 export class Business extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     uuid: string;
@@ -55,11 +56,17 @@ export class Business extends BaseEntity {
     })
     claimedByOwner: string;
 
+    @Column({
+        type: 'simple-array',
+        default: []
+    })
+    media: [string];
 
 
-    @ManyToMany(() => Domain)
+
+    @ManyToMany(() => Domain, { onDelete: "CASCADE" })
     @JoinTable({
-        name: "BusinessesDomains",
+        name: "business_domain",
         joinColumn: {
             name: 'business',
             referencedColumnName: 'uuid'
@@ -77,6 +84,8 @@ export class Business extends BaseEntity {
     })
     createdBy: User;
 
+    @OneToMany(() => Review, review => review.business, { onDelete: "CASCADE" })
+    reviews: Review[];
 
     @ManyToOne(() => User, user => user.businesses)
     @JoinColumn({

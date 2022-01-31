@@ -1,8 +1,8 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Business } from "./Business";
 
 
-@Entity('domains')
+@Entity('domain')
 export class Domain extends BaseEntity {
     @PrimaryGeneratedColumn("uuid")
     uuid: string;

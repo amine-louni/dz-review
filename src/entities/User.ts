@@ -18,6 +18,7 @@ import {
 } from "../constatns";
 import EmailSender from "../helpers/EmailSender";
 import { Business } from "./Business";
+import { Review } from "./Review";
 
 config();
 
@@ -35,7 +36,7 @@ export enum UserRoles {
   User = "user"
 }
 
-@Entity("users")
+@Entity("user")
 export class User extends BaseEntity {
   @BeforeInsert()
   async on_register() {
@@ -166,11 +167,16 @@ export class User extends BaseEntity {
   })
   passwordResetPinExpiresAt: Date | null;
 
-  @OneToMany(() => Business, business => business.owner)
+  @OneToMany(() => Business, business => business.owner, { onDelete: "CASCADE" })
   businesses: Business[];
 
-  @OneToMany(() => Business, business => business.createdBy)
+  @OneToMany(() => Business, business => business.createdBy, { onDelete: "CASCADE" })
   creations: Business[];
+
+
+  @OneToMany(() => Review, review => review.createdBy, { onDelete: "CASCADE" })
+  reviews: Review[];
+
 
   @CreateDateColumn()
   createdAt: Date;

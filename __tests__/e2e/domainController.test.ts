@@ -1,33 +1,47 @@
-import { databaseClose, databasePurge } from "../../src/database/connection";
+import { databaseClose } from "../../src/database/connection";
 import { databaseConnection } from "../../src/database/connection";
 import supertest from "supertest";
 import app from "../../src/app";
 import { config } from "dotenv";
 import { Domain } from "../../src/entities/Domain";
 import { User } from "../../src/entities/User";
+import faker from 'faker'
 
 config();
 
-
 const userExample = {
-    firstName: "john",
-    lastName: "doe",
-    userName: "floki",
-    email: "john@gmail.com",
-    password: "12345678s",
-    dob: "1995-10-10",
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'LoremIpsum1993',
+    dob: "1995-10-10"
+};
+const userExample2 = {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'LoremIpsum1993',
+    dob: "1995-10-10"
+};
+const userExample3 = {
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    userName: faker.internet.userName(),
+    email: faker.internet.email(),
+    password: 'LoremIpsum1993',
+    dob: "1995-10-10"
+};
+const domainExample = {
+    name: faker.company.companyName(),
+
+};
+const domainExampleInvalid = {
+    random: "random",
 };
 
-
 describe("Domain CRUD suit", () => {
-    const domainExample = {
-        name: "resturants",
-
-    };
-
-    const domainExampleInvalid = {
-        random: "random",
-    };
 
     beforeAll(async () => {
         await databaseConnection(process.env.DB_NAME_TEST).catch((e) =>
@@ -39,9 +53,7 @@ describe("Domain CRUD suit", () => {
         await databaseClose().catch((e) => console.error(e));
     });
 
-    beforeEach(async () => {
-        await databasePurge().catch((e) => console.error(e));
-    });
+
 
     test("it should create a domain  successfully", async () => {
 
@@ -58,6 +70,7 @@ describe("Domain CRUD suit", () => {
             .send(domainExample)
             .expect(201)
             .then((response) => {
+
                 // Check type and length
                 expect(response.body).toEqual({
                     status: "success",
@@ -72,7 +85,7 @@ describe("Domain CRUD suit", () => {
         //Create a user
         const { body } = await supertest(app)
             .post("/api/v1/users/auth/register")
-            .send(userExample)
+            .send(userExample2)
         await User.update({ uuid: body.data.uuid }, { role: 'admin' })
         await supertest(app)
             .post("/api/v1/domains")
@@ -104,7 +117,7 @@ describe("Domain CRUD suit", () => {
         // user created
         const { body } = await supertest(app)
             .post("/api/v1/users/auth/register")
-            .send(userExample)
+            .send(userExample3)
         await User.update({ uuid: body.data.uuid }, { role: 'admin' })
 
         // domain created
@@ -145,13 +158,15 @@ describe("Domain CRUD suit", () => {
             .then((response) => {
                 expect(response.body).toEqual({
                     status: "success",
-                    data: [{
-                        "uuid": expect.any(String),
-                        "name": "test",
-                        "archived": false,
-                        "createdAt": "2022-01-24T13:03:14.699Z",
-                        "updatedAt": "2022-01-24T13:03:14.699Z"
-                    }],
+                    data: expect.arrayContaining([
+                        {
+                            "uuid": expect.any(String),
+                            "name": expect.any(String),
+                            "archived": expect.any(Boolean),
+                            "createdAt": expect.any(String),
+                            "updatedAt": expect.any(String),
+                        }
+                    ])
                 });
             });
 

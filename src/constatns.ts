@@ -21,6 +21,7 @@ export const ALLOWED_USER_FIELDS = [
   "id_verified_at",
   "isActive",
   "profilePictureUrl",
+  "role"
 ] as const;
 
 export const SECRET_USER_FIELDS = [
