@@ -24,14 +24,14 @@ export class Review extends BaseEntity {
 
     @ManyToOne(() => User, user => user.reviews)
     @JoinColumn({
-        name: 'createdBy',
+        name: 'createdById',
     })
     createdBy: User;
 
 
     @ManyToOne(() => Business, business => business.reviews)
     @JoinColumn({
-        name: 'business',
+        name: 'businessId',
     })
     business: Business;
 

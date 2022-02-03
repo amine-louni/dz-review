@@ -68,11 +68,11 @@ export class Business extends BaseEntity {
     @JoinTable({
         name: "business_domain",
         joinColumn: {
-            name: 'business',
+            name: 'businessesId',
             referencedColumnName: 'uuid'
         },
         inverseJoinColumn: {
-            name: 'domain',
+            name: 'domainsId',
             referencedColumnName: "uuid"
         }
     })
@@ -80,7 +80,7 @@ export class Business extends BaseEntity {
 
     @ManyToOne(() => User, user => user.businesses)
     @JoinColumn({
-        name: 'createdBy',
+        name: 'createdById',
     })
     createdBy: User;
 
@@ -89,7 +89,7 @@ export class Business extends BaseEntity {
 
     @ManyToOne(() => User, user => user.businesses)
     @JoinColumn({
-        name: 'owner',
+        name: 'ownerId',
     })
     owner: User;
 

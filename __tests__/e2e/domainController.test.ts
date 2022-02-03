@@ -75,7 +75,11 @@ describe("Domain CRUD suit", () => {
                 expect(response.body).toEqual({
                     status: "success",
                     data: {
-                        name: domainExample.name
+                        uuid: expect.any(String),
+                        name: domainExample.name,
+                        archived: false,
+                        createdAt: expect.any(String),
+                        updatedAt: expect.any(String),
                     },
                 });
             });
@@ -132,7 +136,12 @@ describe("Domain CRUD suit", () => {
                 expect(response.body).toEqual({
                     status: "success",
                     data: {
-                        name: domainExample.name
+                        name: domainExample.name,
+                        uuid: expect.any(String),
+                        archived: false,
+                        createdAt: expect.any(String),
+                        updatedAt: expect.any(String),
+
                     },
                 });
             });

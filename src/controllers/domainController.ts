@@ -15,7 +15,7 @@ export const createDomain = catchAsync(async (req, res, _next) => {
     return res.status(201).json({
         status: "success",
         data: {
-            name: name
+            ...newDomain,
         },
     })
 })

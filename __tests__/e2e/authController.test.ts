@@ -6,7 +6,7 @@ import { config } from "dotenv";
 import faker from 'faker';
 config();
 
-describe("Authenctication suit 🗝", () => {
+describe("Authenctication", () => {
   const userExample = {
     firstName: faker.name.firstName(),
     lastName: faker.name.lastName(),

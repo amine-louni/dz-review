@@ -1,3 +1,4 @@
+import { UpdateResult } from "typeorm";
 import { Business } from "../entities/Business";
 import { catchAsync } from "../helpers/catchAsync";
 
@@ -5,7 +6,7 @@ import { catchAsync } from "../helpers/catchAsync";
 
 export const createBusiness = catchAsync(async (req, res, _next) => {
     const { name, about, state, city, googleMapsUrl, phone, website, domains, email } = req.body;
-    const newDomainRes = await Business.create({
+    const newBusinessRes = await Business.create({
         name,
         about,
         state,
@@ -15,16 +16,32 @@ export const createBusiness = catchAsync(async (req, res, _next) => {
         website,
         domains,
         email,
-
     });
 
-    const newDomain = await newDomainRes.save();
+    const newBusiness = await newBusinessRes.save();
 
     return res.status(201).json({
         status: "success",
         data: {
-            ...newDomain,
-            createdBy: req.currentUser?.uuid
+            ...newBusiness,
+        },
+    })
+})
+
+export const updateBusiness = catchAsync(async (req, res, _next) => {
+    const { uuid } = req.params
+
+    // check if exiits
+
+    const updatedBusiness: UpdateResult | void = await Business.update(uuid, req.body).catch((e) => {
+        console.error('Error while updating', e);
+    });
+
+
+    return res.status(201).json({
+        status: "success",
+        data: {
+            ...updatedBusiness,
         },
     })
 })
