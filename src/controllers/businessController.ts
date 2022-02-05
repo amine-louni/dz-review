@@ -1,4 +1,5 @@
-import { UpdateResult } from "typeorm";
+
+import AppError from "../helpers/AppError";
 import { Business } from "../entities/Business";
 import { catchAsync } from "../helpers/catchAsync";
 
@@ -28,15 +29,25 @@ export const createBusiness = catchAsync(async (req, res, _next) => {
     })
 })
 
-export const updateBusiness = catchAsync(async (req, res, _next) => {
+export const updateBusiness = catchAsync(async (req, res, next) => {
     const { uuid } = req.params
 
     // check if exiits
+    const business = await Business.findOne(uuid);
 
-    const updatedBusiness: UpdateResult | void = await Business.update(uuid, req.body).catch((e) => {
+
+    if (!business) {
+        return next(new AppError('Business not found', 404))
+    }
+
+    const updated = await Business.update(uuid, req.body).catch((e) => {
         console.error('Error while updating', e);
     });
 
+    if (!updated) {
+        return next(new AppError('Error while updating', 505))
+    }
+    const updatedBusiness = await Business.findOne(uuid);
 
     return res.status(201).json({
         status: "success",

@@ -11,7 +11,7 @@ const router: Router = express.Router();
 
 
 router.post('/', protect, createBusinesssValidator, createBusiness)
-router.patch('/:id', protect, updateBusinesssValidator, updateBusiness)
+router.patch('/:uuid', protect, updateBusinesssValidator, updateBusiness)
 
 
 

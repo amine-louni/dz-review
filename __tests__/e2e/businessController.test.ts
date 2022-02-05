@@ -81,9 +81,9 @@ describe("Business CRUD suit", () => {
             .post("/api/v1/business")
             .set("Authorization", `Bearer ${body.token}`)
             .send({ ...businessExample, domains: [domainBody.data.uuid] })
-
+            .expect(201)
             .then((response) => {
-                console.log(response.body);
+
                 expect(response.body).toEqual({
                     status: "success",
                     data: {
@@ -108,7 +108,7 @@ describe("Business CRUD suit", () => {
     });
 
 
-    test.only("it should update a business  successfully", async () => {
+    test("it should update a business  successfully", async () => {
 
         //Create a user
         const { body } = await supertest(app)
@@ -131,12 +131,12 @@ describe("Business CRUD suit", () => {
 
         // update it !
         await supertest(app)
-            .patch(`/api/v1/business/${businessBody.uuid}`)
+            .patch(`/api/v1/business/${businessBody.data.uuid}`)
             .set("Authorization", `Bearer ${body.token}`)
             .send({ name: 'updated' })
-            // .expect(201)
+            .expect(201)
             .then((response) => {
-                console.log(response.body);
+
                 expect(response.body).toEqual({
                     status: "success",
                     data: {
