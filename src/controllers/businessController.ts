@@ -56,3 +56,21 @@ export const updateBusiness = catchAsync(async (req, res, next) => {
         },
     })
 })
+
+
+export const readOneBusiness = catchAsync(async (req, res, next) => {
+    const { uuid } = req.params
+    // check if exiits
+    const business = await Business.findOne(uuid);
+
+    if (!business) {
+        return next(new AppError('Business not found', 404))
+    }
+
+    return res.json({
+        status: "success",
+        data: {
+            ...business,
+        },
+    })
+})
