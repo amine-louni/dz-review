@@ -74,3 +74,16 @@ export const readOneBusiness = catchAsync(async (req, res, next) => {
         },
     })
 })
+
+export const readAllBusinesses = catchAsync(async (_req, res, _next) => {
+
+    const businesses = await Business.find();
+
+    return res.json({
+        status: "success",
+        data: [
+            ...businesses
+        ],
+    })
+})
+
