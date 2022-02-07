@@ -2,6 +2,7 @@
 import AppError from "../helpers/AppError";
 import { Business } from "../entities/Business";
 import { catchAsync } from "../helpers/catchAsync";
+import { NOT_AUTHORIZED } from "../constatns";
 
 
 
@@ -38,6 +39,9 @@ export const updateBusiness = catchAsync(async (req, res, next) => {
 
     if (!business) {
         return next(new AppError('Business not found', 404))
+    }
+    if (business.createdBy.uuid !== req.currentUser?.uuid && req.currentUser?.role !== 'admin') {
+        return next(new AppError('You are not allowed to prefrom this action', 403, NOT_AUTHORIZED))
     }
 
     const updated = await Business.update(uuid, req.body).catch((e) => {
