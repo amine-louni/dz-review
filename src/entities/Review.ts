@@ -26,7 +26,7 @@ export class Review extends BaseEntity {
     @JoinColumn({
         name: 'createdById',
     })
-    createdBy: User;
+    public createdBy: User;
 
 
     @ManyToOne(() => Business, business => business.reviews)

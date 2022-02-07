@@ -3,11 +3,16 @@ import express from 'express'
 import { createBusiness, readAllBusinesses, readOneBusiness, updateBusiness } from "../controllers/businessController";
 import { createBusinesssValidator, updateBusinesssValidator } from "../middlewares/validators/businessValidator";
 import { protect } from "../controllers/authController";
+import { createReview, getReviewsForBusiness } from "../controllers/ReviewController";
 
 
 
 
 const router: Router = express.Router();
+
+// Reveiws
+router.post('/:uuid/reviews', protect, createReview)
+router.get('/:uuid/reviews', getReviewsForBusiness)
 
 
 router.post('/', protect, createBusinesssValidator, createBusiness)
