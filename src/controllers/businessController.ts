@@ -2,12 +2,31 @@
 import AppError from "../helpers/AppError";
 import { Business } from "../entities/Business";
 import { catchAsync } from "../helpers/catchAsync";
-import { NOT_AUTHORIZED } from "../constatns";
+import { BAD_INPUT, NOT_AUTHORIZED } from "../constatns";
+import { Domain } from "../entities/Domain";
+import { In } from "typeorm";
 
 
 
-export const createBusiness = catchAsync(async (req, res, _next) => {
+
+
+export const createBusiness = catchAsync(async (req, res, next) => {
+    console.log('create');
     const { name, about, state, city, googleMapsUrl, phone, website, domains, email } = req.body;
+
+    // check if domain exists
+    console.log(domains);
+
+    const theDomains = await Domain.find({
+        where: {
+            uuid: In(domains)
+        }
+    }).catch(e => console.error(e));
+
+
+    console.log(theDomains, 'domains');
+
+
     const newBusinessRes = await Business.create({
         name,
         about,
@@ -18,7 +37,14 @@ export const createBusiness = catchAsync(async (req, res, _next) => {
         website,
         domains,
         email,
+
     });
+
+    if (!theDomains) {
+        return next(new AppError('Invalid domain list', 422, BAD_INPUT))
+    }
+
+    newBusinessRes.domains = theDomains;
 
     const newBusiness = await newBusinessRes.save();
 
@@ -81,8 +107,26 @@ export const readOneBusiness = catchAsync(async (req, res, next) => {
 
 export const readAllBusinesses = catchAsync(async (_req, res, _next) => {
 
-    const businesses = await Business.find();
+    const businesses = await Business.find({
+        relations: ['domains']
+    });
 
+    return res.json({
+        status: "success",
+        data: [
+            ...businesses
+        ],
+    })
+})
+
+
+export const getBusinessesByDomainId = catchAsync(async (req, res, _next) => {
+    const { domainId } = req.params;
+
+    console.log(domainId, 'domain id');
+    const businesses = await Business.find({
+
+    });
     return res.json({
         status: "success",
         data: [

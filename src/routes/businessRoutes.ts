@@ -1,6 +1,6 @@
 import { Router } from "express";
 import express from 'express'
-import { createBusiness, readAllBusinesses, readOneBusiness, updateBusiness } from "../controllers/businessController";
+import { createBusiness, getBusinessesByDomainId, readAllBusinesses, readOneBusiness, updateBusiness } from "../controllers/businessController";
 import { createBusinesssValidator, updateBusinesssValidator } from "../middlewares/validators/businessValidator";
 import { protect } from "../controllers/authController";
 import { createReview, getReviewsForBusiness } from "../controllers/ReviewController";
@@ -20,6 +20,7 @@ router.get('/:uuid', readOneBusiness)
 router.get('/', readAllBusinesses)
 router.patch('/:uuid', protect, updateBusinesssValidator, updateBusiness)
 
+router.get('/domainId/:domainId', getBusinessesByDomainId)
 
 
 export default router;
