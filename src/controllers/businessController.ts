@@ -15,7 +15,7 @@ export const createBusiness = catchAsync(async (req, res, next) => {
     const { name, about, state, city, googleMapsUrl, phone, website, domains, email } = req.body;
 
     // check if domain exists
-    console.log(domains);
+
 
     const theDomains = await Domain.find({
         where: {
@@ -24,7 +24,7 @@ export const createBusiness = catchAsync(async (req, res, next) => {
     }).catch(e => console.error(e));
 
 
-    console.log(theDomains, 'domains');
+
 
 
     const newBusinessRes = await Business.create({
