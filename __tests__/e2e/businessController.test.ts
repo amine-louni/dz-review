@@ -172,7 +172,7 @@ describe("Business CRUD suit", () => {
             .patch(`/api/v1/business/${businessBody.data.uuid}`)
             .set("Authorization", `Bearer ${body.token}`)
             .send({ name: 'updated' })
-            .expect(201)
+
             .then((response) => {
 
                 expect(response.body).toEqual({
@@ -294,6 +294,8 @@ describe("Business CRUD suit", () => {
                             updatedAt: expect.any(String),
                             uuid: expect.any(String),
                             media: expect.any(Array),
+                            domains: expect.any(Array),
+
 
                         }
                     ]),
