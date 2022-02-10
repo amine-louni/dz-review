@@ -139,6 +139,7 @@ describe("Business CRUD suit", () => {
                         updatedAt: expect.any(String),
                         uuid: expect.any(String),
                         media: expect.any(Array),
+                        createdBy: expect.any(Object)
 
                     },
                 });
@@ -186,13 +187,11 @@ describe("Business CRUD suit", () => {
                         website: expect.any(String),
                         email: expect.any(String),
                         googleMapsUrl: expect.any(String),
-
                         claimedByOwner: false,
                         createdAt: expect.any(String),
                         updatedAt: expect.any(String),
                         uuid: expect.any(String),
                         media: expect.any(Array),
-
                     },
                 });
             });
