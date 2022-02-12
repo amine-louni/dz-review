@@ -13,9 +13,11 @@ export const createReview = catchAsync(async (req, res, next) => {
     const { body, currentUser } = req;
 
     const user = await User.findOne(currentUser?.uuid);
-    const business = await Business.findOne(uuid).catch((_e) => {
-        return next(new AppError('Business not found', 422, BAD_INPUT))
-    });
+    const business = await Business.findOne(uuid)
+
+    if (!business) {
+        return next(new AppError('No business with this id', 404, BAD_INPUT))
+    }
 
     // Check if user is  has no posted review  about his business
     const alreadyReviewed = await Review.find({ where: { createdBy: user, business: business } })
@@ -27,7 +29,7 @@ export const createReview = catchAsync(async (req, res, next) => {
         text: body.text,
         stars: body.stars,
         createdBy: user,
-        business: business!
+        business: business
     })
 
     await review.save();

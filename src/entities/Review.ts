@@ -1,5 +1,6 @@
 
-import { Max, Min } from "class-validator";
+
+import { IsInt, IsNumber, Max, Min } from "class-validator";
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Business } from "./Business";
 import { User } from "./User";
@@ -13,13 +14,13 @@ export class Review extends BaseEntity {
     @Column('text')
     text: string
 
-
     @Column({
-        type: 'numeric',
-        default: 0
+        default: 1
     })
+    @IsNumber()
     @Min(1)
     @Max(5)
+
     stars: number
 
     @ManyToOne(() => User, user => user.reviews)

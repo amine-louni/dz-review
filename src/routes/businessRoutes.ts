@@ -4,6 +4,7 @@ import { createBusiness, getBusinessesByDomainId, readAllBusinesses, readOneBusi
 import { createBusinesssValidator, updateBusinesssValidator } from "../middlewares/validators/businessValidator";
 import { protect } from "../controllers/authController";
 import { createReview, getReviewsForBusiness } from "../controllers/ReviewController";
+import { createReviewValidtaor } from "../middlewares/validators/reviewValidator";
 
 
 
@@ -11,7 +12,7 @@ import { createReview, getReviewsForBusiness } from "../controllers/ReviewContro
 const router: Router = express.Router();
 
 // Reveiws
-router.post('/:uuid/reviews', protect, createReview)
+router.post('/:uuid/reviews', protect, createReviewValidtaor, createReview)
 router.get('/:uuid/reviews', getReviewsForBusiness)
 
 
