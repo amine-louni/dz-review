@@ -176,20 +176,13 @@ export const followBusiness = catchAsync(async (req, res, next) => {
         return next(new AppError('User not found', 404))
     }
 
-
-
-
-
     business.followers.push(user);
 
     await business.save()
 
-
-
     if (!business) {
         return next(new AppError('Error while updating', 505))
     }
-
 
     return res.status(201).json({
         status: "success",
