@@ -5,6 +5,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -175,6 +177,10 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Review, review => review.createdBy, { onDelete: "CASCADE" })
   reviews: Review[];
+
+
+  @ManyToMany(() => Business)
+  followings: Business[]
 
 
   @CreateDateColumn()

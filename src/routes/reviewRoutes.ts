@@ -1,7 +1,7 @@
 import { Router } from "express";
 import express from 'express'
 import { protect } from "../controllers/authController";
-import { updateReview } from "../controllers/ReviewController";
+import { updateReview } from "../controllers/reviewController";
 import { updateReviewValidator } from "../middlewares/validators/reviewValidator";
 
 const router: Router = express.Router();

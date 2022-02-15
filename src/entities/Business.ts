@@ -78,6 +78,20 @@ export class Business extends BaseEntity {
     })
     domains: Domain[]
 
+    @ManyToMany(() => User, { onDelete: "CASCADE" })
+    @JoinTable({
+        name: "business_followers",
+        joinColumn: {
+            name: 'businessId',
+            referencedColumnName: 'uuid'
+        },
+        inverseJoinColumn: {
+            name: 'userId',
+            referencedColumnName: "uuid"
+        }
+    })
+    followers: User[]
+
     @ManyToOne(() => User, user => user.creations)
     @JoinColumn({
         name: 'createdById',
@@ -86,6 +100,8 @@ export class Business extends BaseEntity {
 
     @OneToMany(() => Review, review => review.business, { onDelete: "CASCADE" })
     reviews: Review[];
+
+
 
 
     @CreateDateColumn()
