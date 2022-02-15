@@ -69,6 +69,7 @@ export const updateBusiness = catchAsync(async (req, res, next) => {
     }
 
 
+    // check if currentUser is the owner
     if (business.createdBy.uuid !== req.currentUser?.uuid && req.currentUser?.role !== 'admin') {
         return next(new AppError('You are not allowed to prefrom this action', 403, NOT_AUTHORIZED))
     }
