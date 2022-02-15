@@ -167,8 +167,7 @@ export class User extends BaseEntity {
   })
   passwordResetPinExpiresAt: Date | null;
 
-  @OneToMany(() => Business, business => business.owner, { onDelete: "CASCADE" })
-  businesses: Business[];
+
 
   @OneToMany(() => Business, business => business.createdBy, { onDelete: "CASCADE" })
   creations: Business[];

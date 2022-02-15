@@ -57,6 +57,8 @@ export const createBusiness = catchAsync(async (req, res, next) => {
 
 export const updateBusiness = catchAsync(async (req, res, next) => {
     const { uuid } = req.params
+    const { name, about, state, city, googleMapsUrl, phone, website, domains, email, claimedByOwner } = req.body;
+    const isAdmin = req.currentUser?.role !== 'admin';
 
     // check if exiits
     const business = await Business.findOne(uuid, {
@@ -70,11 +72,22 @@ export const updateBusiness = catchAsync(async (req, res, next) => {
 
 
     // check if currentUser is the owner
-    if (business.createdBy.uuid !== req.currentUser?.uuid && req.currentUser?.role !== 'admin') {
+    if (business.createdBy.uuid !== req.currentUser?.uuid || !isAdmin) {
         return next(new AppError('You are not allowed to prefrom this action', 403, NOT_AUTHORIZED))
     }
 
-    const updated = await Business.update(uuid, req.body).catch((e) => {
+    const updated = await Business.update(uuid, {
+        name,
+        about,
+        state,
+        city,
+        googleMapsUrl,
+        phone,
+        website,
+        domains,
+        email,
+        claimedByOwner: (isAdmin ? claimedByOwner : undefined)
+    }).catch((e) => {
         console.error('Error while updating', e);
     });
 
@@ -90,6 +103,7 @@ export const updateBusiness = catchAsync(async (req, res, next) => {
         },
     })
 })
+
 
 
 export const readOneBusiness = catchAsync(async (req, res, next) => {
@@ -137,4 +151,3 @@ export const getBusinessesByDomainId = catchAsync(async (req, res, _next) => {
         ],
     })
 })
-

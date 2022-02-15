@@ -78,7 +78,7 @@ export class Business extends BaseEntity {
     })
     domains: Domain[]
 
-    @ManyToOne(() => User, user => user.businesses)
+    @ManyToOne(() => User, user => user.creations)
     @JoinColumn({
         name: 'createdById',
     })
@@ -87,11 +87,6 @@ export class Business extends BaseEntity {
     @OneToMany(() => Review, review => review.business, { onDelete: "CASCADE" })
     reviews: Review[];
 
-    @ManyToOne(() => User, user => user.businesses)
-    @JoinColumn({
-        name: 'ownerId',
-    })
-    owner: User;
 
     @CreateDateColumn()
     createdAt: Date;
