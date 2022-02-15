@@ -1,6 +1,6 @@
 
 
-import { IsInt, IsNumber, Max, Min } from "class-validator";
+import { IsNumber, Max, Min } from "class-validator";
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Business } from "./Business";
 import { User } from "./User";
