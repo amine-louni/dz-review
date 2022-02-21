@@ -7,7 +7,7 @@ import domainRoutes from "./routes/domainRoutes";
 import businessRoutes from "./routes/businessRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
 import { NOT_FOUND, __dev__ } from "./constatns";
-import AppError from "./helpers/AppError";
+import AppError from "./utils/AppError";
 import errorController from "./controllers/errorController";
 import path from "path";
 

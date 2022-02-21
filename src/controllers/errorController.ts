@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import AppError from "../helpers/AppError";
+import AppError from "../utils/AppError";
 import { NextFunction, Request, Response } from "express";
 import { EXPIRED_TOKEN, INVALID_TOKEN, __prod__ } from "../constatns";
 

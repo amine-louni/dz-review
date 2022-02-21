@@ -2,7 +2,7 @@
 import { databaseConnection } from "./database/connection";
 import { __dev__, __prod__ } from "./constatns";
 import app from "./app";
-import AppError from "./helpers/AppError";
+import AppError from "./utils/AppError";
 
 // connect db  🔗
 databaseConnection(process.env.DB_NAME)

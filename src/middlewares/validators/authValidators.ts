@@ -1,7 +1,7 @@
 import { body, check, validationResult } from "express-validator";
 
 import { Request, Response, NextFunction } from "express";
-import AppError from "../../helpers/AppError";
+import AppError from "../../utils/AppError";
 import { passwordRegExValidator, VALIDATION_FAILED } from "../../constatns";
 
 export const userRegisterValidator = [

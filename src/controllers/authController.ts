@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import crypto from "crypto";
 
-import { catchAsync } from "../helpers/catchAsync";
+import { catchAsync } from "../utils/catchAsync";
 import { User } from "../entities/User";
 
 import crypt from "bcryptjs";
-import AppError from "../helpers/AppError";
+import AppError from "../utils/AppError";
 import {
   ALLOWED_USER_FIELDS,
   BAD_AUTH,
@@ -21,9 +21,9 @@ import {
   VALIDATION_FAILED,
 } from "../constatns";
 import { validate } from "class-validator";
-import formatValidationErrors from "../helpers/formatValidationErrors";
-import changedPasswordAfter from "../helpers/changedPasswordAfter";
-import EmailSender from "../helpers/EmailSender";
+import formatValidationErrors from "../utils/formatValidationErrors";
+import changedPasswordAfter from "../utils/changedPasswordAfter";
+import EmailSender from "../utils/EmailSender";
 
 
 export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
@@ -49,6 +49,7 @@ const createSendToken = async (
   res: Response
 ) => {
   const token = singingToken(user.uuid);
+
   res.cookie("jwt", token, {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRED_IN * 24 * 60 * 60 * 1000
@@ -451,5 +452,10 @@ export const isAdmin = catchAsync(async (req, _res, next) => {
   }
 
   return next()
+
+})
+
+
+export const getAccessTokenByRefreshToken = catchAsync(async (req, res, next) => {
 
 })

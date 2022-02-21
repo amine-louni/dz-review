@@ -17,7 +17,7 @@ import {
   PASSWORD_PIN_EXPIRATION_IN_MINUTES,
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
 } from "../constatns";
-import EmailSender from "../helpers/EmailSender";
+import EmailSender from "../utils/EmailSender";
 import { Business } from "./Business";
 import { Review } from "./Review";
 

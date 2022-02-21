@@ -1,7 +1,7 @@
 
-import AppError from "../helpers/AppError";
+import AppError from "../utils/AppError";
 import { Business } from "../entities/Business";
-import { catchAsync } from "../helpers/catchAsync";
+import { catchAsync } from "../utils/catchAsync";
 import { BAD_INPUT, NOT_AUTHORIZED, SERVER_ERROR } from "../constatns";
 import { Domain } from "../entities/Domain";
 import { In } from "typeorm";

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { check, validationResult } from "express-validator";
 import { VALIDATION_FAILED } from "../../constatns";
-import AppError from "../../helpers/AppError";
+import AppError from "../../utils/AppError";
 
 export const createReviewValidtaor = [
     check("text")

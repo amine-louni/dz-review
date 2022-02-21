@@ -1,6 +1,6 @@
 
 import { Domain } from '../entities/Domain'
-import { catchAsync } from "../helpers/catchAsync";
+import { catchAsync } from "../utils/catchAsync";
 
 
 export const createDomain = catchAsync(async (req, res, _next) => {

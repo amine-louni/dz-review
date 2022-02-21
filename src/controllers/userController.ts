@@ -1,6 +1,6 @@
-import { catchAsync } from "../helpers/catchAsync";
+import { catchAsync } from "../utils/catchAsync";
 import { User } from "../entities/User";
-import AppError from "../helpers/AppError";
+import AppError from "../utils/AppError";
 import { ALLOWED_USER_FIELDS_TO_UPDATE, NOT_FOUND } from "../constatns";
 import { allowFieldsType } from "../@types/user";
 
