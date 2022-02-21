@@ -22,7 +22,7 @@ router.patch('/auth/update-email', updateEmailValidator, protect, updateEmail)
 
 // User data
 
-router.get('/:uuid', getUser)
+router.get('/:username', getUser)
 router.patch('/update-me', protect, updateMe)
 
 

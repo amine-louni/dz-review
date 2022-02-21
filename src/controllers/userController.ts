@@ -5,10 +5,10 @@ import { ALLOWED_USER_FIELDS_TO_UPDATE, NOT_FOUND } from "../constatns";
 import { allowFieldsType } from "../@types/user";
 
 export const getUser = catchAsync(async (req, res, next) => {
-  const { uuid } = req.params;
+  const { username } = req.params;
 
   // 1 ) find the user  &  check if exists
-  const theUser = await User.findOne({ uuid: uuid });
+  const theUser = await User.findOne({ userName: username });
 
   if (!theUser) {
     return next(new AppError("user not found", 404, NOT_FOUND));
