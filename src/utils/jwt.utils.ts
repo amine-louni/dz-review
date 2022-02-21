@@ -22,7 +22,7 @@ export const createSendToken = async (
 ) => {
     const accessToken = singingToken(user.uuid, process.env.JWT_ACCESS_SECRET_KEY, process.env.JWT_ACCESS_EXPIRED_IN);
     const refreshToken = singingToken(user.uuid, process.env.JWT_REFRESH_SECRET_KEY, process.env.JWT_REFRESH_EXPIRED_IN);
-    console.log('here')
+
 
     res.cookie("jid", refreshToken, {
         secure: req.secure || req.headers["x-forwarded-proto"] === "https",
