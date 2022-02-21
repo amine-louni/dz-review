@@ -1,4 +1,4 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload, verify } from "jsonwebtoken";
 import crypto from "crypto";
 
 import { catchAsync } from "../utils/catchAsync";
@@ -257,6 +257,7 @@ export const updatePassword = catchAsync(async (req, res, next) => {
     { uuid: theUser.uuid },
     {
       password: await crypt.hash(password, 12),
+      passwordChangedAt: new Date(),
     }
   ).catch((e) =>
     next(
@@ -351,7 +352,7 @@ export const protect = catchAsync(async (req, _res, next) => {
   } catch {
     return next(
       new AppError(
-        "the user belonging to this token does no longer exist.",
+        "invalid access token.",
         401,
         BAD_AUTH
       )
@@ -359,7 +360,9 @@ export const protect = catchAsync(async (req, _res, next) => {
   }
 
   // 3) Check if user still exists
-  const currentUser = await User.findOne({ uuid: decoded.id });
+  const currentUser = await User.findOne({ uuid: decoded.id }, {
+    select: [...ALLOWED_USER_FIELDS, 'passwordChangedAt']
+  });
 
   if (!currentUser) {
     return next(
@@ -370,13 +373,14 @@ export const protect = catchAsync(async (req, _res, next) => {
       )
     );
   }
-
+  console.log(currentUser, 'cuurent')
   // 4) Check if user changed password after the token was issued
   if (
     currentUser.passwordChangedAt &&
     decoded.iat &&
     changedPasswordAfter(decoded.iat, currentUser.passwordChangedAt)
   ) {
+    console.log('here inside ')
     return next(
       new AppError(
         "user recently changed password! Please log in again.",
@@ -386,6 +390,7 @@ export const protect = catchAsync(async (req, _res, next) => {
     );
   }
 
+  console.log('granted')
   // GRANT ACCESS TO PROTECTED ROUTE
   req.currentUser = currentUser;
 
@@ -417,3 +422,31 @@ export const isAdmin = catchAsync(async (req, _res, next) => {
   return next()
 
 })
+
+
+export const refreshAccessToken = catchAsync(async (req, res, next) => {
+
+  // jwt verify token
+  const { jid } = req.cookies;
+
+  //check if there is not coockie
+  if (!jid) {
+    return next(new AppError('jwt malfomred', 403, BAD_AUTH))
+  }
+  const payload = verify(jid, process.env.JWT_REFRESH_SECRET_KEY) as { id: string, iat: number, exp: number };
+
+
+
+  const user = await User.findOne({ uuid: payload.id });
+
+  if (!user) {
+    return next(new AppError('user not found', 404, NOT_FOUND))
+  }
+
+
+  // Check the expixration based on passwordChangedAT
+
+  //Ok!
+  createSendToken(user, 200, req, res)
+}
+)

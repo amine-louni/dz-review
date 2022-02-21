@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from 'cookie-parser';
 import userRoutes from "./routes/userRoutes";
 import domainRoutes from "./routes/domainRoutes";
 import businessRoutes from "./routes/businessRoutes";
@@ -12,6 +13,10 @@ import errorController from "./controllers/errorController";
 import path from "path";
 
 const app = express();
+
+// Parse cookies
+app.use(cookieParser())
+
 
 // Get the Auth service for the default app
 app.set("view engine", "pug");
