@@ -374,7 +374,7 @@ export const protect = catchAsync(async (req, _res, next) => {
       )
     );
   }
-  console.log(currentUser, 'cuurent')
+
   // 4) Check if user changed password after the token was issued
   if (
     currentUser.passwordChangedAt &&
