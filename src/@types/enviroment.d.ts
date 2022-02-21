@@ -13,8 +13,11 @@ declare global {
       DB_USERNAME: string;
       DB_PASSWORD: string;
 
-      JWT_SECRET_KEY: string;
-      JWT_COOKIE_EXPIRED_IN: number;
+      JWT_ACCESS_SECRET_KEY: string;
+      JWT_REFRESH_SECRET_KEY: string;
+      JWT_ACCESS_EXPIRED_IN: string;
+      JWT_REFRESH_EXPIRED_IN: string;
+      JWT_COOKIE_EXPIRED_IN: string;
       HASH_PASS_SALT: number;
 
       MAILGUN_PRIVATE_API_KEY: string;

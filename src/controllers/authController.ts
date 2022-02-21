@@ -1,4 +1,3 @@
-import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import crypto from "crypto";
 
@@ -15,7 +14,6 @@ import {
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
   NOT_FOUND,
   passwordResetPin_EXPIRED,
-  SECRET_USER_FIELDS,
   SERVER_ERROR,
   VALIDATION_EMAIL_PIN_EXPIRED,
   VALIDATION_FAILED,
@@ -24,6 +22,7 @@ import { validate } from "class-validator";
 import formatValidationErrors from "../utils/formatValidationErrors";
 import changedPasswordAfter from "../utils/changedPasswordAfter";
 import EmailSender from "../utils/EmailSender";
+import { createSendToken } from "../utils/jwt.utils";
 
 
 export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
@@ -32,43 +31,7 @@ export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
   });
 };
 
-export const singingToken = (id: string): string => {
-  return jwt.sign(
-    {
-      id,
-    },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: process.env.JWT_EXPIRED_IN }
-  );
-};
 
-const createSendToken = async (
-  user: User,
-  status: number,
-  req: Request,
-  res: Response
-) => {
-  const token = singingToken(user.uuid);
-
-  res.cookie("jwt", token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRED_IN * 24 * 60 * 60 * 1000
-    ),
-    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-    httpOnly: true,
-  });
-
-  // remove sensetive data
-  filterobj(user, [...SECRET_USER_FIELDS]);
-
-  res.status(status).json({
-    status: "success",
-    token,
-    data: {
-      ...user,
-    },
-  });
-};
 
 export const register = catchAsync(async (req, res, next) => {
   const { firstName, lastName, userName, email, dob, password } = req.body;
@@ -105,7 +68,7 @@ export const register = catchAsync(async (req, res, next) => {
 export const login = catchAsync(async (req, res, next) => {
   const { email, password, userName } = req.body;
 
-  // 2 ) Check if user & password exits
+  // 1 ) Check if user & password exits
 
   const theUser = await User.findOne({
     select: [...ALLOWED_USER_FIELDS, "password"],
@@ -119,7 +82,7 @@ export const login = catchAsync(async (req, res, next) => {
     return next(new AppError("wrong login credeintials", 401, BAD_AUTH));
   }
 
-  // 3 ) Every thing is okay !
+  // 2 ) Every thing is okay !
   createSendToken(theUser, 200, req, res);
 });
 
@@ -384,7 +347,7 @@ export const protect = catchAsync(async (req, _res, next) => {
   let decoded: JwtPayload;
 
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET_KEY) as JwtPayload
+    decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET_KEY) as JwtPayload
   } catch {
     return next(
       new AppError(
@@ -452,10 +415,5 @@ export const isAdmin = catchAsync(async (req, _res, next) => {
   }
 
   return next()
-
-})
-
-
-export const getAccessTokenByRefreshToken = catchAsync(async (req, res, next) => {
 
 })
