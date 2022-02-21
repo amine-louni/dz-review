@@ -12,6 +12,7 @@ import {
   BAD_INPUT,
   EMAIL_ALREADY_VALIDATED,
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
+  INVALID_TOKEN,
   NOT_FOUND,
   passwordResetPin_EXPIRED,
   SERVER_ERROR,
@@ -369,7 +370,7 @@ export const protect = catchAsync(async (req, _res, next) => {
       new AppError(
         "the user belonging to this token does no longer exist.",
         401,
-        BAD_AUTH
+        INVALID_TOKEN
       )
     );
   }
@@ -380,17 +381,16 @@ export const protect = catchAsync(async (req, _res, next) => {
     decoded.iat &&
     changedPasswordAfter(decoded.iat, currentUser.passwordChangedAt)
   ) {
-    console.log('here inside ')
     return next(
       new AppError(
-        "user recently changed password! Please log in again.",
+        "invalid token! Please log in again.",
         401,
-        BAD_AUTH
+        INVALID_TOKEN
       )
     );
   }
 
-  console.log('granted')
+
   // GRANT ACCESS TO PROTECTED ROUTE
   req.currentUser = currentUser;
 
