@@ -1,0 +1,57 @@
+
+import { createTheme } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
+
+// Create a theme instance.
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#12398F',
+    },
+    secondary: {
+      main: '#DB4123',
+    },
+    grey: {
+      "200": "#F4F5F4",
+      "500": "#636770",
+      "600": "#737B7D"
+    },
+    error: {
+      main: red.A400,
+    },
+    common: {
+      white: '#F5F6F7',
+      black: "#2B2A2E"
+    }
+  },
+  typography: {
+    allVariants: {
+      fontFamily: 'Poppins'
+    },
+    h1: {
+
+      fontSize: 72,
+      fontWeight: 'bold'
+    },
+    h2: {
+      fontSize: 42,
+      fontWeight: 'bold'
+    },
+    h3: {
+      fontSize: 35,
+      fontWeight: '600',
+    },
+    h4: {
+      fontSize: 28,
+    },
+    h5: {
+      fontSize: 22
+    },
+    h6: {
+      fontSize: 18
+    }
+  }
+
+});
+
+export default theme;
