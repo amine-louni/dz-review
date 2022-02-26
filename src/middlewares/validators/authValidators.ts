@@ -124,12 +124,8 @@ export const userLoginValidator = [
     .not()
     .isEmpty()
     .withMessage("password can not be empty!")
-    .bail()
-    .isLength({ min: 5 })
-    .withMessage("Minimum 5 characters required!")
-    .bail()
-    .matches(passwordRegExValidator)
-    .withMessage("Minimum eight characters, at least one letter and one number")
+    .isLength({ min: 8 })
+    .withMessage("Minimum eight characters")
     .bail(),
   (req: Request, _res: Response, next: NextFunction) => {
     const errors = validationResult(req);

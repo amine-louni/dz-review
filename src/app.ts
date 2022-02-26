@@ -14,6 +14,11 @@ import path from "path";
 
 const app = express();
 
+
+app.use(cors({
+  credentials: true
+}));
+app.options("*", cors)  // enable pre-flight
 // Parse cookies
 app.use(cookieParser())
 
@@ -26,7 +31,7 @@ app.enable("trust proxy");
 //GLOBALS MIDDLEWARES
 
 // implement CORS (Access-Control-Allow-Origin *)
-app.use(cors());
+
 // Set security http headers
 app.use(helmet());
 
