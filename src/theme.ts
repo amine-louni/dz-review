@@ -1,6 +1,6 @@
 
 import { createTheme } from "@mui/material/styles";
-import { red } from "@mui/material/colors";
+import { grey, red } from "@mui/material/colors";
 
 // Create a theme instance.
 const theme = createTheme({
@@ -49,6 +49,29 @@ const theme = createTheme({
     },
     h6: {
       fontSize: 18
+    }
+  },
+  components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          background: '#FFF',
+          margin: 0
+        }
+      }
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          background: "#F4F5F4",
+          ":webkit-autofill": {
+            boxShadow: '0 0 0 30px white inset'
+
+
+          },
+
+        }
+      }
     }
   }
 
