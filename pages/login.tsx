@@ -19,6 +19,7 @@ import { useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setUser } from "../redux/slices/userSlice";
+import { Alert } from "@mui/material";
 
 const Copyright = (props: any) => {
   return (
@@ -41,8 +42,8 @@ const Copyright = (props: any) => {
 const Login: React.FunctionComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
   // The `state` arg is correctly typed as `RootState` already
-  const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const [apiError, setApiError] = useState(null);
 
   const initialValues = {
     email: "",
@@ -67,10 +68,12 @@ const Login: React.FunctionComponent = () => {
         password,
       });
 
-      const { data } = res;
-      dispatch(setUser(data));
-    } catch (error) {
-      console.error(error);
+      if (res.data.status === "success") {
+        const { data } = res;
+        dispatch(setUser(data));
+      }
+    } catch (error: any) {
+      setApiError(error?.response.data.code);
     }
   };
 
@@ -134,6 +137,16 @@ const Login: React.FunctionComponent = () => {
                     isSubmitting,
                   }) => (
                     <Form>
+                      {apiError && (
+                        <Alert
+                          severity="error"
+                          css={css`
+                            margin-bottom: 0.5rem;
+                          `}
+                        >
+                          {apiError}
+                        </Alert>
+                      )}
                       <TextField
                         error={!!errors.email}
                         helperText={errors.email}
