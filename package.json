@@ -15,11 +15,17 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "@reduxjs/toolkit": "^1.7.2",
+    "add": "^2.0.6",
     "axios": "^0.26.0",
     "formik": "^2.2.9",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.1",
+    "yarn": "^1.22.17",
     "yup": "^0.32.11"
   },
   "devDependencies": {

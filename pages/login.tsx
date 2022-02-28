@@ -17,6 +17,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setUser } from "../redux/slices/userSlice";
 
 const Copyright = (props: any) => {
   return (
@@ -38,6 +40,10 @@ const Copyright = (props: any) => {
 
 const Login: React.FunctionComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
+  // The `state` arg is correctly typed as `RootState` already
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
   const initialValues = {
     email: "",
     password: "",
@@ -55,15 +61,16 @@ const Login: React.FunctionComponent = () => {
   });
 
   const handleLogin = async ({ email, password }: FormikValues) => {
-    console.log(email);
     try {
       const res = await auth.post("/login", {
         email,
         password,
       });
-      console.log(res);
+
+      const { data } = res;
+      dispatch(setUser(data));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

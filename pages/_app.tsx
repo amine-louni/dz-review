@@ -6,8 +6,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
-import { createTheme } from "@mui/material/styles";
 import { Theme as MaterialUITheme } from "@mui/material";
+import { Provider as ReduxProvider } from "react-redux";
+import store from "../redux/store";
 
 // Re-declare the emotion theme to have the properties of the MaterialUiTheme
 declare module "@emotion/react" {
@@ -39,10 +40,12 @@ export default function MyApp(props: MyAppProps) {
         />
         <title>dz review 🔊</title>
       </Head>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <ReduxProvider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </ReduxProvider>
     </CacheProvider>
   );
 }
