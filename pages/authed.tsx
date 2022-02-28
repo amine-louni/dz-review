@@ -4,11 +4,11 @@ interface IProtected {
   email: string;
 }
 
-const Portected = ({ email }: IProtected) => {
+const Authed = ({ email }: IProtected) => {
   return <div>portected {email}</div>;
 };
 
-export default Portected;
+export default Authed;
 
 export const getServerSideProps = requireAuthentication(async (_context) => {
   // Your normal `getServerSideProps` code here
