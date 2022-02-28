@@ -34,7 +34,6 @@ export const createSendToken = async (
 
     return res.status(status).json({
         status: "success",
-        refreshToken,
         accessToken,
         data: {
             ...user,
