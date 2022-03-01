@@ -20,6 +20,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setUser } from "../redux/slices/userSlice";
 import { Alert } from "@mui/material";
+import { authed } from "../utils/authed";
+import { useRouter } from "next/router";
 
 const Copyright = (props: any) => {
   return (
@@ -41,9 +43,9 @@ const Copyright = (props: any) => {
 
 const Login: React.FunctionComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
-  // The `state` arg is correctly typed as `RootState` already
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState(null);
+  const router = useRouter();
 
   const initialValues = {
     email: "",
@@ -71,6 +73,8 @@ const Login: React.FunctionComponent = () => {
       if (res.data.status === "success") {
         const { data } = res;
         dispatch(setUser(data));
+        setApiError(null);
+        router.replace("/");
       }
     } catch (error: any) {
       setApiError(error?.response.data.code);
@@ -306,3 +310,13 @@ const Login: React.FunctionComponent = () => {
 };
 
 export default Login;
+
+export const getServerSideProps = authed(async (_context) => {
+  // Your normal `getServerSideProps` code here
+  const email = "test";
+  return {
+    props: {
+      email,
+    },
+  };
+});
