@@ -63,7 +63,7 @@ export class User extends BaseEntity {
   lastName: string;
 
   @Column()
-  @Length(5, 20)
+  @Length(3, 20)
   userName: string;
 
   // Email fields

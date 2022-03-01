@@ -67,4 +67,6 @@ export const VALIDATION_FAILED = "validation_failed";
 export const VALIDATION_EMAIL_PIN_EXPIRED = "validation_email_pin_expired";
 export const passwordResetPin_EXPIRED = "passwordResetPin_expired";
 export const EMAIL_ALREADY_VALIDATED = "email_already_validated";
+export const QUERY_FAILED = "QUERY_FAILED";
+export const DUPLICATED = "DUPLICATED";
 export const SERVER_ERROR = "server_error";

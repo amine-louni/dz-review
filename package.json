@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "cross-env NODE_ENV=production node ./dist/index.js",
     "watch:ts": "tsc -w",
     "watch:js": "nodemon dist/index.js",
     "watch:all": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Nodemon\" -c \"yellow.bold,cyan.bold,green.bold\" \"yarn watch:ts\" \"yarn watch:js\"",

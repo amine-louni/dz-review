@@ -57,9 +57,9 @@ export const userRegisterValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("lastName can not be empty!")
+    .withMessage("dob can not be empty!")
     .bail()
-    .isDate()
+    .matches(/\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])*/)
     .withMessage("dob must be in valid format! ex : 10-10-1900")
     .bail(),
 
