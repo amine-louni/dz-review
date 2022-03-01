@@ -36,11 +36,6 @@ const handleDbValidation = (err: any) => {
   const field: string[] = err?.detail.split(/\(|\)/);
   const key = field[1]
 
-
-
-
-
-
   return new AppError(err?.detail, 400, QUERY_FAILED, [{ code: codeError, field: key, description: err?.detai }]);
 };
 
