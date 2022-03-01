@@ -1,5 +1,4 @@
 import Button from "@mui/material/Button";
-
 import TextField from "@mui/material/TextField";
 import * as yup from "yup";
 import Link from "../src/Link";
@@ -15,7 +14,6 @@ import { auth } from "../api";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CalendarTodayOutlined from "@mui/icons-material/CalendarTodayOutlined";
 import { useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
@@ -29,6 +27,7 @@ import {
 } from "@mui/material";
 import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
+import { IApiError } from "../@types";
 
 const generateYears = (startYear: number = 1970): number[] => {
   var currentYear = new Date().getFullYear(),
@@ -42,7 +41,7 @@ const generateYears = (startYear: number = 1970): number[] => {
 const Register: React.FunctionComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
-  const [apiError, setApiError] = useState(null);
+  const [apiError, setApiError] = useState<IApiError | null>(null);
   const router = useRouter();
 
   const initialValues = {
@@ -68,14 +67,17 @@ const Register: React.FunctionComponent = () => {
       .string()
       .min(8, "Password should be of minimum 8 characters length")
       .required("Password is required"),
-    day: yup.string().required("dob is required"),
-    month: yup.string().required("dob is required"),
-    year: yup.string().required("dob is required"),
+    day: yup.number().required("day is required"),
+    month: yup.number().required("month is required"),
+    year: yup.number().required("year is required"),
   });
 
   const handleRegister = async (values: FormikValues) => {
     try {
-      const res = await auth.post("/register", values);
+      const res = await auth.post("/register", {
+        ...values,
+        dob: `${values.year}-${values.month}-${values.day}`,
+      });
 
       if (res.data.status === "success") {
         const { data } = res;
@@ -84,7 +86,7 @@ const Register: React.FunctionComponent = () => {
         router.replace("/");
       }
     } catch (error: any) {
-      setApiError(error?.response.data.code);
+      setApiError(error?.response.data);
     }
   };
 
@@ -135,16 +137,17 @@ const Register: React.FunctionComponent = () => {
                 >
                   {({ handleChange, errors, isSubmitting, values }) => (
                     <Form>
-                      {apiError && (
-                        <Alert
-                          severity="error"
-                          css={css`
-                            margin-bottom: 0.5rem;
-                          `}
-                        >
-                          {apiError}
-                        </Alert>
-                      )}
+                      {apiError &&
+                        apiError?.errors?.map((oneError) => (
+                          <Alert
+                            severity="error"
+                            css={css`
+                              margin-bottom: 0.5rem;
+                            `}
+                          >
+                            {oneError.field} : {oneError.code}
+                          </Alert>
+                        ))}
                       <TextField
                         error={!!errors.userName}
                         helperText={errors.userName}
@@ -280,7 +283,9 @@ const Register: React.FunctionComponent = () => {
                                 .fill(1)
                                 .map((x, y) => x + y)
                                 .map((item) => (
-                                  <MenuItem value={item}>{item}</MenuItem>
+                                  <MenuItem key={item} value={item}>
+                                    {item}
+                                  </MenuItem>
                                 ))}
                             </Select>
                           </FormControl>
@@ -306,7 +311,9 @@ const Register: React.FunctionComponent = () => {
                                 .fill(1)
                                 .map((x, y) => x + y)
                                 .map((item) => (
-                                  <MenuItem value={item}>{item}</MenuItem>
+                                  <MenuItem key={item} value={item}>
+                                    {item}
+                                  </MenuItem>
                                 ))}
                             </Select>
                           </FormControl>
@@ -329,7 +336,9 @@ const Register: React.FunctionComponent = () => {
                               onChange={handleChange}
                             >
                               {generateYears().map((item) => (
-                                <MenuItem value={item}>{item}</MenuItem>
+                                <MenuItem key={item} value={item}>
+                                  {item}
+                                </MenuItem>
                               ))}
                             </Select>
                           </FormControl>

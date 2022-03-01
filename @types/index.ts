@@ -12,3 +12,21 @@ export interface IUser {
     id_verified_at?: any;
     profilePictureUrl: string;
 }
+
+
+
+
+export interface Error {
+    code: string;
+    field: string;
+}
+
+export interface IApiError {
+    status: string;
+    code: string;
+    message: string;
+    statusCode: number;
+    isOperational: boolean;
+    errors: Error[];
+}
+
