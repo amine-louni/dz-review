@@ -17,11 +17,14 @@ const handleJWTExpiredError = () =>
   );
 
 const handleDbValidation = (err: any) => {
+  console.log('====================================', err.name)
   if (!__prod__) {
     console.error(
       err
     )
   }
+
+
 
   let codeError;
   switch (err.code) {

@@ -28,15 +28,11 @@ process.on("SIGINT", function () {
 });
 
 // Listening to unhandled rejections
-process.on("unhandledRejection", (err: { name: string; message: string }) => {
-  console.error(err.name, err.message);
-
-  console.error("UNHANDLED REJECTION 💥 shutting down the server ");
-
-  server.close(() => {
-    process.exit(1);
-  });
-});
+process.on('unhandledRejection', (err: Error) => {
+  console.error('Unhandled Rejection at:', err.stack || err)
+  // Recommended: send the information to sentry.io
+  // or whatever crash reporting service you use
+})
 
 // Listening to SIGTERM by Heroku
 process.on("SIGTERM", () => {
