@@ -269,7 +269,7 @@ const Register: React.FunctionComponent = () => {
                               flex: 1;
                             `}
                           >
-                            <InputLabel id="day">Day</InputLabel>
+                            <InputLabel id="day">{t("day")}</InputLabel>
                             <Select
                               size="small"
                               name="day"
@@ -296,7 +296,7 @@ const Register: React.FunctionComponent = () => {
                               flex: 1;
                             `}
                           >
-                            <InputLabel id="month">Month</InputLabel>
+                            <InputLabel id="month">{t("month")}</InputLabel>
                             <Select
                               variant="outlined"
                               size="small"
@@ -324,7 +324,7 @@ const Register: React.FunctionComponent = () => {
                               flex: 2;
                             `}
                           >
-                            <InputLabel id="year">Year</InputLabel>
+                            <InputLabel id="year">{t("year")}</InputLabel>
                             <Select
                               variant="outlined"
                               size="small"
