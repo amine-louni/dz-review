@@ -27,7 +27,7 @@ const theme = createTheme({
   },
   typography: {
     allVariants: {
-      fontFamily: 'Poppins'
+      fontFamily: 'Poppins, Cairo'
     },
     h1: {
 
