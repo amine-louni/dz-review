@@ -22,30 +22,17 @@ import { setUser } from "../redux/slices/userSlice";
 import { Alert } from "@mui/material";
 import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
-
-const Copyright = (props: any) => {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        DZ review
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
+import useTranslation from "next-translate/useTranslation";
 
 const Login: React.FunctionComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState(null);
   const router = useRouter();
+  const { t } = useTranslation("auth");
+  const title = t("sign-in");
+
+  console.log(title);
 
   const initialValues = {
     email: "",
@@ -121,7 +108,7 @@ const Login: React.FunctionComponent = () => {
               }}
             >
               <Typography component="h1" variant="h3" marginBottom={1}>
-                Sign in ✌
+                {t("sign-in")}
               </Typography>
               <Typography component="p" variant="caption" marginBottom={2}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -227,7 +214,6 @@ const Login: React.FunctionComponent = () => {
                     </Form>
                   )}
                 </Formik>
-                <Copyright sx={{ mt: 1 }} />
               </Box>
             </Box>
           </Box>
