@@ -8,7 +8,10 @@ import Document, {
 } from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme from "../src/theme";
-import createEmotionCache from "../src/createEmotionCache";
+import {
+  createEmotionCache,
+  createEmotionCacheRTL,
+} from "../src/createEmotionCache";
 
 export default class MyDocument extends Document {
   render() {
@@ -68,9 +71,12 @@ MyDocument.getInitialProps = async (ctx) => {
 
   const originalRenderPage = ctx.renderPage;
 
+  const isRTL = ctx?.locale === "ar";
+
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
   // However, be aware that it can have global side effects.
-  const cache = createEmotionCache();
+  const cache = isRTL ? createEmotionCacheRTL() : createEmotionCache();
+
   const { extractCriticalToChunks } = createEmotionServer(cache);
 
   ctx.renderPage = () =>

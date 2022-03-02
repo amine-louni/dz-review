@@ -5,7 +5,10 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider, EmotionCache } from "@emotion/react";
 import theme from "../src/theme";
-import createEmotionCache from "../src/createEmotionCache";
+import {
+  createEmotionCache,
+  createEmotionCacheRTL,
+} from "../src/createEmotionCache";
 import { Theme as MaterialUITheme } from "@mui/material";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../redux/store";
@@ -14,16 +17,21 @@ import store from "../redux/store";
 declare module "@emotion/react" {
   export interface Theme extends Partial<MaterialUITheme> {}
 }
-
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
+const clientSideEmotionCacheRTL = createEmotionCacheRTL();
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
 export default function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const isRTL = props.router.locale === "ar";
+  const {
+    Component,
+    emotionCache = isRTL ? clientSideEmotionCacheRTL : clientSideEmotionCache,
+    pageProps,
+  } = props;
   return (
     <CacheProvider value={emotionCache}>
       <Head>
