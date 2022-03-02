@@ -1,5 +1,11 @@
 import * as React from "react";
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+} from "next/document";
 import createEmotionServer from "@emotion/server/create-instance";
 import theme from "../src/theme";
 import createEmotionCache from "../src/createEmotionCache";
@@ -7,7 +13,7 @@ import createEmotionCache from "../src/createEmotionCache";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html dir={this.props.locale === "ar" ? "rtl" : "ltr"}>
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -58,6 +64,8 @@ MyDocument.getInitialProps = async (ctx) => {
   // 3. app.render
   // 4. page.render
 
+  // locale is in ctx.locale
+
   const originalRenderPage = ctx.renderPage;
 
   // You can consider sharing the same emotion cache between all the SSR requests to speed up performance.
@@ -89,5 +97,6 @@ MyDocument.getInitialProps = async (ctx) => {
   return {
     ...initialProps,
     emotionStyleTags,
+    locale: ctx?.locale || "en",
   };
 };

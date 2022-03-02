@@ -30,9 +30,6 @@ const Login: React.FunctionComponent = () => {
   const [apiError, setApiError] = useState(null);
   const router = useRouter();
   const { t } = useTranslation("auth");
-  const title = t("sign-in");
-
-  console.log(title);
 
   const initialValues = {
     email: "",
@@ -111,8 +108,7 @@ const Login: React.FunctionComponent = () => {
                 {t("sign-in")}
               </Typography>
               <Typography component="p" variant="caption" marginBottom={2}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Laudantium, quos?
+                {t("description")}
               </Typography>
               <Box component="main" sx={{ mt: 1 }}>
                 <Formik
@@ -120,13 +116,7 @@ const Login: React.FunctionComponent = () => {
                   validationSchema={validationSchema}
                   onSubmit={handleLogin}
                 >
-                  {({
-                    handleSubmit,
-                    handleChange,
-                    errors,
-                    values,
-                    isSubmitting,
-                  }) => (
+                  {({ handleChange, errors, isSubmitting }) => (
                     <Form>
                       {apiError && (
                         <Alert
@@ -192,12 +182,12 @@ const Login: React.FunctionComponent = () => {
                       <Grid container>
                         <Grid item xs>
                           <Link href="#" variant="caption">
-                            {"Don't have an account?"}
+                            {t("dont-have-account")}
                           </Link>
                         </Grid>
                         <Grid item>
                           <Link href="#" variant="caption">
-                            Forgot password?
+                            {t("forgot-password")}
                           </Link>
                         </Grid>
                       </Grid>
@@ -209,7 +199,7 @@ const Login: React.FunctionComponent = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                       >
-                        Sign In
+                        {t("sign-in")}
                       </Button>
                     </Form>
                   )}

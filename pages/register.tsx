@@ -25,6 +25,7 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
+import useTranslation from "next-translate/useTranslation";
 import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
 import { IApiError } from "../@types";
@@ -43,7 +44,7 @@ const Register: React.FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState<IApiError | null>(null);
   const router = useRouter();
-
+  const { t } = useTranslation("auth");
   const initialValues = {
     userName: "",
     firstName: "",
@@ -156,8 +157,8 @@ const Register: React.FunctionComponent = () => {
                         onChange={handleChange}
                         fullWidth
                         id="userName"
-                        label="Username"
-                        name="userName"
+                        label={t("username")}
+                        name={t("username")}
                       />
                       <Grid
                         spacing={{ xs: 0, sm: 1 }}
@@ -173,8 +174,8 @@ const Register: React.FunctionComponent = () => {
                             onChange={handleChange}
                             fullWidth
                             id="firstName"
-                            label="First name"
-                            name="firstName"
+                            label={t("firstname")}
+                            name={t("firstname")}
                           />
                         </Grid>
                         <Grid item sm={6} xs={12}>
@@ -186,8 +187,8 @@ const Register: React.FunctionComponent = () => {
                             onChange={handleChange}
                             fullWidth
                             id="lastName"
-                            label="lastName"
-                            name="lastName"
+                            label={t("lastname")}
+                            name={t("lastname")}
                           />
                         </Grid>
                       </Grid>
@@ -199,8 +200,8 @@ const Register: React.FunctionComponent = () => {
                         onChange={handleChange}
                         fullWidth
                         id="email"
-                        label="Email"
-                        name="email"
+                        label={t("email")}
+                        name={t("email")}
                       />
                       <TextField
                         error={!!errors.password}
@@ -209,8 +210,8 @@ const Register: React.FunctionComponent = () => {
                         margin="dense"
                         fullWidth
                         onChange={handleChange}
-                        name="password"
-                        label="Password"
+                        label={t("password")}
+                        name={t("password")}
                         type={showPassword ? "text" : "password"}
                         id="password"
                         autoComplete="current-password"
@@ -253,7 +254,7 @@ const Register: React.FunctionComponent = () => {
                           `}
                           id="day"
                         >
-                          Date of birth
+                          {t("date-of-birth")}
                         </InputLabel>
 
                         <Box
@@ -275,8 +276,8 @@ const Register: React.FunctionComponent = () => {
                               labelId="day of birth"
                               id="day"
                               value={values.day}
-                              label="Day"
-                              placeholder="Day"
+                              label={t("day")}
+                              placeholder={t("day")}
                               onChange={handleChange}
                             >
                               {Array(31)
@@ -303,8 +304,8 @@ const Register: React.FunctionComponent = () => {
                               labelId="month of birth"
                               id="month"
                               value={values.month}
-                              label="Month"
-                              placeholder="month"
+                              label={t("month")}
+                              placeholder={t("month")}
                               onChange={handleChange}
                             >
                               {Array(12)
@@ -331,8 +332,8 @@ const Register: React.FunctionComponent = () => {
                               labelId="year of birth"
                               id="year"
                               value={values.year}
-                              label="Year"
-                              placeholder="Year"
+                              label={t("year")}
+                              placeholder={t("year")}
                               onChange={handleChange}
                             >
                               {generateYears().map((item) => (
@@ -348,12 +349,7 @@ const Register: React.FunctionComponent = () => {
                       <Grid container>
                         <Grid item xs>
                           <Link href="#" variant="caption">
-                            {"Don't have an account?"}
-                          </Link>
-                        </Grid>
-                        <Grid item>
-                          <Link href="#" variant="caption">
-                            Forgot password?
+                            {t("have-account")}
                           </Link>
                         </Grid>
                       </Grid>
@@ -365,7 +361,7 @@ const Register: React.FunctionComponent = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                       >
-                        Sign Up
+                        {t("sign-up")}
                       </Button>
                     </Form>
                   )}
