@@ -137,7 +137,14 @@ const Register: React.FunctionComponent = () => {
                   validationSchema={validationSchema}
                   onSubmit={handleRegister}
                 >
-                  {({ handleChange, errors, isSubmitting, values }) => (
+                  {({
+                    handleChange,
+                    errors,
+                    isSubmitting,
+                    values,
+                    touched,
+                    handleBlur,
+                  }) => (
                     <Form>
                       {apiError &&
                         apiError?.errors?.map((oneError) => (
@@ -151,15 +158,16 @@ const Register: React.FunctionComponent = () => {
                           </Alert>
                         ))}
                       <TextField
-                        error={!!errors.userName}
-                        helperText={errors.userName}
+                        error={touched.userName && !!errors.userName}
+                        helperText={touched.userName && errors.userName}
                         size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
                         id="userName"
                         label={t("username")}
-                        name={t("username")}
+                        name="userName"
+                        onBlur={handleBlur}
                       />
                       <Grid
                         spacing={{ xs: 0, sm: 1 }}
@@ -168,51 +176,51 @@ const Register: React.FunctionComponent = () => {
                       >
                         <Grid item sm={6} xs={12}>
                           <TextField
-                            error={!!errors.firstName}
-                            helperText={errors.firstName}
+                            error={touched.firstName && !!errors.firstName}
+                            helperText={touched.firstName && errors.firstName}
                             size="small"
                             margin="dense"
                             onChange={handleChange}
                             fullWidth
                             id="firstName"
                             label={t("firstname")}
-                            name={t("firstname")}
+                            name="firstName"
                           />
                         </Grid>
                         <Grid item sm={6} xs={12}>
                           <TextField
-                            error={!!errors.lastName}
-                            helperText={errors.lastName}
+                            error={touched.lastName && !!errors.lastName}
+                            helperText={touched.lastName && errors.lastName}
                             size="small"
                             margin="dense"
                             onChange={handleChange}
                             fullWidth
                             id="lastName"
                             label={t("lastname")}
-                            name={t("lastname")}
+                            name="lastName"
                           />
                         </Grid>
                       </Grid>
                       <TextField
-                        error={!!errors.email}
-                        helperText={errors.email}
+                        error={touched.email && !!errors.email}
+                        helperText={touched.email && errors.email}
                         size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
                         id="email"
                         label={t("email")}
-                        name={t("email")}
+                        name="email"
                       />
                       <TextField
-                        error={!!errors.password}
-                        helperText={errors.password}
+                        error={touched.password && !!errors.password}
+                        helperText={touched.password && errors.password}
                         size="small"
                         margin="dense"
                         fullWidth
                         onChange={handleChange}
                         label={t("password")}
-                        name={t("password")}
+                        name="password"
                         type={showPassword ? "text" : "password"}
                         id="password"
                         autoComplete="current-password"
