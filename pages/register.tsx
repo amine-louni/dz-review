@@ -58,20 +58,14 @@ const Register: React.FunctionComponent = () => {
   };
 
   const validationSchema = yup.object({
-    userName: yup.string().required("Username is required"),
-    firstName: yup.string().required("firstName is required"),
-    lastName: yup.string().required("lastName is required"),
-    email: yup
-      .string()
-      .email("Enter a valid email")
-      .required("Email is required"),
-    password: yup
-      .string()
-      .min(8, "Password should be of minimum 8 characters length")
-      .required("Password is required"),
-    day: yup.number().required("day is required"),
-    month: yup.number().required("month is required"),
-    year: yup.number().required("year is required"),
+    userName: yup.string().required(t("required")),
+    firstName: yup.string().required(t("required")),
+    lastName: yup.string().required(t("required")),
+    email: yup.string().email(t("invalid-email")).required(t("required")),
+    password: yup.string().min(8, t("too-short")).required(t("required")),
+    day: yup.number().required(t("required")),
+    month: yup.number().required(t("required")),
+    year: yup.number().required(t("required")),
   });
 
   const handleRegister = async (values: FormikValues) => {
