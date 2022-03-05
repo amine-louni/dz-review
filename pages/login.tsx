@@ -30,6 +30,7 @@ const Login: React.FunctionComponent = () => {
   const [apiError, setApiError] = useState(null);
   const router = useRouter();
   const { t } = useTranslation("auth");
+  const { t: tCommon } = useTranslation("common");
 
   const initialValues = {
     email: "",
@@ -181,7 +182,7 @@ const Login: React.FunctionComponent = () => {
 
                       <Grid container>
                         <Grid item xs>
-                          <Link href="#" variant="caption">
+                          <Link href="/register" variant="caption">
                             {t("dont-have-account")}
                           </Link>
                         </Grid>
@@ -263,7 +264,7 @@ const Login: React.FunctionComponent = () => {
                 margin-bottom: 1rem;
               `}
             >
-              We are waiting for your to share your review 🤞
+              {tCommon("slug")}
             </Typography>
           </Box>
           <Box

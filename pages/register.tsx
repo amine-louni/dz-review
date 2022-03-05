@@ -45,6 +45,7 @@ const Register: React.FunctionComponent = () => {
   const [apiError, setApiError] = useState<IApiError | null>(null);
   const router = useRouter();
   const { t } = useTranslation("auth");
+  const { t: tCommon } = useTranslation("common");
   const initialValues = {
     userName: "",
     firstName: "",
@@ -348,7 +349,7 @@ const Register: React.FunctionComponent = () => {
                       {/* DOB composer */}
                       <Grid container>
                         <Grid item xs>
-                          <Link href="#" variant="caption">
+                          <Link href="/login" variant="caption">
                             {t("have-account")}
                           </Link>
                         </Grid>
@@ -425,7 +426,7 @@ const Register: React.FunctionComponent = () => {
                 margin-bottom: 1rem;
               `}
             >
-              We are waiting for your to share your review 🤞
+              {tCommon("slug")}
             </Typography>
           </Box>
           <Box
