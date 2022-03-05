@@ -4,8 +4,6 @@ export function requireAuthentication(gssp: GetServerSideProps) {
     return async (context: GetServerSidePropsContext) => {
         try {
             const jid = context.req.cookies.jid
-            console.log(jid, 'b jid yaw')
-
             if (!jid) {
                 // Redirect to login page
                 return {

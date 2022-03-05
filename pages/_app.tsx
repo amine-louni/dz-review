@@ -12,6 +12,7 @@ import {
 import { Theme as MaterialUITheme } from "@mui/material";
 import { Provider as ReduxProvider } from "react-redux";
 import store from "../redux/store";
+import { useEffect, useState } from "react";
 
 // Re-declare the emotion theme to have the properties of the MaterialUiTheme
 declare module "@emotion/react" {
@@ -26,14 +27,15 @@ interface MyAppProps extends AppProps {
 }
 
 export default function MyApp(props: MyAppProps) {
-  const isRTL = props.router.locale === "ar";
-  const {
-    Component,
-    emotionCache = isRTL ? clientSideEmotionCacheRTL : clientSideEmotionCache,
-    pageProps,
-  } = props;
+  const [isRTL, setIsRTL] = useState(props.router.locale === "ar");
+
+  useEffect(() => {
+    setIsRTL(props.router.locale === "ar");
+    document.documentElement.dir = props.router.locale === "ar" ? "rtl" : "ltr";
+  }, [props.router.locale]);
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
-    <CacheProvider value={emotionCache}>
+    <CacheProvider value={isRTL ? clientSideEmotionCacheRTL : emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
