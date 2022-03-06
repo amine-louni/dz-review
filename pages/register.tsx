@@ -28,6 +28,7 @@ import useTranslation from "next-translate/useTranslation";
 import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
 import { IApiError } from "../@types";
+import { NextPage } from "next";
 
 const generateYears = (startYear: number = 1970): number[] => {
   var currentYear = new Date().getFullYear(),
@@ -73,7 +74,7 @@ const Footer: React.FC = () => {
     </Box>
   );
 };
-const Register: React.FunctionComponent = () => {
+const Register: NextPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState<IApiError | null>(null);
@@ -104,6 +105,7 @@ const Register: React.FunctionComponent = () => {
 
   const handleRegister = async (values: FormikValues) => {
     try {
+      setApiError(null);
       const res = await auth.post("/register", {
         ...values,
         dob: `${values.year}-${values.month}-${values.day}`,

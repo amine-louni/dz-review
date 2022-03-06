@@ -23,8 +23,9 @@ import { Alert } from "@mui/material";
 import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
+import { NextPage } from "next";
 
-const Login: React.FunctionComponent = () => {
+const Login: NextPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
   const [apiError, setApiError] = useState(null);
@@ -44,6 +45,7 @@ const Login: React.FunctionComponent = () => {
 
   const handleLogin = async ({ email, password }: FormikValues) => {
     try {
+      setApiError(null);
       const res = await auth.post("/login", {
         email,
         password,
@@ -123,6 +125,7 @@ const Login: React.FunctionComponent = () => {
                           {apiError}
                         </Alert>
                       )}
+
                       <TextField
                         error={!!errors.email}
                         helperText={errors.email}
@@ -135,6 +138,7 @@ const Login: React.FunctionComponent = () => {
                         name="email"
                         autoFocus
                       />
+
                       <TextField
                         error={!!errors.password}
                         helperText={errors.password}
