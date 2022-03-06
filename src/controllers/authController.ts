@@ -11,6 +11,7 @@ import {
   BAD_AUTH,
   BAD_INPUT,
   EMAIL_ALREADY_VALIDATED,
+  EMAIL_NOT_FOUND,
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
   INVALID_TOKEN,
   NOT_FOUND,
@@ -151,7 +152,7 @@ export const forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
   const theUser = await User.findOne({ email: req.body.email });
   if (!theUser) {
-    return next(new AppError("user not found", 404, NOT_FOUND));
+    return next(new AppError("user not found", 404, EMAIL_NOT_FOUND));
   }
 
   // 2) Generate the random reset token
