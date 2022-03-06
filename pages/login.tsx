@@ -131,7 +131,7 @@ const Login: React.FunctionComponent = () => {
                         onChange={handleChange}
                         fullWidth
                         id="email"
-                        label="Email"
+                        label={t("email")}
                         name="email"
                         autoFocus
                       />
@@ -143,7 +143,7 @@ const Login: React.FunctionComponent = () => {
                         fullWidth
                         onChange={handleChange}
                         name="password"
-                        label="Password"
+                        label={t("password")}
                         type={showPassword ? "text" : "password"}
                         id="password"
                         autoComplete="current-password"
@@ -283,11 +283,7 @@ const Login: React.FunctionComponent = () => {
 export default Login;
 
 export const getServerSideProps = authed(async (_context) => {
-  // Your normal `getServerSideProps` code here
-  const email = "test";
   return {
-    props: {
-      email,
-    },
+    props: {},
   };
 });
