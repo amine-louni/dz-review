@@ -11,16 +11,17 @@ import { useTheme } from "@mui/system";
 import { Formik, FormikValues, Form } from "formik";
 import { useState } from "react";
 import { Alert } from "@mui/material";
+import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import Link from "../src/Link";
 import { auth } from "../api";
-import { useRouter } from "next/router";
 
-const ForgotPassword: NextPage = () => {
+const PinResetPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
+  const router = useRouter();
   const { t } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
-  const router = useRouter();
+
   const initialValues = {
     email: "",
   };
@@ -29,15 +30,15 @@ const ForgotPassword: NextPage = () => {
     email: yup.string().email(t("invalid-email")).required(t("required")),
   });
 
-  const handleRequest = async ({ email }: FormikValues) => {
+  const handleRequest = async ({ email, password }: FormikValues) => {
     try {
       setApiError(null);
-      const res = await auth.patch("/forgot-password", {
+      const res = await auth.patch("/reset-password", {
         email,
       });
 
       if (res.data.status === "success") {
-        router.push("/pin-reset-password");
+        console.log("navigate to enter pin");
       }
     } catch (error: any) {
       setApiError(t(error?.response.data.code));
@@ -143,4 +144,4 @@ const ForgotPassword: NextPage = () => {
   );
 };
 
-export default ForgotPassword;
+export default PinResetPassword;

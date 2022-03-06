@@ -5,6 +5,7 @@
     "*": ["common"],
     "/login": ["auth"],
     "/register": ["auth"],
-    "/forgot-password": ["auth"]
+    "/forgot-password": ["auth"],
+    "/pin-reset-password": ["auth"]
   }
 }
