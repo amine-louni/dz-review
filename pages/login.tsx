@@ -45,7 +45,6 @@ const Login: NextPage = () => {
 
   const handleLogin = async ({ email, password }: FormikValues) => {
     try {
-      setApiError(null);
       const res = await auth.post("/login", {
         email,
         password,

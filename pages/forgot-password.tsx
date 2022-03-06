@@ -15,11 +15,14 @@ import useTranslation from "next-translate/useTranslation";
 import Link from "../src/Link";
 import { auth } from "../api";
 import { useRouter } from "next/router";
+import { useAppDispatch } from "../redux/hooks";
+import { setToast } from "../redux/slices/toastSlice";
 
 const ForgotPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
   const { t } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const initialValues = {
     email: "",
@@ -37,7 +40,16 @@ const ForgotPassword: NextPage = () => {
       });
 
       if (res.data.status === "success") {
-        router.push("/pin-reset-password");
+        dispatch(
+          setToast({
+            message: t("redirect-to-pin"),
+            autoHideDuration: 5000,
+            open: true,
+          })
+        );
+        setTimeout(() => {
+          router.push(`/pin-reset-password?target=${email}`);
+        }, 5000);
       }
     } catch (error: any) {
       setApiError(t(error?.response.data.code));

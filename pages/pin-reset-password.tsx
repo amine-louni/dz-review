@@ -18,7 +18,7 @@ import { auth } from "../api";
 
 const PinResetPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
-  const router = useRouter();
+  const { query } = useRouter();
   const { t } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
 
@@ -78,11 +78,13 @@ const PinResetPassword: NextPage = () => {
                 padding: { xs: 4 },
               }}
             >
-              <Typography component="h1" variant="h3" marginBottom={1}>
-                {t("forgot-password")}
+              <Typography component="h1" variant="h4" marginBottom={1}>
+                {t("reset-password")}
               </Typography>
               <Typography component="p" variant="caption" marginBottom={2}>
-                {t("forgot-password-description")}
+                {t("reset-password-description", {
+                  email: query?.target,
+                })}
               </Typography>
               <Box component="main" sx={{ mt: 1 }}>
                 <Formik
