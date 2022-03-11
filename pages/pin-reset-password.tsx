@@ -18,6 +18,7 @@ import { auth } from "../api";
 import { useAppDispatch } from "../redux/hooks";
 import { setToast } from "../redux/slices/toastSlice";
 import { setUser } from "../redux/slices/userSlice";
+import { authed } from "../utils/authed";
 
 const PinResetPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
@@ -200,3 +201,8 @@ const PinResetPassword: NextPage = () => {
 };
 
 export default PinResetPassword;
+export const getServerSideProps = authed(async (_context) => {
+  return {
+    props: {},
+  };
+});

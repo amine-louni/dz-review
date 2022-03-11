@@ -17,6 +17,7 @@ import { auth } from "../api";
 import { useRouter } from "next/router";
 import { useAppDispatch } from "../redux/hooks";
 import { setToast } from "../redux/slices/toastSlice";
+import { authed } from "../utils/authed";
 
 const ForgotPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
@@ -169,3 +170,9 @@ const ForgotPassword: NextPage = () => {
 };
 
 export default ForgotPassword;
+
+export const getServerSideProps = authed(async (_context) => {
+  return {
+    props: {},
+  };
+});
