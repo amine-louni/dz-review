@@ -233,10 +233,8 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
   await theUser.save()
 
-  res.status(201).json({
-    status: "success",
-    data: theUser,
-  });
+  createSendToken(theUser, 201, req, res)
+
 });
 
 export const updatePassword = catchAsync(async (req, res, next) => {
