@@ -15,30 +15,58 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import Link from "../src/Link";
 import { auth } from "../api";
+import { useAppDispatch } from "../redux/hooks";
+import { setToast } from "../redux/slices/toastSlice";
+import { setUser } from "../redux/slices/userSlice";
 
 const PinResetPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
+  const [success, setSuccess] = useState(false);
+  const router = useRouter();
   const { query } = useRouter();
+  const dispatch = useAppDispatch();
+
+  const { target: email } = query;
   const { t } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
 
   const initialValues = {
-    email: "",
+    pin: "",
+    password: "",
+    passwordConfirm: "",
   };
 
   const validationSchema = yup.object({
-    email: yup.string().email(t("invalid-email")).required(t("required")),
+    pin: yup.string().required(t("required")),
+    password: yup.string().required(t("required")).min(2, t("too-short")),
+    passwordConfirm: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 
-  const handleRequest = async ({ email, password }: FormikValues) => {
+  const handleRequest = async ({ pin, password }: FormikValues) => {
     try {
       setApiError(null);
-      const res = await auth.patch("/reset-password", {
+      const { data } = await auth.patch("/reset-password", {
         email,
+        pin,
+        password,
       });
 
-      if (res.data.status === "success") {
-        console.log("navigate to enter pin");
+      if (data.status === "success") {
+        setSuccess(true);
+        dispatch(setUser(data));
+        dispatch(
+          setToast({
+            message: t("password-changed"),
+            autoHideDuration: 5000,
+            open: true,
+          })
+        );
+
+        setTimeout(() => {
+          router.push(`${router.locale}/`);
+        }, 1000);
       }
     } catch (error: any) {
       setApiError(t(error?.response.data.code));
@@ -83,7 +111,7 @@ const PinResetPassword: NextPage = () => {
               </Typography>
               <Typography component="p" variant="caption" marginBottom={2}>
                 {t("reset-password-description", {
-                  email: query?.target,
+                  email: email,
                 })}
               </Typography>
               <Box component="main" sx={{ mt: 1 }}>
@@ -106,27 +134,52 @@ const PinResetPassword: NextPage = () => {
                       )}
 
                       <TextField
-                        error={!!errors.email}
-                        helperText={errors.email}
+                        error={!!errors.pin}
+                        helperText={errors.pin}
                         size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
-                        id="email"
-                        label={t("email")}
-                        name="email"
-                        autoFocus
+                        id="pin"
+                        label={t("pin")}
+                        name="pin"
                       />
 
-                      <Button
-                        disabled={isSubmitting}
-                        type="submit"
+                      <TextField
+                        error={!!errors.password}
+                        helperText={errors.password}
+                        size="small"
+                        margin="dense"
+                        onChange={handleChange}
                         fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                      >
-                        {tCommon("submit")}
-                      </Button>
+                        id="password"
+                        label={t("password")}
+                        name="password"
+                      />
+
+                      <TextField
+                        error={!!errors.passwordConfirm}
+                        helperText={errors.passwordConfirm}
+                        size="small"
+                        margin="dense"
+                        onChange={handleChange}
+                        fullWidth
+                        id="passwordConfirm"
+                        label={t("password-confirm")}
+                        name="passwordConfirm"
+                      />
+
+                      {!success ? (
+                        <Button
+                          disabled={isSubmitting}
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          {tCommon("submit")}
+                        </Button>
+                      ) : null}
                     </Form>
                   )}
                 </Formik>

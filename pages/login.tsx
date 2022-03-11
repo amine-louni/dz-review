@@ -184,7 +184,7 @@ const Login: NextPage = () => {
                           </Link>
                         </Grid>
                         <Grid item>
-                          <Link href="#" variant="caption">
+                          <Link href="/forgot-password" variant="caption">
                             {t("forgot-password")}
                           </Link>
                         </Grid>

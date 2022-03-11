@@ -20,6 +20,7 @@ import { setToast } from "../redux/slices/toastSlice";
 
 const ForgotPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
+  const [success, setSucesss] = useState(false);
   const { t } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
   const dispatch = useAppDispatch();
@@ -34,12 +35,14 @@ const ForgotPassword: NextPage = () => {
 
   const handleRequest = async ({ email }: FormikValues) => {
     try {
+      setSucesss(true);
       setApiError(null);
       const res = await auth.patch("/forgot-password", {
         email,
       });
 
       if (res.data.status === "success") {
+        setSucesss(true);
         dispatch(
           setToast({
             message: t("redirect-to-pin"),
@@ -47,9 +50,17 @@ const ForgotPassword: NextPage = () => {
             open: true,
           })
         );
+
         setTimeout(() => {
           router.push(`/pin-reset-password?target=${email}`);
-        }, 5000);
+          dispatch(
+            setToast({
+              message: "",
+              autoHideDuration: 5000,
+              open: false,
+            })
+          );
+        }, 1000);
       }
     } catch (error: any) {
       setApiError(t(error?.response.data.code));
@@ -127,15 +138,17 @@ const ForgotPassword: NextPage = () => {
                         autoFocus
                       />
 
-                      <Button
-                        disabled={isSubmitting}
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                      >
-                        {tCommon("submit")}
-                      </Button>
+                      {!success ? (
+                        <Button
+                          disabled={isSubmitting}
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                        >
+                          {tCommon("submit")}
+                        </Button>
+                      ) : null}
                     </Form>
                   )}
                 </Formik>
