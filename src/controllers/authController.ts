@@ -225,15 +225,17 @@ export const resetPassword = catchAsync(async (req, res, next) => {
 
   const hashed_password = await crypt.hash(password, 12);
 
-  const updatedUser = User.update(theUser.uuid, {
-    password: hashed_password,
-    passwordResetPin: undefined,
-    passwordResetPinExpiresAt: undefined,
-    passwordChangedAt: new Date(),
-  });
+
+  theUser.password = hashed_password;
+  theUser.passwordResetPin = null;
+  theUser.passwordResetPinExpiresAt = null;
+  theUser.passwordChangedAt = new Date();
+
+  await theUser.save()
 
   res.status(201).json({
-    user: updatedUser,
+    status: "success",
+    data: theUser,
   });
 });
 
