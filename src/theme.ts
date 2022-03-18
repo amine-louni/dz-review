@@ -9,7 +9,9 @@ const theme = createTheme({
       main: '#12398F',
     },
     secondary: {
+      light: "#ffd5cc",
       main: '#DB4123',
+
     },
     grey: {
       "200": "#F4F5F4",
@@ -49,9 +51,14 @@ const theme = createTheme({
     },
     h6: {
       fontSize: 18
+    },
+    button: {
+      textTransform: 'none',
+
     }
   },
   components: {
+
     MuiFormHelperText: {
       styleOverrides: {
         root: {

@@ -3,6 +3,7 @@
   "defaultLocale": "en",
   "pages": {
     "*": ["common"],
+    "/": ["auth"],
     "/login": ["auth"],
     "/register": ["auth"],
     "/forgot-password": ["auth"],
