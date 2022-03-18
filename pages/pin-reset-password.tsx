@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import { useTheme } from "@mui/system";
 import { Formik, FormikValues, Form } from "formik";
 import { useState } from "react";
-import { Alert } from "@mui/material";
+import { Alert, IconButton, InputAdornment } from "@mui/material";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import Link from "../src/Link";
@@ -19,10 +19,12 @@ import { useAppDispatch } from "../redux/hooks";
 import { setToast } from "../redux/slices/toastSlice";
 import { setUser } from "../redux/slices/userSlice";
 import { authed } from "../utils/authed";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const PinResetPassword: NextPage = () => {
   const [apiError, setApiError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { query } = useRouter();
   const dispatch = useAppDispatch();
@@ -45,6 +47,9 @@ const PinResetPassword: NextPage = () => {
       .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
 
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
   const handleRequest = async ({ pin, password }: FormikValues) => {
     try {
       setApiError(null);
@@ -151,23 +156,50 @@ const PinResetPassword: NextPage = () => {
                         helperText={errors.password}
                         size="small"
                         margin="dense"
-                        onChange={handleChange}
                         fullWidth
-                        id="password"
-                        label={t("password")}
+                        onChange={handleChange}
                         name="password"
+                        label={t("password")}
+                        type={showPassword ? "text" : "password"}
+                        id="password"
+                        autoComplete="current-password"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              position="end"
+                              css={css`
+                                background: ${theme.palette.grey["200"]};
+                              `}
+                            >
+                              <IconButton
+                                css={css`
+                                  background: ${theme.palette.grey["200"]};
+                                `}
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                edge="end"
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
                       />
-
                       <TextField
                         error={!!errors.passwordConfirm}
                         helperText={errors.passwordConfirm}
                         size="small"
                         margin="dense"
-                        onChange={handleChange}
                         fullWidth
-                        id="passwordConfirm"
-                        label={t("password-confirm")}
+                        onChange={handleChange}
                         name="passwordConfirm"
+                        label={t("password-confirm")}
+                        type={showPassword ? "text" : "password"}
+                        id="passwordConfirm"
                       />
 
                       {!success ? (
