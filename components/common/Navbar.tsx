@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useAppSelector } from "../../redux/hooks";
 import useTranslation from "next-translate/useTranslation";
 import LanguageMenu from "./LanguageMenu";
+import Link from "../../src/Link";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -56,7 +57,7 @@ const Navbar = () => {
             Dz Review 🔊
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -85,11 +86,28 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link href="/login">
+                  <Button
+                    sx={{ marginRight: 1 }}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    {tAuth("sign-in")}
+                  </Button>
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link href="/register">
+                  <Button
+                    sx={{ marginRight: 1 }}
+                    variant="contained"
+                    color="primary"
+                  >
+                    {tAuth("sign-up")}
+                  </Button>
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -105,20 +123,30 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             {!user.accessToken && (
               <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Button
-                  sx={{ marginRight: 1 }}
-                  variant="contained"
-                  color="secondary"
+                <Link
+                  sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                  href="/login"
                 >
-                  {tAuth("sign-in")}
-                </Button>
-                <Button
-                  sx={{ marginRight: 1 }}
-                  variant="contained"
-                  color="info"
+                  <Button
+                    sx={{ marginRight: 1 }}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    {tAuth("sign-in")}
+                  </Button>
+                </Link>
+                <Link
+                  sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+                  href="/register"
                 >
-                  {tAuth("sign-up")}
-                </Button>
+                  <Button
+                    sx={{ marginRight: 1 }}
+                    variant="contained"
+                    color="info"
+                  >
+                    {tAuth("sign-up")}
+                  </Button>
+                </Link>
                 <LanguageMenu />
               </Box>
             )}
