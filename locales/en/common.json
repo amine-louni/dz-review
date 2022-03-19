@@ -1,4 +1,14 @@
 {
   "slug": "We are waiting for your to share your review 🤞",
-  "submit": "submit"
+  "submit": "submit",
+  "slug-description": "User Reviews and Recommendations of Best Restaurants, Shopping, Food, Entertainment, Things to Do",
+  "select-domain": "Select a domain",
+  "select-wilaya": "Select a wilaya",
+  "search-now": "Search now",
+  "restaurant": "Restaurant",
+  "mall": "Mall",
+  "tea-room": "Tea room",
+  "fast-food": "Fast food",
+  "travel-agency": "Travel agency",
+  "hotel": "Hotel"
 }

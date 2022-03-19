@@ -15,6 +15,7 @@ import { useAppSelector } from "../../redux/hooks";
 import useTranslation from "next-translate/useTranslation";
 import LanguageMenu from "./LanguageMenu";
 import Link from "../../src/Link";
+import theme from "../../src/theme";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -45,16 +46,21 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="absolute" color="transparent" elevation={0}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              color: "white",
+              fontWeight: "600",
+            }}
           >
-            Dz Review 🔊
+            Algerian review
           </Typography>
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -130,7 +136,7 @@ const Navbar = () => {
                   <Button
                     sx={{ marginRight: 1 }}
                     variant="contained"
-                    color="secondary"
+                    color="inherit"
                   >
                     {tAuth("sign-in")}
                   </Button>
@@ -142,7 +148,7 @@ const Navbar = () => {
                   <Button
                     sx={{ marginRight: 1 }}
                     variant="contained"
-                    color="info"
+                    color="primary"
                   >
                     {tAuth("sign-up")}
                   </Button>
@@ -151,16 +157,18 @@ const Navbar = () => {
               </Box>
             )}
             {user.accessToken && (
-              <>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography
+                  variant="subtitle1"
+                  sx={{ color: theme.palette.common.white }}
+                >{`${user?.userData?.firstName} ${user?.userData?.lastName}`}</Typography>
                 <Tooltip title="Open settings">
                   <Typography
                     onClick={handleOpenUserMenu}
-                    sx={{ p: 0, cursor: "pointer" }}
+                    sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
                   >
-                    {console.log(user)}
-                    {user?.userData?.firstName} {user?.userData?.lastName}
                     <Avatar
-                      alt="Remy Sharp"
+                      alt={`${user?.userData?.firstName} ${user?.userData?.lastName}`}
                       src="/static/images/avatar/2.jpg"
                     />
                   </Typography>
@@ -187,7 +195,7 @@ const Navbar = () => {
                     </MenuItem>
                   ))}
                 </Menu>
-              </>
+              </Box>
             )}
           </Box>
         </Toolbar>

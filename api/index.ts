@@ -8,5 +8,11 @@ export const auth = Axios.create({
     withCredentials: true
 })
 
+export const domain = Axios.create({
+    baseURL: `${API_URL}/domains/`,
+    headers: { "Content-type": "application/json" },
+    withCredentials: true
+})
+
 
 

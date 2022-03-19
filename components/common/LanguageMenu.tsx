@@ -5,7 +5,8 @@ import Box from "@mui/material/Box";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IoLanguage } from "react-icons/io5";
-import useTranslation from "next-translate/useTranslation";
+
+import { useTheme } from "@emotion/react";
 
 type languageTypes = { value: string; displayValue: string };
 const languages = [
@@ -17,8 +18,8 @@ const languages = [
 const LanguageMenu = () => {
   const [language, setLanguage] = useState<languageTypes>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { lang } = useTranslation();
   const { locale, route, push } = useRouter();
+  const theme = useTheme();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,17 +37,16 @@ const LanguageMenu = () => {
         (oneLanguage) => oneLanguage.value === locale
       )[0].displayValue,
     });
-    console.log(route, "route initial");
   }, [locale]);
 
   useEffect(() => {
     push(route, route, { locale: language?.value });
   }, [language]);
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 120, color: theme.palette?.common.white }}>
       <Button
         startIcon={<IoLanguage />}
-        color="info"
+        color="inherit"
         id="language-button"
         aria-controls={open ? "language-menu" : undefined}
         aria-haspopup="true"
@@ -66,7 +66,10 @@ const LanguageMenu = () => {
         }}
       >
         {languages.map((oneLanguage) => (
-          <MenuItem onClick={() => handleClose(oneLanguage)}>
+          <MenuItem
+            key={oneLanguage.value}
+            onClick={() => handleClose(oneLanguage)}
+          >
             {oneLanguage.displayValue}
           </MenuItem>
         ))}

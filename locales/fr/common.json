@@ -1,4 +1,14 @@
 {
   "slug": "Nous attendons que vous partagiez votre avis 🤞",
-  "submit": "Envoyer"
+  "submit": "Envoyer",
+  "slug-description": "Avis d’utilisateurs et recommandations de Meilleurs restaurants, Shopping, Nourriture, Divertissement, Choses à faire",
+  "select-domain": "Sélectionner un domaine",
+  "select-wilaya": "Sélectionnez une wilaya",
+  "search-now": "Rechercher maintenant",
+  "restaurant": "Restaurant",
+  "mall": "Centre commercial",
+  "tea-room": "Salon de thé",
+  "fast-food": "Fast food",
+  "travel-agency": "Agence de voyages",
+  "hotel": "Hôtel"
 }

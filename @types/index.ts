@@ -13,7 +13,13 @@ export interface IUser {
     profilePictureUrl: string;
 }
 
-
+export interface IDomain {
+    "uuid": string,
+    "name": string,
+    "archived": boolean,
+    "createdAt": string,
+    "updatedAt": string
+}
 
 
 export interface Error {
