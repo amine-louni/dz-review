@@ -7,13 +7,27 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Rating } from "@mui/material";
 import { useTheme } from "@mui/system";
 
-const ReviewCard = () => {
+interface IReviewCard {
+  reviewerFullName: string;
+  createdAt: string;
+  image: string;
+  companyName: string;
+  avgRating: number;
+  text: string;
+}
+
+const ReviewCard = ({
+  reviewerFullName,
+  createdAt,
+  image,
+  companyName,
+  avgRating,
+  text,
+}: IReviewCard) => {
   const theme = useTheme();
   return (
     <Card
@@ -26,29 +40,22 @@ const ReviewCard = () => {
             R
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={reviewerFullName}
+        subheader={createdAt}
       />
       <CardMedia
         component="img"
         height="194"
         image="/png/review-image-sample.png"
-        alt="Paella dish"
+        alt={companyName}
       />
       <CardContent>
         <Typography variant="h6" gutterBottom sx={{ fontWeight: "600" }}>
-          Service title
+          {companyName}
         </Typography>
         <Rating name="read-only" value={4} readOnly />
         <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {text.substring(0, 140)}
         </Typography>
       </CardContent>
     </Card>
