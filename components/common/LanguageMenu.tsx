@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
@@ -29,7 +29,7 @@ const LanguageMenu = () => {
     setAnchorEl(null);
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!locale) return;
     setLanguage({
       value: locale,

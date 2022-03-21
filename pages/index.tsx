@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Link from "../src/Link";
 import Navbar from "../components/common/Navbar";
 import Hero from "../components/Hero";
+import Recent from "../components/Recent";
 
 const Home: NextPage = () => {
   return (
@@ -12,6 +13,7 @@ const Home: NextPage = () => {
       <Navbar />
 
       <Hero />
+      <Recent />
     </Box>
   );
 };
