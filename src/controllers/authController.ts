@@ -451,3 +451,18 @@ export const refreshAccessToken = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, req, res)
 }
 )
+
+
+export const logoutHandler = catchAsync(async (req, res) => {
+  res.cookie("jid", undefined, {
+    expires: new Date(0),
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+    httpOnly: true,
+  });
+
+  res.json({
+    status: 'success',
+    data: null
+
+  })
+})
