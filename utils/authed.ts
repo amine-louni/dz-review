@@ -1,4 +1,5 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { auth } from "../api";
 
 export function authed(gssp: GetServerSideProps) {
     return async (context: GetServerSidePropsContext) => {
@@ -25,4 +26,16 @@ export function authed(gssp: GetServerSideProps) {
 
         return await gssp(context); // Continue on to call `getServerSideProps` logic
     }
+}
+
+
+export const refreshUserToken = async () => {
+    try {
+        const response = await auth.get('/refresh-token');
+        return response.data
+    } catch (error) {
+        console.error(error)
+    }
+
+
 }

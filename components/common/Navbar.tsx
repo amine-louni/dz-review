@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,13 +11,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import useTranslation from "next-translate/useTranslation";
 import LanguageMenu from "./LanguageMenu";
 import Link from "../../src/Link";
 import theme from "../../src/theme";
+import { refreshUserToken } from "../../utils/authed";
+import { setUser } from "../../redux/slices/userSlice";
 
-const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Navbar = () => {
@@ -28,6 +29,7 @@ const Navbar = () => {
     null
   );
 
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state);
   const { t: tAuth } = useTranslation("auth");
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -45,6 +47,17 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  useEffect(() => {
+    refreshUserToken().then((data) => {
+      dispatch(setUser(data));
+    });
+    const interval = setInterval(() => {
+      refreshUserToken().then((data) => {
+        dispatch(setUser(data));
+      });
+    }, 600000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <AppBar position="absolute" color="transparent" elevation={0}>
       <Container maxWidth="lg">

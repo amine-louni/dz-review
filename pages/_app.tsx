@@ -34,6 +34,7 @@ export default function MyApp(props: MyAppProps) {
     setIsRTL(props.router.locale === "ar");
     document.documentElement.dir = props.router.locale === "ar" ? "rtl" : "ltr";
   }, [props.router.locale]);
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   return (
     <CacheProvider value={isRTL ? clientSideEmotionCacheRTL : emotionCache}>

@@ -91,7 +91,9 @@ const Hero = () => {
               inputProps={{ "aria-label": t("select-domain") }}
             >
               {allDomains?.map((oneDomain) => (
-                <MenuItem value={oneDomain.uuid}>{t(oneDomain.name)}</MenuItem>
+                <MenuItem key={oneDomain.uuid} value={oneDomain.uuid}>
+                  {t(oneDomain.name)}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -109,7 +111,9 @@ const Hero = () => {
               inputProps={{ "aria-label": t("select-wilaya") }}
             >
               {getAllWilayas().map((oneWilaya) => (
-                <MenuItem value={oneWilaya}>{oneWilaya}</MenuItem>
+                <MenuItem key={oneWilaya} value={oneWilaya}>
+                  {oneWilaya}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
