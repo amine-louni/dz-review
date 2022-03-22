@@ -2,12 +2,9 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Rating } from "@mui/material";
 import { useTheme } from "@mui/system";
 
@@ -29,10 +26,19 @@ const ReviewCard = ({
   text,
 }: IReviewCard) => {
   const theme = useTheme();
+
   return (
     <Card
       variant="outlined"
-      sx={{ backgroundColor: theme.palette.grey["200"], cursor: "pointer" }}
+      sx={{
+        backgroundColor: theme.palette.grey["200"],
+        cursor: "pointer",
+        marginRight: "1rem",
+        transition: "all .3s ease-in-out",
+        ":hover": {
+          transform: "translateY(3px)",
+        },
+      }}
     >
       <CardHeader
         avatar={
@@ -53,9 +59,9 @@ const ReviewCard = ({
         <Typography variant="h6" gutterBottom sx={{ fontWeight: "600" }}>
           {companyName}
         </Typography>
-        <Rating name="read-only" value={4} readOnly />
+        <Rating name="read-only" value={avgRating} readOnly />
         <Typography variant="body2" color="text.secondary">
-          {text.substring(0, 140)}
+          {text?.substring(0, 100)} {text?.length > 100 && "..."}
         </Typography>
       </CardContent>
     </Card>

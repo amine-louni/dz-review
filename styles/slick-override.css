@@ -1,0 +1,46 @@
+/* REACT SLICK ARROW CUSTOM CSS */
+.react__slick__slider__parent {
+  position: relative;
+}
+
+.slick-track {
+  display: flex !important;
+  align-items: center;
+}
+
+.slick-slide {
+  height: auto;
+}
+.react__slick__slider__parent .slick-prev,
+.react__slick__slider__parent .slick-next {
+  position: absolute;
+  top: 50%;
+  height: 4rem;
+  width: 4rem;
+  padding: 20px;
+}
+.react__slick__slider__parent .slick-prev {
+  border-radius: 50%;
+  color: #f5f6f7 !important;
+  background-color: #12398f;
+
+  z-index: 2;
+}
+.react__slick__slider__parent .slick-next {
+  border-radius: 50%;
+  color: #f5f6f7 !important;
+  background-color: #12398f;
+
+  z-index: 2;
+}
+.react__slick__slider__parent .slick-next:hover {
+  background-color: #051f55;
+}
+.react__slick__slider__parent .slick-prev:hover {
+  background-color: #051f55;
+}
+
+.react__slick__slider__parent .slick-prev:before,
+.slick-next:before {
+  color: #12398f !important;
+}

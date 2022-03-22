@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import useTranslation from "next-translate/useTranslation";
-import { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 import { IDomain } from "../@types";
 import { domain } from "../api";
