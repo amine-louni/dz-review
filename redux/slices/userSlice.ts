@@ -26,8 +26,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<payloadType>) => {
-            state.accessToken = action.payload.accessToken;
-            state.userData = action.payload.data
+            state.accessToken = action.payload?.accessToken;
+            state.userData = action.payload?.data
         },
     },
 })

@@ -36,6 +36,4 @@ export const refreshUserToken = async () => {
     } catch (error) {
         console.error(error)
     }
-
-
 }

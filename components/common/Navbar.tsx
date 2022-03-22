@@ -18,6 +18,7 @@ import Link from "../../src/Link";
 import theme from "../../src/theme";
 import { refreshUserToken } from "../../utils/authed";
 import { setUser } from "../../redux/slices/userSlice";
+import { useAuth } from "../../hooks/useAuth";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -58,6 +59,8 @@ const Navbar = () => {
     }, 600000);
     return () => clearInterval(interval);
   }, []);
+
+  const { logoutHandler } = useAuth();
   return (
     <AppBar position="absolute" color="transparent" elevation={0}>
       <Container maxWidth="lg">
@@ -202,11 +205,9 @@ const Navbar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </MenuItem>
-                  ))}
+                  <MenuItem onClick={logoutHandler}>
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>
                 </Menu>
               </Box>
             )}
