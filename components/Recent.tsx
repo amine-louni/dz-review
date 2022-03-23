@@ -5,11 +5,12 @@ import { Button, Container, Typography } from "@mui/material";
 
 import { Box } from "@mui/system";
 import ReviewCard from "./ReviewCard";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Slider, { Settings } from "react-slick";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { useRouter } from "next/router";
 
 const Recent = () => {
+  const { locale } = useRouter();
   var settings: Settings = {
     dots: false,
     infinite: false,
@@ -17,8 +18,8 @@ const Recent = () => {
     slidesToShow: 2.9,
     slidesToScroll: 2,
 
-    nextArrow: <ChevronRight />,
-    prevArrow: <ChevronLeft />,
+    nextArrow: locale === "ar" ? <ChevronLeft /> : <ChevronRight />,
+    prevArrow: locale === "ar" ? <ChevronRight /> : <ChevronLeft />,
     className: "react__slick__slider__parent",
   };
 

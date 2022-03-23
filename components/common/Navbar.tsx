@@ -20,8 +20,6 @@ import { refreshUserToken } from "../../utils/authed";
 import { setUser } from "../../redux/slices/userSlice";
 import { useAuth } from "../../hooks/useAuth";
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -185,7 +183,7 @@ const Navbar = () => {
                   >
                     <Avatar
                       alt={`${user?.userData?.firstName} ${user?.userData?.lastName}`}
-                      src="/static/images/avatar/2.jpg"
+                      src={user?.userData?.profilePictureUrl}
                     />
                   </Typography>
                 </Tooltip>
