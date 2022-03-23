@@ -8,9 +8,11 @@ import ReviewCard from "./ReviewCard";
 import Slider, { Settings } from "react-slick";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 const Recent = () => {
   const { locale } = useRouter();
+  const { t } = useTranslation("common");
   var settings: Settings = {
     dots: false,
     infinite: false,
@@ -20,19 +22,20 @@ const Recent = () => {
 
     nextArrow: locale === "ar" ? <ChevronLeft /> : <ChevronRight />,
     prevArrow: locale === "ar" ? <ChevronRight /> : <ChevronLeft />,
+
     className: "react__slick__slider__parent",
   };
 
   return (
     <Box className="recent" sx={{ paddingY: "4rem" }}>
       <Container>
-        <Typography variant="h2">Recent activity</Typography>
+        <Typography variant="h2">{t("recent-activities")}</Typography>
         <Typography
           variant="subtitle2"
           sx={{ marginBottom: "2rem" }}
           color="text.secondary"
         >
-          People can share their reviews and add photos
+          {t("recent-activities-description")}
         </Typography>
         <Slider {...settings}>
           <ReviewCard
@@ -70,7 +73,7 @@ const Recent = () => {
         </Slider>
 
         <Box sx={{ textAlign: "center", marginTop: "2rem" }}>
-          <Button variant="outlined">Show more activities</Button>
+          <Button variant="outlined">{t("show-more-activites")}</Button>
         </Box>
       </Container>
     </Box>

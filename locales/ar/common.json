@@ -10,5 +10,8 @@
   "tea-room": "غرفة الشاي",
   "fast-food": "وجبات سريعة",
   "travel-agency": "وكالة سفر",
-  "hotel": "فندق"
+  "hotel": "فندق",
+  "recent-activities": "الأنشطة الأخيرة",
+  "recent-activities-description": "يمكن للأشخاص مشاركة تعليقاتهم وإضافة الصور",
+  "show-more-activites": "عرض المزيد من الأنشطة"
 }
