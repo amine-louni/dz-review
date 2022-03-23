@@ -39,7 +39,7 @@ const Recent = () => {
             reviewerFullName="John doe"
             avgRating={4}
             companyName="Net company"
-            createdAt="September, 200"
+            action="Wrote a review"
             text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
             image="place holder"
           />
@@ -47,7 +47,7 @@ const Recent = () => {
             reviewerFullName="John doe"
             avgRating={4}
             companyName="Net company"
-            createdAt="September, 200"
+            action="Wrote a review"
             text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
             image="place holder"
           />
@@ -55,7 +55,7 @@ const Recent = () => {
             reviewerFullName="John doe"
             avgRating={4}
             companyName="Net company"
-            createdAt="September, 200"
+            action="Wrote a review"
             text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
             image="place holder"
           />
@@ -63,7 +63,7 @@ const Recent = () => {
             reviewerFullName="John doe"
             avgRating={4}
             companyName="Net company"
-            createdAt="September, 200"
+            action="Wrote a review"
             text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
             image="place holder"
           />

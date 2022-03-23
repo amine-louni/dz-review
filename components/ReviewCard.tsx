@@ -7,10 +7,11 @@ import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import { Rating } from "@mui/material";
 import { useTheme } from "@mui/system";
+import { useRouter } from "next/router";
 
 interface IReviewCard {
   reviewerFullName: string;
-  createdAt: string;
+  action: string;
   image: string;
   companyName: string;
   avgRating: number;
@@ -19,35 +20,38 @@ interface IReviewCard {
 
 const ReviewCard = ({
   reviewerFullName,
-  createdAt,
+  action,
   image,
   companyName,
   avgRating,
   text,
 }: IReviewCard) => {
   const theme = useTheme();
-
+  const { locale } = useRouter();
   return (
     <Card
       variant="outlined"
       sx={{
         backgroundColor: theme.palette.grey["200"],
         cursor: "pointer",
-        marginRight: "1rem",
+        marginRight: locale === "ar" ? 0 : "1rem",
+        marginLeft: locale === "ar" ? "1rem" : "0",
         transition: "all .3s ease-in-out",
         ":hover": {
           transform: "translateY(3px)",
         },
+        textAlign: locale === "ar" ? "right" : "left",
       }}
     >
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar sx={{ bgcolor: red[500] }} aria-label="avatar">
             R
           </Avatar>
         }
         title={reviewerFullName}
-        subheader={createdAt}
+        subheader={action}
+        style={{ textAlign: locale === "ar" ? "right" : "left" }}
       />
       <CardMedia
         component="img"
