@@ -13,5 +13,8 @@
   "hotel": "Hotel",
   "recent-activities": "Recent activities",
   "recent-activities-description": "People can share their reviews and add photos",
-  "show-more-activites": "Show more activities"
+  "show-more-activites": "Show more activities",
+  "my-profile": "My profile",
+  "create-business": "Create a business",
+  "logout": "logout"
 }

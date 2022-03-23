@@ -13,5 +13,8 @@
   "hotel": "فندق",
   "recent-activities": "الأنشطة الأخيرة",
   "recent-activities-description": "يمكن للأشخاص مشاركة تعليقاتهم وإضافة الصور",
-  "show-more-activites": "عرض المزيد من الأنشطة"
+  "show-more-activites": "عرض المزيد من الأنشطة",
+  "my-profile": "ملفي الشخصي",
+  "create-business": "إنشاء نشاط تجاري",
+  "logout": "الخروج"
 }

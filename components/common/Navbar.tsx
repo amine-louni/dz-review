@@ -19,6 +19,9 @@ import theme from "../../src/theme";
 import { refreshUserToken } from "../../utils/authed";
 import { setUser } from "../../redux/slices/userSlice";
 import { useAuth } from "../../hooks/useAuth";
+import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
+import { ContentCut, PersonPin } from "@mui/icons-material";
+import { IoAdd, IoAddCircle, IoLogOut, IoPerson } from "react-icons/io5";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -31,6 +34,7 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state);
   const { t: tAuth } = useTranslation("auth");
+  const { t: tCommon } = useTranslation("common");
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -77,7 +81,12 @@ const Navbar = () => {
             Algerian review
           </Typography>
 
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              display: { xs: "flex", md: "none" },
+              color: theme.palette.common.white,
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -106,37 +115,70 @@ const Navbar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/login">
-                  <Button
-                    sx={{ marginRight: 1 }}
-                    variant="contained"
-                    color="secondary"
-                  >
-                    {tAuth("sign-in")}
-                  </Button>
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/register">
-                  <Button
-                    sx={{ marginRight: 1 }}
-                    variant="contained"
-                    color="primary"
-                  >
-                    {tAuth("sign-up")}
-                  </Button>
-                </Link>
-              </MenuItem>
+              {!user?.accessToken && (
+                <>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Link href="/login">
+                      <Button
+                        sx={{ marginRight: 1 }}
+                        variant="contained"
+                        color="secondary"
+                      >
+                        {tAuth("sign-in")}
+                      </Button>
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleCloseNavMenu}>
+                    <Link href="/register">
+                      <Button
+                        sx={{ marginRight: 1 }}
+                        variant="contained"
+                        color="primary"
+                      >
+                        {tAuth("sign-up")}
+                      </Button>
+                    </Link>
+                  </MenuItem>
+                </>
+              )}
+              {user?.accessToken && (
+                <MenuList>
+                  <MenuItem>
+                    <ListItemIcon>
+                      <IoPerson />
+                    </ListItemIcon>
+                    <ListItemText>{tCommon("my-profile")}</ListItemText>
+                  </MenuItem>
+                  <MenuItem>
+                    <ListItemIcon>
+                      <IoAdd />
+                    </ListItemIcon>
+                    <ListItemText>{tCommon("create-business")}</ListItemText>
+                  </MenuItem>
+                  <MenuItem onClick={logoutHandler}>
+                    <ListItemIcon>
+                      <IoLogOut />
+                    </ListItemIcon>
+                    <ListItemText>{tCommon("logout")}</ListItemText>
+                  </MenuItem>
+                </MenuList>
+              )}
             </Menu>
           </Box>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            sx={{
+              flexGrow: 1,
+              display: {
+                xs: "flex",
+                md: "none",
+                color: theme.palette.common.white,
+              },
+            }}
           >
-            Dz Review🔊
+            Algerian review
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
 
@@ -171,7 +213,12 @@ const Navbar = () => {
               </Box>
             )}
             {user.accessToken && (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  display: { xs: "none", md: "flex" },
+                  alignItems: "center",
+                }}
+              >
                 <Typography
                   variant="subtitle1"
                   sx={{ color: theme.palette.common.white }}
@@ -203,8 +250,23 @@ const Navbar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
+                  <MenuItem>
+                    <ListItemIcon>
+                      <IoPerson />
+                    </ListItemIcon>
+                    <ListItemText>{tCommon("my-profile")}</ListItemText>
+                  </MenuItem>
+                  <MenuItem>
+                    <ListItemIcon>
+                      <IoAdd />
+                    </ListItemIcon>
+                    <ListItemText>{tCommon("create-business")}</ListItemText>
+                  </MenuItem>
                   <MenuItem onClick={logoutHandler}>
-                    <Typography textAlign="center">Logout</Typography>
+                    <ListItemIcon>
+                      <IoLogOut />
+                    </ListItemIcon>
+                    <ListItemText>{tCommon("logout")}</ListItemText>
                   </MenuItem>
                 </Menu>
               </Box>
