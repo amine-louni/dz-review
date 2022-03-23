@@ -24,10 +24,38 @@ const Recent = () => {
     prevArrow: locale === "ar" ? <ChevronRight /> : <ChevronLeft />,
 
     className: "react__slick__slider__parent",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          infinite: false,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2,
+          arrows: false,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: false,
+        },
+      },
+    ],
   };
 
   return (
-    <Box className="recent" sx={{ paddingY: "4rem" }}>
+    <Box className="recent" sx={{ paddingY: "4rem", overflowX: "hidden" }}>
       <Container>
         <Typography variant="h2">{t("recent-activities")}</Typography>
         <Typography

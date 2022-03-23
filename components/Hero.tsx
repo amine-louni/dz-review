@@ -65,7 +65,7 @@ const Hero = () => {
       }}
     >
       <Container sx={{ zIndex: 4 }} maxWidth="md">
-        <Typography variant="h2" sx={{ marginBottom: ".4rem" }}>
+        <Typography variant="h3" sx={{ marginBottom: ".4rem" }}>
           {t("slug")}
         </Typography>
         <Typography variant="body1">{t("slug-description")}</Typography>
@@ -73,12 +73,17 @@ const Hero = () => {
           sx={{
             display: "flex",
             marginTop: "2rem",
+
+            flexWrap: "wrap",
             backgroundColor: theme.palette?.common.white,
             padding: "2rem",
             borderRadius: "4px",
+            flexDirection: { xs: "column", md: "row" },
           }}
         >
-          <FormControl sx={{ flex: 1, marginRight: "1rem" }}>
+          <FormControl
+            sx={{ flex: 1, margin: { xs: "0 0 1rem 0", md: "0 1rem 0 0" } }}
+          >
             <InputLabel id="select-domain"> {t("select-domain")}</InputLabel>
 
             <Select
@@ -98,7 +103,9 @@ const Hero = () => {
             </Select>
           </FormControl>
 
-          <FormControl sx={{ flex: 1, marginRight: "1rem" }}>
+          <FormControl
+            sx={{ flex: 1, margin: { xs: "0 0 1rem 0", md: "0 1rem 0 0" } }}
+          >
             <InputLabel id="select-wilaya">{t("select-wilaya")}</InputLabel>
 
             <Select
