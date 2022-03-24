@@ -7,6 +7,7 @@ import userRoutes from "./routes/userRoutes";
 import domainRoutes from "./routes/domainRoutes";
 import businessRoutes from "./routes/businessRoutes";
 import reviewRoutes from "./routes/reviewRoutes";
+import mediaRoutes from "./routes/mediaRoutes";
 import { NOT_FOUND, __dev__ } from "./constatns";
 import AppError from "./utils/AppError";
 import errorController from "./controllers/errorController";
@@ -59,6 +60,7 @@ app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/domains", domainRoutes);
 app.use("/api/v1/business", businessRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/v1/media", mediaRoutes);
 
 //Error Handling (if the route is not  of the previous ones (not found))
 app.all("*", (req, _res, next) => {

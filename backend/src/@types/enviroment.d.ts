@@ -27,6 +27,12 @@ declare global {
       MAILTRAP_PASSWORD: string;
       MAILTRAP_HOST: string | undefined;
       MAILTRAP_PORT: number;
+
+
+      CLOUDINARY_URL: string
+      CLOUDINARY_CLOUD_NAME: string;
+      CLOUDINARY_API_KEY: string;
+      CLOUDINARY_API_SECRET: string
     }
   }
 }
