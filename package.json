@@ -9,7 +9,9 @@
   "scripts": {
     "dev:front": "cd frontend && yarn dev",
     "dev:back": "cd backend && yarn start:dev",
-    "dev": "npx kill-port 4000 &&  concurrently -k -p \"[{name}]\" -n \"Frontend 🖼️,Backend 🔃\" -c \"yellow.bold,cyan.bold,green.bold\" \"yarn dev:front\" \"yarn dev:back\""
+    "build:back": "cd backend && yarn build",
+    "install:all": "yarn && cd frontend && yarn && cd ../backend && yarn",
+    "dev": "npx kill-port 4000 && yarn build:back && concurrently -k -p \"[{name}]\" -n \"Frontend 🖼️,Backend 🔃\" -c \"yellow.bold,cyan.bold,green.bold\" \"yarn dev:front\" \"yarn dev:back\""
   },
   "devDependencies": {
     "concurrently": "^7.0.0"

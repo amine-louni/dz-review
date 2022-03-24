@@ -116,7 +116,7 @@ const Navbar = () => {
               }}
             >
               {!user?.accessToken && (
-                <>
+                <MenuList>
                   <MenuItem onClick={handleCloseNavMenu}>
                     <Link href="/login">
                       <Button
@@ -139,7 +139,7 @@ const Navbar = () => {
                       </Button>
                     </Link>
                   </MenuItem>
-                </>
+                </MenuList>
               )}
               {user?.accessToken && (
                 <MenuList>
