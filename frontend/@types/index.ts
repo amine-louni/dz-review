@@ -36,3 +36,11 @@ export interface IApiError {
     errors: Error[];
 }
 
+
+export interface IState {
+    id: number,
+    commune_name: string,
+    daira_name: string,
+    wilaya_code: string,
+    wilaya_name: string
+}

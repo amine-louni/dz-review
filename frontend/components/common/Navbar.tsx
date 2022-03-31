@@ -20,8 +20,9 @@ import { refreshUserToken } from "../../utils/authed";
 import { setUser } from "../../redux/slices/userSlice";
 import { useAuth } from "../../hooks/useAuth";
 import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
-import { ContentCut, PersonPin } from "@mui/icons-material";
-import { IoAdd, IoAddCircle, IoLogOut, IoPerson } from "react-icons/io5";
+
+import { IoAdd, IoLogOut, IoPerson } from "react-icons/io5";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -35,6 +36,7 @@ const Navbar = () => {
   const { user } = useAppSelector((state) => state);
   const { t: tAuth } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
+  const router = useRouter();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -150,10 +152,12 @@ const Navbar = () => {
                     <ListItemText>{tCommon("my-profile")}</ListItemText>
                   </MenuItem>
                   <MenuItem>
-                    <ListItemIcon>
-                      <IoAdd />
-                    </ListItemIcon>
-                    <ListItemText>{tCommon("create-business")}</ListItemText>
+                    <Link href={"/business-form"}>
+                      <ListItemIcon>
+                        <IoAdd />
+                      </ListItemIcon>
+                      <ListItemText>{tCommon("create-business")}</ListItemText>
+                    </Link>
                   </MenuItem>
                   <MenuItem onClick={logoutHandler}>
                     <ListItemIcon>
@@ -256,7 +260,7 @@ const Navbar = () => {
                     </ListItemIcon>
                     <ListItemText>{tCommon("my-profile")}</ListItemText>
                   </MenuItem>
-                  <MenuItem>
+                  <MenuItem onClick={() => router.push("/business-form")}>
                     <ListItemIcon>
                       <IoAdd />
                     </ListItemIcon>

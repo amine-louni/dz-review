@@ -1,0 +1,12 @@
+{
+  "name": "Business name",
+  "add-business": "Add a business",
+  "add-business-description": "Fill your business information to help users finding you",
+  "about": "Tell us about your business",
+  "city": "City",
+  "state": "State",
+  "phone": "Phone",
+  "website": "Website",
+  "email": "Email",
+  "google-maps-url": "Google maps link"
+}

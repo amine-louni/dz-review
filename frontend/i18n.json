@@ -7,6 +7,7 @@
     "/login": ["auth"],
     "/register": ["auth"],
     "/forgot-password": ["auth"],
-    "/pin-reset-password": ["auth"]
+    "/pin-reset-password": ["auth"],
+    "/business-form": ["business"]
   }
 }
