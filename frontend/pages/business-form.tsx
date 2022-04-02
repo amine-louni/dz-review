@@ -24,6 +24,7 @@ import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import { businessHTTP, domain, setAuthToken } from "../api";
 import { useAppSelector } from "../redux/hooks";
+import { useRouter } from "next/router";
 
 const BusinessForm: NextPage = () => {
   const [apiError, setApiError] = useState<IApiError | null>(null);
@@ -60,15 +61,13 @@ const BusinessForm: NextPage = () => {
     domains: yup.array().required(tAuth("required")),
   });
 
+  const router = useRouter();
   const getAllDomains = useCallback(async () => {
     const response = await domain.get("/");
 
     setAllDomains(response.data?.data);
   }, []);
 
-  const handleDomainChange = (event: SelectChangeEvent) => {
-    setSelectedDomain(event.target.value);
-  };
   useEffect(() => {
     getAllDomains();
   }, []);
@@ -78,9 +77,15 @@ const BusinessForm: NextPage = () => {
     setAuthToken(user?.accessToken);
   }, [user.accessToken]);
   const createBusiness = async (values: FormikValues) => {
-    const response = await businessHTTP.post("/", values);
-
-    console.log(response, "response------------------");
+    try {
+      const response = await businessHTTP.post("/", values);
+      if (response.data.status === "success") {
+        setApiError(null);
+        router.push(`/business/${response.data.data.uuid}`);
+      }
+    } catch (error: any) {
+      setApiError(error?.response.data.code);
+    }
   };
   return (
     <>
