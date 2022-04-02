@@ -79,6 +79,17 @@ const theme = createTheme({
 
         }
       }
+    },
+    MuiSelect: {
+      styleOverrides: {
+
+        outlined: {
+          background: "#F4F5F4",
+
+        }
+
+      }
+
     }
   }
 

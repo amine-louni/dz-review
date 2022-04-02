@@ -9,15 +9,15 @@ import {
 } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
 import { useEffect, useState } from "react";
-import { IState } from "../../@types";
 import {
   getAllWilayas,
   getCommunsForWilayaByName,
 } from "../../utils/wilayasConfig";
+import { css } from "@emotion/react";
 
 interface ILocationSelect {
   selectWilayaCb: (state: string) => void;
-  selectCommuneCb: (city: string) => void;
+  selectCommuneCb: (city: string | null) => void;
 }
 
 const LocationSelect = ({
@@ -34,6 +34,7 @@ const LocationSelect = ({
   const handleWilayaChange = (event: SelectChangeEvent) => {
     setSelectedWilaya(event.target.value);
     selectWilayaCb(event.target.value);
+    selectCommuneCb(null);
     setCommuns(null);
   };
   const handleCityChange = (event: SelectChangeEvent) => {
@@ -55,6 +56,7 @@ const LocationSelect = ({
 
           <Select
             fullWidth
+            size="small"
             labelId="select-wilaya"
             label={t("select-wilaya")}
             variant="outlined"
@@ -76,6 +78,7 @@ const LocationSelect = ({
           <InputLabel id="select-city">{t("select-city")}</InputLabel>
 
           <Select
+            size="small"
             disabled={!Boolean(selectedWilaya)}
             fullWidth
             labelId="select-city"
@@ -94,7 +97,13 @@ const LocationSelect = ({
           </Select>
         </FormControl>
       </Grid>
-      <Grid item xs={12}>
+      <Grid
+        item
+        xs={12}
+        css={css`
+          padding-top: 0 !important;
+        `}
+      >
         <Typography variant="caption" color="text.secondary">
           {t("select-loaction-disclaimer")}
         </Typography>

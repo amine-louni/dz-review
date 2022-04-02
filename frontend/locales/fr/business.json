@@ -1,0 +1,13 @@
+{
+  "name": "Nom de l’entreprise",
+  "add-business": "Ajouter une entreprise",
+  "add-business-description": "Remplissez les informations de votre entreprise pour aider les utilisateurs à vous trouver",
+  "about": "Parlez-nous de votre entreprise",
+  "city": "Ville",
+  "state": "État",
+  "phone": "Téléphone",
+  "website": "Site internet",
+  "email": "Messagerie électronique",
+  "google-maps-url": "Lien Google Maps",
+  "select-domain": "Sélectionner un domaine"
+}

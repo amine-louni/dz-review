@@ -349,9 +349,12 @@ export const protect = catchAsync(async (req, _res, next) => {
 
   let decoded: JwtPayload;
 
+
+
   try {
     decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET_KEY) as JwtPayload
-  } catch {
+  } catch (error) {
+    console.error(error)
     return next(
       new AppError(
         "invalid access token.",

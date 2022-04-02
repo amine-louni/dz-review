@@ -8,5 +8,6 @@
   "phone": "Phone",
   "website": "Website",
   "email": "Email",
-  "google-maps-url": "Google maps link"
+  "google-maps-url": "Google maps link",
+  "select-domain": "Select a domain"
 }

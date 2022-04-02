@@ -14,6 +14,7 @@ import { Provider as ReduxProvider } from "react-redux";
 import store from "../redux/store";
 import { useEffect, useState } from "react";
 import Toast from "../components/common/Toast";
+import AuthRefresh from "../src/AuthRefresh";
 
 // Re-declare the emotion theme to have the properties of the MaterialUiTheme
 declare module "@emotion/react" {
@@ -47,6 +48,7 @@ export default function MyApp(props: MyAppProps) {
       <ReduxProvider store={store}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
+          <AuthRefresh />
           <Toast />
           <Component {...pageProps} />
         </ThemeProvider>

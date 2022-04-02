@@ -109,7 +109,7 @@ export const readOneBusiness = catchAsync(async (req, res, next) => {
     // check if exiits
     const business = await Business.findOne(uuid, {
         relations: ['createdBy', 'followers']
-    });
+    }).catch((_e) => next(new AppError('Business not found', 404)));
 
     if (!business) {
         return next(new AppError('Business not found', 404))

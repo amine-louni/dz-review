@@ -49,6 +49,14 @@ export class Business extends BaseEntity {
     website: string;
 
 
+    @Column({
+        type: "varchar",
+        nullable: false,
+        default: 'pending'
+    })
+    status: string;
+
+
 
     @Column({
         type: 'boolean',

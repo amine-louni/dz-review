@@ -24,7 +24,12 @@ import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
 import { IoAdd, IoLogOut, IoPerson } from "react-icons/io5";
 import { useRouter } from "next/router";
 
-const Navbar = () => {
+interface INavbar {
+  color?: "transparent" | "primary";
+  position?: "relative" | "absolute";
+}
+
+const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -52,21 +57,9 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
-  useEffect(() => {
-    refreshUserToken().then((data) => {
-      dispatch(setUser(data));
-    });
-    const interval = setInterval(() => {
-      refreshUserToken().then((data) => {
-        dispatch(setUser(data));
-      });
-    }, 600000);
-    return () => clearInterval(interval);
-  }, []);
-
   const { logoutHandler } = useAuth();
   return (
-    <AppBar position="absolute" color="transparent" elevation={0}>
+    <AppBar position={position} color={color} elevation={0}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Typography

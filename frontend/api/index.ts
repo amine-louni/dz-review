@@ -15,4 +15,22 @@ export const domain = Axios.create({
 })
 
 
+export const businessHTTP = Axios.create({
+    baseURL: `${API_URL}/business/`,
+    headers: { "Content-type": "application/json" },
+    withCredentials: true
+})
 
+
+export const setAuthToken = (token: string) => {
+    if (token) {
+        console.log(token, 'token front')
+        Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        auth.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        domain.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        businessHTTP.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+    } else {
+        delete Axios.defaults.headers.common['Authorization'];
+    }
+};

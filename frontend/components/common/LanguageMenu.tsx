@@ -15,7 +15,10 @@ const languages = [
   { value: "ar", displayValue: "العربية" },
 ];
 
-const LanguageMenu = () => {
+interface ILanguageMenu {
+  mode?: "dark" | "light";
+}
+const LanguageMenu = ({ mode = "dark" }: ILanguageMenu) => {
   const [language, setLanguage] = useState<languageTypes>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { locale, route, push } = useRouter();
@@ -43,7 +46,15 @@ const LanguageMenu = () => {
     push(route, route, { locale: language?.value });
   }, [language]);
   return (
-    <Box sx={{ minWidth: 120, color: theme.palette?.common.white }}>
+    <Box
+      sx={{
+        minWidth: 120,
+        color:
+          mode === "light"
+            ? theme.palette?.common.black
+            : theme.palette?.common.white,
+      }}
+    >
       <Button
         startIcon={<IoLanguage />}
         color="inherit"
