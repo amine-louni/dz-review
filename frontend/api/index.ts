@@ -21,6 +21,12 @@ export const businessHTTP = Axios.create({
     withCredentials: true
 })
 
+export const mediaHTTP = Axios.create({
+    baseURL: `${API_URL}/media/`,
+    headers: { "Content-type": "application/json" },
+    withCredentials: true
+})
+
 
 export const setAuthToken = (token: string) => {
     if (token) {

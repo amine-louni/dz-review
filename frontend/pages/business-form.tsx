@@ -26,6 +26,8 @@ import { businessHTTP, domain, setAuthToken } from "../api";
 import { useAppSelector } from "../redux/hooks";
 import { useRouter } from "next/router";
 import ShowErrors from "../components/common/ShowErrors";
+import { requireAuthentication } from "../utils/requireAuthentication";
+import FileInput from "../components/common/FileInput";
 
 const BusinessForm: NextPage = () => {
   const [apiErrors, setApiErrors] = useState<IApiError | null>(null);
@@ -127,6 +129,11 @@ const BusinessForm: NextPage = () => {
                 }) => (
                   <Form>
                     <ShowErrors screen="business" apiErrors={apiErrors} />
+                    <FormControl fullWidth>
+                      <FileInput
+                        getUrl={(url) => console.log(url, "get url")}
+                      />
+                    </FormControl>
                     <FormControl fullWidth>
                       <TextField
                         error={touched.name && !!errors.name}
@@ -289,3 +296,9 @@ const BusinessForm: NextPage = () => {
 };
 
 export default BusinessForm;
+
+export const getServerSideProps = requireAuthentication(async (_context) => {
+  return {
+    props: {},
+  };
+});
