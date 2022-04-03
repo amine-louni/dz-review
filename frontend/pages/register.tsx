@@ -29,6 +29,7 @@ import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
 import { IApiError } from "../@types";
 import { NextPage } from "next";
+import ShowErrors from "../components/common/ShowErrors";
 
 const generateYears = (startYear: number = 1970): number[] => {
   var currentYear = new Date().getFullYear(),
@@ -178,17 +179,7 @@ const Register: NextPage = () => {
                       handleBlur,
                     }) => (
                       <Form>
-                        {apiError &&
-                          apiError?.errors?.map((oneError) => (
-                            <Alert
-                              severity="error"
-                              css={css`
-                                margin-bottom: 0.5rem;
-                              `}
-                            >
-                              {oneError.field} : {oneError.code}
-                            </Alert>
-                          ))}
+                        <ShowErrors apiErrors={apiError} screen="register" />
                         <TextField
                           error={touched.userName && !!errors.userName}
                           helperText={touched.userName && errors.userName}

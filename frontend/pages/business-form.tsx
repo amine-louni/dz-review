@@ -25,15 +25,17 @@ import Navbar from "../components/common/Navbar";
 import { businessHTTP, domain, setAuthToken } from "../api";
 import { useAppSelector } from "../redux/hooks";
 import { useRouter } from "next/router";
+import ShowErrors from "../components/common/ShowErrors";
 
 const BusinessForm: NextPage = () => {
-  const [apiError, setApiError] = useState<IApiError | null>(null);
+  const [apiErrors, setApiErrors] = useState<IApiError | null>(null);
   const [allDomains, setAllDomains] = useState<IDomain[] | null>(null);
   const [selectedDomain, setSelectedDomain] = useState<string | undefined>("");
   const { user } = useAppSelector((state) => state);
   const { t: tAuth } = useTranslation("auth");
   const { t } = useTranslation("business");
   const { t: tCommon } = useTranslation("common");
+
   const initialValues = {
     name: "",
     about: "",
@@ -62,6 +64,7 @@ const BusinessForm: NextPage = () => {
   });
 
   const router = useRouter();
+
   const getAllDomains = useCallback(async () => {
     const response = await domain.get("/");
 
@@ -71,22 +74,25 @@ const BusinessForm: NextPage = () => {
   useEffect(() => {
     getAllDomains();
   }, []);
+
   useEffect(() => {
     if (!user?.accessToken) return;
     console.log("run here");
     setAuthToken(user?.accessToken);
   }, [user.accessToken]);
+
   const createBusiness = async (values: FormikValues) => {
     try {
       const response = await businessHTTP.post("/", values);
       if (response.data.status === "success") {
-        setApiError(null);
+        setApiErrors(null);
         router.push(`/business/${response.data.data.uuid}`);
       }
     } catch (error: any) {
-      setApiError(error?.response.data.code);
+      setApiErrors(error?.response.data);
     }
   };
+  console.log(apiErrors);
   return (
     <>
       <Navbar color="primary" position="relative" />
@@ -112,23 +118,12 @@ const BusinessForm: NextPage = () => {
                   handleChange,
                   errors,
                   isSubmitting,
-                  values,
                   touched,
                   handleBlur,
                   setFieldValue,
                 }) => (
                   <Form>
-                    {apiError &&
-                      apiError?.errors?.map((oneError) => (
-                        <Alert
-                          severity="error"
-                          css={css`
-                            margin-bottom: 0.2rem;
-                          `}
-                        >
-                          {oneError.field} : {oneError.code}
-                        </Alert>
-                      ))}
+                    <ShowErrors screen="business" apiErrors={apiErrors} />
                     <FormControl fullWidth>
                       <TextField
                         error={touched.name && !!errors.name}

@@ -13,7 +13,7 @@ export const createBusinesssValidator = [
     .withMessage("name can not be empty!")
     .bail()
     .isLength({ min: 2 })
-    .withMessage("Minimum 2 characters required!")
+    .withMessage("MIN_2")
     .bail(),
 
   check("about")
@@ -24,7 +24,7 @@ export const createBusinesssValidator = [
     .withMessage("about can not be empty!")
     .bail()
     .isLength({ min: 8 })
-    .withMessage("Minimum 8 characters required!")
+    .withMessage("MIN_8")
     .bail(),
 
   check("state")
@@ -32,10 +32,10 @@ export const createBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("state can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .isLength({ min: 3 })
-    .withMessage("Minimum 3 characters required!")
+    .withMessage("MIN_3")
     .bail(),
 
   check("city")
@@ -43,10 +43,10 @@ export const createBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("city can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .isLength({ min: 3 })
-    .withMessage("Minimum 3 characters required!")
+    .withMessage("MIN_3")
     .bail(),
 
   check("googleMapsUrl")
@@ -54,7 +54,7 @@ export const createBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("googleMapsUrl can not be empty!")
+    .withMessage("REQUIRED")
     .bail(),
 
 
@@ -63,10 +63,10 @@ export const createBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("phone can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .matches(/^(0)(5|6|7)[0-9]{8}$/)
-    .withMessage("Enter a valid phone number")
+    .withMessage("INVALID")
     .bail(),
 
 
@@ -75,13 +75,13 @@ export const createBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("website can not be empty!")
+    .withMessage("REQUIRED")
     .bail(),
 
   check("domains")
     .isArray()
     .isLength({ min: 1 })
-    .withMessage("domains can not be empty!")
+    .withMessage("REQUIRED")
     .bail(),
 
   check("email")
@@ -89,10 +89,10 @@ export const createBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("email can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .isEmail()
-    .withMessage("invalid email formt")
+    .withMessage("REQUIRED")
     .bail(),
 
 
@@ -121,7 +121,7 @@ export const updateBusinesssValidator = [
     .withMessage("name can not be empty!")
     .bail()
     .isLength({ min: 2 })
-    .withMessage("Minimum 2 characters required!")
+    .withMessage("MIN_2")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -133,7 +133,7 @@ export const updateBusinesssValidator = [
     .withMessage("about can not be empty!")
     .bail()
     .isLength({ min: 8 })
-    .withMessage("Minimum 8 characters required!")
+    .withMessage("MIN_8")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -142,10 +142,8 @@ export const updateBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("state can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
-    .isLength({ min: 3 })
-    .withMessage("Minimum 3 characters required!")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -154,10 +152,8 @@ export const updateBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("city can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
-    .isLength({ min: 3 })
-    .withMessage("Minimum 3 characters required!")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -166,7 +162,7 @@ export const updateBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("googleMapsUrl can not be empty!")
+    .withMessage("REQUIRED")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -176,10 +172,10 @@ export const updateBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("phone can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .matches(/^(0)(5|6|7)[0-9]{8}$/)
-    .withMessage("Enter a valid phone number")
+    .withMessage("INVALID")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -189,14 +185,14 @@ export const updateBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("website can not be empty!")
+    .withMessage("REQUIRED")
     .optional({ checkFalsy: true })
     .bail(),
 
   check("domains")
     .isArray()
     .isLength({ min: 1 })
-    .withMessage("domains can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .optional({ checkFalsy: true })
     .bail(),
@@ -206,10 +202,10 @@ export const updateBusinesssValidator = [
     .escape()
     .not()
     .isEmpty()
-    .withMessage("email can not be empty!")
+    .withMessage("REQUIRED")
     .bail()
     .isEmail()
-    .withMessage("invalid email formt")
+    .withMessage("INVALID")
     .optional({ checkFalsy: true })
     .bail(),
 

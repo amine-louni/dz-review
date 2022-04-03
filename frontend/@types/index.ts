@@ -27,13 +27,20 @@ export interface Error {
     field: string;
 }
 
+export interface ValidationError {
+    location: string;
+    msg: string;
+    param: string;
+    value: string
+}
+
 export interface IApiError {
     status: string;
     code: string;
     message: string;
     statusCode: number;
     isOperational: boolean;
-    errors: Error[];
+    errors: Error[] | ValidationError[];
 }
 
 
