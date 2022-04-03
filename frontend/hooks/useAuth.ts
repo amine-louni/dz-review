@@ -8,7 +8,7 @@ export const useAuth = () => {
 
     const logoutHandler = async () => {
         try {
-            console.log('logout ------ 🏃‍♀️')
+
             const response = await auth.get('/logout');
 
             if (!response) return;

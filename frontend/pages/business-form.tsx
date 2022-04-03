@@ -77,7 +77,6 @@ const BusinessForm: NextPage = () => {
 
   useEffect(() => {
     if (!user?.accessToken) return;
-    console.log("run here");
     setAuthToken(user?.accessToken);
   }, [user.accessToken]);
 
@@ -92,7 +91,7 @@ const BusinessForm: NextPage = () => {
       setApiErrors(error?.response.data);
     }
   };
-  console.log(apiErrors);
+
   return (
     <>
       <Navbar color="primary" position="relative" />

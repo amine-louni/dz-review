@@ -24,7 +24,6 @@ export const businessHTTP = Axios.create({
 
 export const setAuthToken = (token: string) => {
     if (token) {
-        console.log(token, 'token front')
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         auth.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         domain.defaults.headers.common['Authorization'] = `Bearer ${token}`;

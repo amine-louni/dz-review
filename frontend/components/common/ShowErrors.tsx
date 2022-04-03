@@ -32,7 +32,7 @@ const ShowErrors = ({ apiErrors, screen }: IShowErrors) => {
         if ("field" in oneError)
           return (
             <Alert severity="error" sx={{ marginBlock: ".3rem" }}>
-              {oneError?.field} : {tApiErrors(oneError?.code)}
+              {tScreen(oneError?.field)} : {tApiErrors(oneError?.code)}
             </Alert>
           );
       })}

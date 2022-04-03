@@ -22,7 +22,7 @@ const BusinessDetails = ({ business }: BusinessDetailsProps) => {
   const {
     query: { uuid },
   } = useRouter();
-  console.log(business);
+
   return (
     <div>
       <h3>status: {business.status}</h3>

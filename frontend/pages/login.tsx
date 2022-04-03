@@ -23,6 +23,7 @@ import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 import { NextPage } from "next";
+import ShowErrors from "../components/common/ShowErrors";
 
 const Login: NextPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -113,16 +114,7 @@ const Login: NextPage = () => {
                 >
                   {({ handleChange, errors, isSubmitting }) => (
                     <Form>
-                      {apiError && (
-                        <Alert
-                          severity="error"
-                          css={css`
-                            margin-bottom: 0.5rem;
-                          `}
-                        >
-                          {apiError}
-                        </Alert>
-                      )}
+                      <ShowErrors apiErrors={apiError} screen="auth" />
 
                       <TextField
                         error={!!errors.email}

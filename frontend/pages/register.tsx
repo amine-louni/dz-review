@@ -179,7 +179,7 @@ const Register: NextPage = () => {
                       handleBlur,
                     }) => (
                       <Form>
-                        <ShowErrors apiErrors={apiError} screen="register" />
+                        <ShowErrors apiErrors={apiError} screen="auth" />
                         <TextField
                           error={touched.userName && !!errors.userName}
                           helperText={touched.userName && errors.userName}
