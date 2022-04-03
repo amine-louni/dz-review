@@ -2,5 +2,6 @@
   "DUPLICATED": "The value is already used, please enter an other value.",
   "MIN_8": "8 minimum characters.",
   "MIN_3": "3 minimum characters.",
-  "REQUIRED": "Required field."
+  "REQUIRED": "Required field.",
+  "INVALID": "Invalid format"
 }

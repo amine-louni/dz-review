@@ -18,13 +18,16 @@ import { css } from "@emotion/react";
 interface ILocationSelect {
   selectWilayaCb: (state: string) => void;
   selectCommuneCb: (city: string | null) => void;
+  caption: string | undefined;
 }
 
 const LocationSelect = ({
   selectWilayaCb,
   selectCommuneCb,
+  caption,
 }: ILocationSelect) => {
   const { t } = useTranslation("common");
+
   const [selectedWilaya, setSelectedWilaya] = useState<string | undefined>("");
   const [selectedCommune, setSelectedCommune] = useState<string | undefined>(
     ""
@@ -104,6 +107,14 @@ const LocationSelect = ({
           padding-top: 0 !important;
         `}
       >
+        {caption && (
+          <>
+            <Typography variant="caption" color="red">
+              {caption}
+            </Typography>
+            <br />
+          </>
+        )}
         <Typography variant="caption" color="text.secondary">
           {t("select-loaction-disclaimer")}
         </Typography>

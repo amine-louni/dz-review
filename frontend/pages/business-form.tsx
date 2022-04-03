@@ -35,6 +35,7 @@ const BusinessForm: NextPage = () => {
   const { t: tAuth } = useTranslation("auth");
   const { t } = useTranslation("business");
   const { t: tCommon } = useTranslation("common");
+  const { t: tApiErrors } = useTranslation("apiErrors");
 
   const initialValues = {
     name: "",
@@ -50,11 +51,17 @@ const BusinessForm: NextPage = () => {
 
   const validationSchema = yup.object({
     name: yup.string().required(tAuth("required")),
-    about: yup.string().required(tAuth("required")),
+    about: yup.string().min(8, tApiErrors("MIN_8")).required(tAuth("required")),
     city: yup.string().required(tAuth("required")),
     state: yup.string().required(tAuth("required")),
-    phone: yup.string().required(tAuth("required")),
-    website: yup.string().required(tAuth("required")),
+    phone: yup
+      .string()
+      .required(tAuth("required"))
+      .matches(/^(0)(5|6|7)[0-9]{8}$/, tApiErrors("INVALID")),
+    website: yup
+      .string()
+      .url(tApiErrors("INVALID"))
+      .required(tAuth("required")),
     email: yup
       .string()
       .email(tAuth("invalid-email"))
@@ -160,6 +167,7 @@ const BusinessForm: NextPage = () => {
                       `}
                     >
                       <LocationSelect
+                        caption={errors.state || errors?.city}
                         selectCommuneCb={(city) => setFieldValue("city", city)}
                         selectWilayaCb={(state) =>
                           setFieldValue("state", state)
