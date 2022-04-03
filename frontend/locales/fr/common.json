@@ -4,6 +4,8 @@
   "slug-description": "Avis d’utilisateurs et recommandations de Meilleurs restaurants, Shopping, Nourriture, Divertissement, Choses à faire",
   "select-domain": "Sélectionner un domaine",
   "select-wilaya": "Sélectionnez une wilaya",
+  "select-city": "Sélectionnez une commune",
+  "select-loaction-disclaimer": "Avertissement : nous utilisons le nouveau système d'administration des 58 wilayas en lettres latines",
   "search-now": "Rechercher maintenant",
   "restaurant": "Restaurant",
   "mall": "Centre commercial",

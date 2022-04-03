@@ -110,10 +110,7 @@ const BusinessForm: NextPage = () => {
           <Typography variant="subtitle2" sx={{ marginBottom: "2rem" }}>
             {t("add-business-description")}
           </Typography>
-          <Grid container>
-            <Grid item md={4}>
-              guides
-            </Grid>
+          <Grid container justifyContent="center">
             <Grid item md={8}>
               <Formik
                 initialValues={initialValues}
