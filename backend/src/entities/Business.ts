@@ -42,6 +42,13 @@ export class Business extends BaseEntity {
     @Column("varchar")
     phone: string;
 
+
+    @Column({
+        type: "varchar",
+        nullable: true
+    })
+    cover: string;
+
     @Column({
         type: "varchar",
         nullable: true

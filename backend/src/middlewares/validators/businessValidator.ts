@@ -70,6 +70,18 @@ export const createBusinesssValidator = [
     .bail(),
 
 
+  check("cover")
+    .trim()
+    .escape()
+    .not()
+    .isEmpty()
+    .withMessage("REQUIRED")
+    .bail()
+    .isURL()
+    .withMessage("INVALID")
+    .optional({ checkFalsy: true })
+    .bail(),
+
   check("website")
     .trim()
     .escape()
@@ -178,6 +190,22 @@ export const updateBusinesssValidator = [
     .withMessage("INVALID")
     .optional({ checkFalsy: true })
     .bail(),
+
+
+
+
+  check("cover")
+    .trim()
+    .escape()
+    .not()
+    .isEmpty()
+    .withMessage("REQUIRED")
+    .bail()
+    .isURL()
+    .withMessage("INVALID")
+    .optional({ checkFalsy: true })
+    .bail(),
+
 
 
   check("website")
