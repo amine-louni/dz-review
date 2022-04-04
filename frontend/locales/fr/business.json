@@ -9,5 +9,6 @@
   "website": "Site internet",
   "email": "Messagerie électronique",
   "google-maps-url": "Lien Google Maps",
-  "select-domain": "Sélectionner un domaine"
+  "select-domain": "Sélectionner un domaine",
+  "business-main-image": "Image principale de l'entreprise"
 }

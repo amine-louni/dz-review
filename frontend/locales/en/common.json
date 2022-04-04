@@ -18,5 +18,7 @@
   "show-more-activites": "Show more activities",
   "my-profile": "My profile",
   "create-business": "Create a business",
-  "logout": "logout"
+  "logout": "Logout",
+  "sign-in": "Sign in",
+  "sign-up": "Sign up"
 }

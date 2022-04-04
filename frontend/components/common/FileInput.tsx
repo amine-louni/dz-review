@@ -1,8 +1,7 @@
 import { css, useTheme } from "@emotion/react";
-import { LocalDiningRounded } from "@mui/icons-material";
 import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { FormEvent, MouseEvent, NewLifecycle, useState } from "react";
+import { FormEvent, useState } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { mediaHTTP } from "../../api";
 
@@ -40,7 +39,7 @@ const FileInput = ({ getUrl, label, caption }: IFileInput) => {
   };
   return (
     <>
-      <Typography>{label}</Typography>
+      <Typography variant="subtitle1">{label}</Typography>
       <Box
         sx={{
           backgroundImage: `url(${url})`,
@@ -50,7 +49,6 @@ const FileInput = ({ getUrl, label, caption }: IFileInput) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-
           overflow: "hidden",
         }}
       >

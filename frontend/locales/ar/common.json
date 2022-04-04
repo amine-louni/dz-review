@@ -19,5 +19,7 @@
   "show-more-activites": "عرض المزيد من الأنشطة",
   "my-profile": "ملفي الشخصي",
   "create-business": "إنشاء نشاط تجاري",
-  "logout": "الخروج"
+  "logout": "الخروج",
+  "sign-in": "تسجيل الدخول",
+  "sign-up": "التسجيل"
 }

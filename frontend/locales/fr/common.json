@@ -18,5 +18,7 @@
   "show-more-activites": "Afficher plus d’activités",
   "my-profile": "Mon profil",
   "create-business": "Créer une entreprise",
-  "logout": "Déconnexion"
+  "logout": "Déconnexion",
+  "sign-in": "Connexion",
+  "sign-up": "S’enregistrer"
 }

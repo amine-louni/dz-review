@@ -119,7 +119,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                         variant="contained"
                         color="secondary"
                       >
-                        {tAuth("sign-in")}
+                        {tCommon("sign-in")}
                       </Button>
                     </Link>
                   </MenuItem>
@@ -130,7 +130,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                         variant="contained"
                         color="primary"
                       >
-                        {tAuth("sign-up")}
+                        {tCommon("sign-up")}
                       </Button>
                     </Link>
                   </MenuItem>
@@ -191,7 +191,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                     variant="contained"
                     color="inherit"
                   >
-                    {tAuth("sign-in")}
+                    {tCommon("sign-in")}
                   </Button>
                 </Link>
                 <Link
@@ -203,7 +203,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                     variant="contained"
                     color="primary"
                   >
-                    {tAuth("sign-up")}
+                    {tCommon("sign-up")}
                   </Button>
                 </Link>
                 <LanguageMenu />
