@@ -3,7 +3,7 @@ import { LocalDiningRounded } from "@mui/icons-material";
 import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { FormEvent, MouseEvent, NewLifecycle, useState } from "react";
-import { IoAddCircleOutline } from "react-icons/io5";
+import { IoCloudUploadOutline } from "react-icons/io5";
 import { mediaHTTP } from "../../api";
 
 interface IFileInput {
@@ -78,7 +78,7 @@ const FileInput = ({ getUrl, label, caption }: IFileInput) => {
           `}
         />
 
-        {loading ? <CircularProgress /> : <IoAddCircleOutline size={35} />}
+        {loading ? <CircularProgress /> : <IoCloudUploadOutline size={35} />}
       </Box>
       {caption && (
         <>

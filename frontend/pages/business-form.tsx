@@ -40,6 +40,7 @@ const BusinessForm: NextPage = () => {
   const { t: tApiErrors } = useTranslation("apiErrors");
 
   const initialValues = {
+    cover: "",
     name: "",
     about: "",
     state: "",
@@ -52,6 +53,7 @@ const BusinessForm: NextPage = () => {
   };
 
   const validationSchema = yup.object({
+    cover: yup.string().required(tAuth("required")),
     name: yup.string().required(tAuth("required")),
     about: yup.string().min(8, tApiErrors("MIN_8")).required(tAuth("required")),
     city: yup.string().required(tAuth("required")),
@@ -131,8 +133,9 @@ const BusinessForm: NextPage = () => {
                     <ShowErrors screen="business" apiErrors={apiErrors} />
                     <FormControl fullWidth>
                       <FileInput
-                        getUrl={(url) => console.log(url, "get url")}
-                        label={"business main image"}
+                        caption={errors.cover}
+                        getUrl={(url) => setFieldValue("cover", url)}
+                        label={t("business-main-image")}
                       />
                     </FormControl>
                     <FormControl fullWidth>

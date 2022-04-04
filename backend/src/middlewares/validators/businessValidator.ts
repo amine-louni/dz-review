@@ -77,8 +77,6 @@ export const createBusinesssValidator = [
     .isEmpty()
     .withMessage("REQUIRED")
     .bail()
-    .isURL()
-    .withMessage("INVALID")
     .optional({ checkFalsy: true })
     .bail(),
 
@@ -201,8 +199,6 @@ export const updateBusinesssValidator = [
     .isEmpty()
     .withMessage("REQUIRED")
     .bail()
-    .isURL()
-    .withMessage("INVALID")
     .optional({ checkFalsy: true })
     .bail(),
 
