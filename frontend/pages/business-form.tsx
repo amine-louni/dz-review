@@ -132,6 +132,7 @@ const BusinessForm: NextPage = () => {
                     <FormControl fullWidth>
                       <FileInput
                         getUrl={(url) => console.log(url, "get url")}
+                        label={"business main image"}
                       />
                     </FormControl>
                     <FormControl fullWidth>

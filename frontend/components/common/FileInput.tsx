@@ -1,16 +1,18 @@
 import { css, useTheme } from "@emotion/react";
 import { LocalDiningRounded } from "@mui/icons-material";
-import { Typography } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { FormEvent, MouseEvent, useState } from "react";
+import { FormEvent, MouseEvent, NewLifecycle, useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { mediaHTTP } from "../../api";
 
 interface IFileInput {
   getUrl: (url: string) => void;
+  label: string;
+  caption?: string | null;
 }
 
-const FileInput = ({ getUrl }: IFileInput) => {
+const FileInput = ({ getUrl, label, caption }: IFileInput) => {
   const theme = useTheme();
 
   const [loading, setLoading] = useState(false);
@@ -38,10 +40,9 @@ const FileInput = ({ getUrl }: IFileInput) => {
   };
   return (
     <>
-      <Typography>title</Typography>
+      <Typography>{label}</Typography>
       <Box
         sx={{
-          backgroundColor: theme.palette?.secondary.light,
           backgroundImage: `url(${url})`,
           position: "relative",
           height: "9rem",
@@ -49,13 +50,18 @@ const FileInput = ({ getUrl }: IFileInput) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          cursor: "pointer",
-          ":hover": {
-            cursor: "pointer",
-            backgroundColor: theme.palette?.secondary.main,
-          },
+
+          overflow: "hidden",
         }}
       >
+        <Box
+          sx={{
+            position: "absolute",
+            height: " 100%",
+            width: " 100%",
+            backgroundColor: "rgba(225,0,0, 0.2)",
+          }}
+        />
         <input
           accept="image/*"
           onChange={onFileChange}
@@ -68,11 +74,19 @@ const FileInput = ({ getUrl }: IFileInput) => {
             opacity: 0;
             height: 100%;
             width: 100%;
+            cursor: pointer;
           `}
         />
 
-        {loading ? <p>chargemtn</p> : <IoAddCircleOutline size={35} />}
+        {loading ? <CircularProgress /> : <IoAddCircleOutline size={35} />}
       </Box>
+      {caption && (
+        <>
+          <Typography variant="caption" color="red">
+            {caption}
+          </Typography>
+        </>
+      )}
     </>
   );
 };
