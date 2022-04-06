@@ -43,7 +43,7 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
 
-        <title>dz review 🔊</title>
+        <title>Algerian review</title>
       </Head>
       <ReduxProvider store={store}>
         <ThemeProvider theme={theme}>

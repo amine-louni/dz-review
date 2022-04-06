@@ -1,62 +1,68 @@
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
-import { Button, Container, Typography } from "@mui/material";
-
-import { Box } from "@mui/system";
-import ReviewCard from "./ReviewCard";
-import Slider, { Settings } from "react-slick";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { useRouter } from "next/router";
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import Paper from "@mui/material/Paper";
+import Masonry from "@mui/lab/Masonry";
+import { Container, Typography } from "@mui/material";
 import useTranslation from "next-translate/useTranslation";
+import ReviewCard from "./ReviewCard";
 
-const Recent = () => {
-  const { locale } = useRouter();
+const Recents = () => {
   const { t } = useTranslation("common");
-  var settings: Settings = {
-    dots: false,
-    infinite: false,
-    centerMode: false,
-    slidesToShow: 2.9,
-    slidesToScroll: 2,
 
-    nextArrow: locale === "ar" ? <ChevronLeft /> : <ChevronRight />,
-    prevArrow: locale === "ar" ? <ChevronRight /> : <ChevronLeft />,
-
-    className: "react__slick__slider__parent",
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 2,
-          infinite: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-          arrows: false,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          arrows: false,
-        },
-      },
-    ],
-  };
-
+  const dummyReviews = [
+    {
+      reviewerFullName: "John doe",
+      avgRating: 4,
+      companyName: "Net company",
+      action: "Wrote a review",
+      text: "design,rem ipsum is a placeholder text commonln publishing and graphic design, Lorem ipsum is a placeholder text commonln publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available",
+      image: "place holder",
+    },
+    {
+      reviewerFullName: "Jane doe",
+      avgRating: 4,
+      companyName: "Net company",
+      action: "Wrote a review",
+      text: " placeholder  before the final copy is ava  Lorem ipsum is a placeholder text commonln publishing and graphic design, Lo Lorem ipsum is a placeholder text commonln publishing and graphic design, Loilable",
+      image: "place holder",
+    },
+    {
+      reviewerFullName: "Stewrat marlo",
+      avgRating: 4,
+      companyName: "Net company",
+      action: "Wrote a review",
+      text: "In publishing and gra n, Lorem ipsum is a placeholder text commonly used to demonstrate!",
+      image: "place holder",
+    },
+    {
+      reviewerFullName: "Jane doe",
+      avgRating: 4,
+      companyName: "Net company",
+      action: "Wrote a review",
+      text: " placeholder  before the final copy is ava  Lorem ipsum is a placeholder text commonln publishing and graphic design, Lo Lorem ipsum is a placeholder text commonln publishing and graphic design, Loilable",
+      image: "place holder",
+    },
+    {
+      reviewerFullName: "Stewrat marlon",
+      avgRating: 4,
+      companyName: "Net company",
+      action: "Wrote a review",
+      text: "In publishing and gra n, Lorem ipsum is a placeholder text commonly used to demonstrate!",
+      image: "place holder",
+    },
+    {
+      reviewerFullName: "جمال براندزن",
+      avgRating: 4,
+      companyName: "Net company",
+      action: "Wrote a review",
+      text: "In publishing and gra n, Lorem ipsum is a placeholder text commonly used to demonstrate!",
+      image: "place holder",
+    },
+  ];
   return (
-    <Box className="recent" sx={{ paddingY: "4rem", overflowX: "hidden" }}>
-      <Container>
+    <Box sx={{ paddingY: "4rem" }}>
+      <Container maxWidth="lg">
         <Typography variant="h2">{t("recent-activities")}</Typography>
         <Typography
           variant="subtitle2"
@@ -65,47 +71,22 @@ const Recent = () => {
         >
           {t("recent-activities-description")}
         </Typography>
-        <Slider {...settings}>
-          <ReviewCard
-            reviewerFullName="John doe"
-            avgRating={4}
-            companyName="Net company"
-            action="Wrote a review"
-            text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
-            image="place holder"
-          />
-          <ReviewCard
-            reviewerFullName="John doe"
-            avgRating={4}
-            companyName="Net company"
-            action="Wrote a review"
-            text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
-            image="place holder"
-          />
-          <ReviewCard
-            reviewerFullName="John doe"
-            avgRating={4}
-            companyName="Net company"
-            action="Wrote a review"
-            text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
-            image="place holder"
-          />
-          <ReviewCard
-            reviewerFullName="John doe"
-            avgRating={4}
-            companyName="Net company"
-            action="Wrote a review"
-            text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is available"
-            image="place holder"
-          />
-        </Slider>
-
-        <Box sx={{ textAlign: "center", marginTop: "2rem" }}>
-          <Button variant="outlined">{t("show-more-activites")}</Button>
-        </Box>
+        <Masonry columns={3} spacing={1}>
+          {dummyReviews.map((oneReview) => (
+            <ReviewCard
+              key={oneReview.reviewerFullName}
+              action={oneReview.action}
+              avgRating={oneReview.avgRating}
+              companyName={oneReview.companyName}
+              reviewerFullName={oneReview.reviewerFullName}
+              image={oneReview.image}
+              text={oneReview.text}
+            />
+          ))}
+        </Masonry>
       </Container>
     </Box>
   );
 };
 
-export default Recent;
+export default Recents;

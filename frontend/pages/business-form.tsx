@@ -247,6 +247,7 @@ const BusinessForm: NextPage = () => {
                     </FormControl>
 
                     <FormControl
+                      size="small"
                       fullWidth
                       css={css`
                         margin: 8px 0px 4px 0px;
@@ -258,7 +259,6 @@ const BusinessForm: NextPage = () => {
                       </InputLabel>
 
                       <Select
-                        size="small"
                         labelId={t("select-domain")}
                         label={t("select-domain")}
                         variant="outlined"

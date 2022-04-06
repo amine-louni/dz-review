@@ -54,12 +54,11 @@ const LocationSelect = ({
   return (
     <Grid container spacing={1}>
       <Grid item xs={6}>
-        <FormControl fullWidth sx={{ flex: 1 }}>
+        <FormControl fullWidth sx={{ flex: 1 }} size="small">
           <InputLabel id="select-wilaya">{t("select-wilaya")}</InputLabel>
 
           <Select
             fullWidth
-            size="small"
             labelId="select-wilaya"
             label={t("select-wilaya")}
             variant="outlined"
@@ -77,11 +76,10 @@ const LocationSelect = ({
         </FormControl>
       </Grid>
       <Grid item xs={6}>
-        <FormControl fullWidth sx={{ flex: 1 }}>
+        <FormControl fullWidth sx={{ flex: 1 }} size="small">
           <InputLabel id="select-city">{t("select-city")}</InputLabel>
 
           <Select
-            size="small"
             disabled={!Boolean(selectedWilaya)}
             fullWidth
             labelId="select-city"

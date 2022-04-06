@@ -65,7 +65,8 @@ const ReviewCard = ({
         </Typography>
         <Rating name="read-only" value={avgRating} readOnly />
         <Typography variant="body2" color="text.secondary">
-          {text?.substring(0, 100)} {text?.length > 100 && "..."}
+          {/* {text?.substring(0, 100)} {text?.length > 100 && "..."} */}
+          {text}
         </Typography>
       </CardContent>
     </Card>

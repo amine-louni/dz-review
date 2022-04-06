@@ -62,19 +62,21 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
     <AppBar position={position} color={color} elevation={0}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              color: "white",
-              fontWeight: "600",
-            }}
-          >
-            Algerian review
-          </Typography>
+          <Link href="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                color: "white",
+                fontWeight: "600",
+              }}
+            >
+              Algerian review
+            </Typography>
+          </Link>
 
           <Box
             sx={{
