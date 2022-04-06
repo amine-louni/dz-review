@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Avatar, Card, Container, Typography } from "@mui/material";
+import { Avatar, Button, Card, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { IoCamera, IoPeople, IoStar } from "react-icons/io5";
 import { HiCake } from "react-icons/hi";
@@ -129,6 +129,7 @@ export const Profile = () => {
                   {userData?.dob}
                 </Typography>
               </Box>
+              <Button variant="outlined">Edit profile</Button>
             </Box>
           </Card>
         </Container>
