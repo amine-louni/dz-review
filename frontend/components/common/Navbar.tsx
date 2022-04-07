@@ -21,8 +21,15 @@ import { setUser } from "../../redux/slices/userSlice";
 import { useAuth } from "../../hooks/useAuth";
 import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
 
-import { IoAdd, IoLogOut, IoPerson } from "react-icons/io5";
+import {
+  IoAdd,
+  IoChevronDown,
+  IoLogOut,
+  IoNotifications,
+  IoPerson,
+} from "react-icons/io5";
 import { useRouter } from "next/router";
+import { ArrowDownward } from "@mui/icons-material";
 
 interface INavbar {
   color?: "transparent" | "primary";
@@ -218,19 +225,70 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                   alignItems: "center",
                 }}
               >
-                <Typography
-                  variant="subtitle1"
-                  sx={{ color: theme.palette.common.white }}
-                >{`${user?.userData?.firstName} ${user?.userData?.lastName}`}</Typography>
+                <Box
+                  sx={{
+                    padding: ".5rem .8rem",
+                    backgroundColor: theme.palette.primary.dark,
+                    borderRadius: 20,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Avatar
+                    sx={{ height: 25, width: 25 }}
+                    alt={`${user?.userData?.firstName} ${user?.userData?.lastName}`}
+                    src={user?.userData?.profilePictureUrl}
+                  />
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      color: theme.palette.common.white,
+                      fontWeight: "semibold",
+                      marginLeft: "1rem",
+                    }}
+                  >{`${user?.userData?.firstName} ${user?.userData?.lastName}`}</Typography>
+                </Box>
+
+                <Tooltip title="Notifications">
+                  <Typography
+                    onClick={handleOpenUserMenu}
+                    sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
+                  >
+                    <Box
+                      sx={{
+                        backgroundColor: theme.palette.primary.dark,
+                        height: 40,
+                        width: 40,
+                        borderRadius: 40,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <IoNotifications color={theme?.palette.common.white} />
+                    </Box>
+                  </Typography>
+                </Tooltip>
+
                 <Tooltip title="Open settings">
                   <Typography
                     onClick={handleOpenUserMenu}
                     sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
                   >
-                    <Avatar
-                      alt={`${user?.userData?.firstName} ${user?.userData?.lastName}`}
-                      src={user?.userData?.profilePictureUrl}
-                    />
+                    <Box
+                      sx={{
+                        backgroundColor: theme.palette.primary.dark,
+                        height: 40,
+                        width: 40,
+                        borderRadius: 40,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <IoChevronDown color={theme?.palette.common.white} />
+                    </Box>
                   </Typography>
                 </Tooltip>
                 <Menu

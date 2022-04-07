@@ -7,6 +7,11 @@ export const auth = Axios.create({
     headers: { "Content-type": "application/json" },
     withCredentials: true
 })
+export const userHTTP = Axios.create({
+    baseURL: `${API_URL}/users/`,
+    headers: { "Content-type": "application/json" },
+    withCredentials: true
+})
 
 export const domain = Axios.create({
     baseURL: `${API_URL}/domains/`,

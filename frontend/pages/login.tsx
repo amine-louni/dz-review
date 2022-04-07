@@ -5,10 +5,10 @@ import Link from "../src/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
-import { useTheme } from "@mui/system";
+
 import { Formik, FormikValues, Form } from "formik";
 import { auth } from "../api";
 import IconButton from "@mui/material/IconButton";
@@ -16,9 +16,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { setUser } from "../redux/slices/userSlice";
-import { Alert } from "@mui/material";
+
 import { authed } from "../utils/authed";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
@@ -71,7 +71,7 @@ const Login: NextPage = () => {
       sx={{
         height: "100vh",
         padding: { xs: 0, md: 4 },
-        background: theme.palette.grey["200"],
+        background: theme?.palette?.grey["200"],
       }}
     >
       <Grid
@@ -146,12 +146,12 @@ const Login: NextPage = () => {
                             <InputAdornment
                               position="end"
                               css={css`
-                                background: ${theme.palette.grey["200"]};
+                                background: ${theme?.palette?.grey["200"]};
                               `}
                             >
                               <IconButton
                                 css={css`
-                                  background: ${theme.palette.grey["200"]};
+                                  background: ${theme?.palette?.grey["200"]};
                                 `}
                                 aria-label="toggle password visibility"
                                 onClick={handleClickShowPassword}
@@ -204,9 +204,9 @@ const Login: NextPage = () => {
             display: { xs: "none", md: "flex" },
             backgroundRepeat: "no-repeat",
             background: (theme) =>
-              theme.palette.mode === "light"
+              theme?.palette?.mode === "light"
                 ? "linear-gradient(180deg, rgba(18,57,143,1) 0%, rgba(0,212,255,0.5690651260504201) 100%);"
-                : theme.palette.grey[900],
+                : theme?.palette?.grey[900],
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -240,7 +240,7 @@ const Login: NextPage = () => {
                 left: -2rem;
                 height: 5rem;
                 width: 5rem;
-                background-color: ${theme.palette.common.white};
+                background-color: ${theme?.palette?.common.white};
                 border-radius: 5rem;
               }
             `}
@@ -248,7 +248,7 @@ const Login: NextPage = () => {
             <Typography
               variant="h3"
               css={css`
-                color: ${theme.palette.common.white};
+                color: ${theme?.palette?.common.white};
                 margin-bottom: 1rem;
               `}
             >

@@ -6,8 +6,8 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 import { Rating } from "@mui/material";
-import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
+import { useTheme } from "@emotion/react";
 
 interface IReviewCard {
   reviewerFullName: string;
@@ -32,7 +32,7 @@ const ReviewCard = ({
     <Card
       variant="outlined"
       sx={{
-        backgroundColor: theme.palette.grey["200"],
+        backgroundColor: theme.palette?.grey["200"],
         cursor: "pointer",
         marginRight: locale === "ar" ? 0 : "1rem",
         marginLeft: locale === "ar" ? "1rem" : "0",

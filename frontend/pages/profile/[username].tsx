@@ -1,24 +1,50 @@
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
+
+import { userHTTP } from "../../api";
 import { useTheme } from "@emotion/react";
 import { Avatar, Button, Card, Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { IoCamera, IoPeople, IoStar } from "react-icons/io5";
 import { HiCake } from "react-icons/hi";
-import { useAppSelector } from "../redux/hooks";
-import { requireAuthentication } from "../utils/requireAuthentication";
-import ReviewCard from "../components/ReviewCard";
-import useTranslation from "next-translate/useTranslation";
-import { useRouter } from "next/router";
-import { Masonry } from "@mui/lab";
-import Navbar from "../components/common/Navbar";
-import Footer from "../components/common/Footer";
+import { useAppSelector } from "../../redux/hooks";
+import ReviewCard from "../../components/ReviewCard";
 
-export const Profile = () => {
+import { Masonry } from "@mui/lab";
+import Navbar from "../../components/common/Navbar";
+import Footer from "../../components/common/Footer";
+
+export const getServerSideProps: GetServerSideProps = async (
+  ctx: GetServerSidePropsContext
+) => {
+  try {
+    const response = await userHTTP.get(`/${ctx.params?.username}`);
+
+    return {
+      props: {
+        userProfile: response?.data,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        notFound: true,
+      },
+    };
+  }
+};
+
+type ProfileDetailsProps = {
+  userProfile: any;
+  notFound?: boolean;
+};
+
+export const Profile = ({ userProfile, notFound }: ProfileDetailsProps) => {
   const {
     user: { userData },
   } = useAppSelector((state) => state);
   const theme = useTheme();
-  const { locale } = useRouter();
-  const { t } = useTranslation("common");
+  const { user } = userProfile;
+
   const dummyReviews = [
     {
       reviewerFullName: "John doe",
@@ -69,6 +95,7 @@ export const Profile = () => {
       image: "place holder",
     },
   ];
+  if (notFound) return <h1>Not found !</h1>;
   return (
     <>
       <Navbar position="relative" color="primary" />
@@ -78,7 +105,7 @@ export const Profile = () => {
             variant="outlined"
             sx={{
               backgroundColor: theme.palette?.grey["100"],
-              padding: "2rem",
+              padding: "1rem",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
@@ -86,22 +113,22 @@ export const Profile = () => {
             }}
           >
             <Avatar
-              src={userData?.profilePictureUrl}
+              src={user?.profilePictureUrl}
               sx={{ height: "5rem", width: "5rem" }}
             />
             <Box>
               <Typography sx={{ marginBottom: "0rem" }}>
-                {userData?.firstName} {userData?.lastName}
+                {user?.firstName} {user?.lastName}
               </Typography>
-              <Typography variant="caption">@{userData?.userName}</Typography>
+              <Typography variant="caption">@{user?.userName}</Typography>
             </Box>
             <Box
               sx={{
                 width: "100%",
-                marginTop: "2rem",
+                marginTop: ".5rem",
                 display: "flex",
                 flexWrap: "wrap",
-                justifyContent: "space-evenly",
+                justifyContent: "space-between",
               }}
             >
               <Box sx={{ alignItems: "center", display: "flex" }}>
@@ -126,19 +153,21 @@ export const Profile = () => {
               <Box sx={{ alignItems: "center", display: "flex" }}>
                 <HiCake color={theme.palette?.primary.light} />
                 <Typography variant="caption" sx={{ marginLeft: "4px" }}>
-                  {userData?.dob}
+                  {user?.dob}
                 </Typography>
               </Box>
-              <Button variant="outlined">Edit profile</Button>
+              {user?.uuid == userData?.uuid && (
+                <Button variant="outlined">Edit profile</Button>
+              )}
             </Box>
           </Card>
         </Container>
       </Box>
-      {userData?.bio && (
+      {user?.bio && (
         <Box component="section" sx={{ paddingY: "2rem" }}>
           <Container maxWidth="md">
             <Typography variant="h6">Biography</Typography>
-            <Typography variant="body1">{userData?.bio}</Typography>
+            <Typography variant="body1">{user?.bio}</Typography>
           </Container>
         </Box>
       )}
@@ -173,9 +202,3 @@ export const Profile = () => {
 };
 
 export default Profile;
-
-export const getServerSideProps = requireAuthentication(async (_context) => {
-  return {
-    props: {},
-  };
-});

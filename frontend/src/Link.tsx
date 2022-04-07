@@ -32,7 +32,7 @@ export const NextLinkComposed = React.forwardRef<
     locale,
     ...other
   } = props;
-
+  if (typeof window === "undefined") return;
   return (
     <NextLink
       href={to}

@@ -88,7 +88,7 @@ const LocationSelect = ({
             value={selectedCommune}
             onChange={handleCityChange}
             displayEmpty
-            inputProps={{ "aria-label": t("select-cityu") }}
+            inputProps={{ "aria-label": t("select-city") }}
           >
             {communs?.map((oneCity) => (
               <MenuItem key={oneCity} value={oneCity}>
