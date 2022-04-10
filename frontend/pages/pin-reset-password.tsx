@@ -87,7 +87,7 @@ const PinResetPassword: NextPage = () => {
       sx={{
         height: "100vh",
 
-        background: theme.palette.grey["200"],
+        background: theme?.palette?.grey["200"],
       }}
     >
       <Grid
@@ -168,12 +168,12 @@ const PinResetPassword: NextPage = () => {
                             <InputAdornment
                               position="end"
                               css={css`
-                                background: ${theme.palette.grey["200"]};
+                                background: ${theme?.palette?.grey["200"]};
                               `}
                             >
                               <IconButton
                                 css={css`
-                                  background: ${theme.palette.grey["200"]};
+                                  background: ${theme?.palette?.grey["200"]};
                                 `}
                                 aria-label="toggle password visibility"
                                 onClick={handleClickShowPassword}

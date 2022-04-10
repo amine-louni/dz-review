@@ -36,7 +36,7 @@ export const filterobj = (objToFilter: any, itemsToFilterOut: string[]) => {
 
 
 export const register = catchAsync(async (req, res, next) => {
-  const { firstName, lastName, userName, email, dob, password } = req.body;
+  const { firstName, lastName, userName, email, dob, password, city, state } = req.body;
 
   // create user
   const newUser = await User.create({
@@ -46,6 +46,8 @@ export const register = catchAsync(async (req, res, next) => {
     email,
     dob,
     password,
+    city,
+    state
   });
 
   const errors = await validate(newUser);

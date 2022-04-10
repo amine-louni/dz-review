@@ -76,7 +76,7 @@ const ForgotPassword: NextPage = () => {
       sx={{
         height: "100vh",
 
-        background: theme.palette.grey["200"],
+        background: theme?.palette?.grey["200"],
       }}
     >
       <Grid

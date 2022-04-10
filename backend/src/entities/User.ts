@@ -76,6 +76,19 @@ export class User extends BaseEntity {
   @IsEmail()
   email: string;
 
+
+  @Column({
+    type: 'varchar',
+    nullable: false
+  })
+  state: string;
+
+  @Column({
+    type: 'varchar',
+    nullable: false
+  })
+  city: string;
+
   @Column({
     type: "timestamptz",
     nullable: true,

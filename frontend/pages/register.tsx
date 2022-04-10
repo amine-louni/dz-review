@@ -5,9 +5,9 @@ import Link from "../src/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { css } from "@emotion/react";
+import { css, useTheme } from "@emotion/react";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@mui/system";
+
 import { Formik, FormikValues, Form } from "formik";
 import { auth } from "../api";
 import IconButton from "@mui/material/IconButton";
@@ -30,6 +30,7 @@ import { useRouter } from "next/router";
 import { IApiError } from "../@types";
 import { NextPage } from "next";
 import ShowErrors from "../components/common/ShowErrors";
+import LocationSelect from "../components/common/LocationSelect";
 
 const generateYears = (startYear: number = 1970): number[] => {
   var currentYear = new Date().getFullYear(),
@@ -53,7 +54,7 @@ const Footer: React.FC = () => {
   return (
     <Box
       css={css`
-        background: ${theme.palette.grey["200"]};
+        background: ${theme?.palette?.grey["200"]};
         padding: 2rem;
         text-align: left;
       `}
@@ -86,6 +87,8 @@ const Register: NextPage = () => {
     userName: "",
     firstName: "",
     lastName: "",
+    city: "",
+    state: "",
     email: "",
     password: "",
     day: 10,
@@ -97,6 +100,8 @@ const Register: NextPage = () => {
     userName: yup.string().required(t("required")),
     firstName: yup.string().required(t("required")),
     lastName: yup.string().required(t("required")),
+    city: yup.string().required(t("required")).nullable(),
+    state: yup.string().required(t("required")),
     email: yup.string().email(t("invalid-email")).required(t("required")),
     password: yup.string().min(8, t("too-short")).required(t("required")),
     day: yup.number().required(t("required")),
@@ -134,7 +139,7 @@ const Register: NextPage = () => {
         sx={{
           height: "100vh",
           padding: { xs: 0, md: 4 },
-          background: theme.palette.grey["200"],
+          background: theme?.palette?.grey["200"],
         }}
       >
         <Grid
@@ -176,6 +181,7 @@ const Register: NextPage = () => {
                       isSubmitting,
                       values,
                       touched,
+                      setFieldValue,
                       handleBlur,
                     }) => (
                       <Form>
@@ -224,6 +230,7 @@ const Register: NextPage = () => {
                             />
                           </Grid>
                         </Grid>
+
                         <TextField
                           error={touched.email && !!errors.email}
                           helperText={touched.email && errors.email}
@@ -252,12 +259,12 @@ const Register: NextPage = () => {
                               <InputAdornment
                                 position="end"
                                 css={css`
-                                  background: ${theme.palette.grey["200"]};
+                                  background: ${theme?.palette?.grey["200"]};
                                 `}
                               >
                                 <IconButton
                                   css={css`
-                                    background: ${theme.palette.grey["200"]};
+                                    background: ${theme?.palette?.grey["200"]};
                                   `}
                                   aria-label="toggle password visibility"
                                   onClick={handleClickShowPassword}
@@ -272,6 +279,16 @@ const Register: NextPage = () => {
                               </InputAdornment>
                             ),
                           }}
+                          sx={{ marginBottom: "1rem" }}
+                        />
+                        <LocationSelect
+                          caption={errors.state || errors?.city}
+                          selectCommuneCb={(city) =>
+                            setFieldValue("city", city)
+                          }
+                          selectWilayaCb={(state) =>
+                            setFieldValue("state", state)
+                          }
                         />
                         {/* DOB composer */}
                         <Box
@@ -447,7 +464,7 @@ const Register: NextPage = () => {
                   left: -2rem;
                   height: 5rem;
                   width: 5rem;
-                  background-color: ${theme.palette.common.white};
+                  background-color: ${theme?.palette?.common?.white};
                   border-radius: 5rem;
                 }
               `}
@@ -455,7 +472,7 @@ const Register: NextPage = () => {
               <Typography
                 variant="h3"
                 css={css`
-                  color: ${theme.palette.common.white};
+                  color: ${theme?.palette?.common?.white};
                   margin-bottom: 1rem;
                 `}
               >
