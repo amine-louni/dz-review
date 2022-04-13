@@ -71,7 +71,7 @@ const Recents = () => {
         >
           {t("recent-activities-description")}
         </Typography>
-        <Masonry columns={3} spacing={1}>
+        <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={1}>
           {dummyReviews.map((oneReview) => (
             <ReviewCard
               key={oneReview.reviewerFullName}
