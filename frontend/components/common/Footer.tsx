@@ -1,5 +1,4 @@
 import { Box } from "@mui/system";
-import React from "react";
 import { useTheme } from "@emotion/react";
 import { Container, Typography } from "@mui/material";
 import LanguageMenu from "./LanguageMenu";

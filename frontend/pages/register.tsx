@@ -137,7 +137,7 @@ const Register: NextPage = () => {
       <Box
         component="main"
         sx={{
-          height: "100vh",
+          minHeight: "100vh",
           padding: { xs: 0, md: 4 },
           background: theme?.palette?.grey["200"],
         }}
@@ -145,7 +145,7 @@ const Register: NextPage = () => {
         <Grid
           container
           component={Paper}
-          sx={{ height: "100%", overflow: "hidden", borderRadius: 3 }}
+          sx={{ height: "auto", borderRadius: 3 }}
         >
           {/* First row  start*/}
           <Grid

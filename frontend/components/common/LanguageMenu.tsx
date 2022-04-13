@@ -21,7 +21,7 @@ interface ILanguageMenu {
 const LanguageMenu = ({ mode = "dark" }: ILanguageMenu) => {
   const [language, setLanguage] = useState<languageTypes>();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { locale, route, push } = useRouter();
+  const router = useRouter();
   const theme = useTheme();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -33,17 +33,18 @@ const LanguageMenu = ({ mode = "dark" }: ILanguageMenu) => {
   };
 
   useEffect(() => {
-    if (!locale) return;
+    if (!router.locale) return;
     setLanguage({
-      value: locale,
+      value: router.locale,
       displayValue: languages.filter(
-        (oneLanguage) => oneLanguage.value === locale
+        (oneLanguage) => oneLanguage.value === router.locale
       )[0].displayValue,
     });
-  }, [locale]);
+  }, [router.locale]);
+  console.log(router.asPath);
 
   useEffect(() => {
-    push(route, route, { locale: language?.value });
+    router.push(router.asPath, router.asPath, { locale: "fr" });
   }, [language]);
   return (
     <Box

@@ -221,7 +221,8 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
             {user.accessToken && (
               <Link
                 href={{
-                  pathname: `profile/${user?.userData?.userName}`,
+                  pathname: "/user/[username]",
+                  query: { username: user.userData?.userName },
                 }}
               >
                 <Box
