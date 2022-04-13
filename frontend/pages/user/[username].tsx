@@ -182,7 +182,7 @@ export const Profile = ({ userProfile, notFound }: ProfileDetailsProps) => {
             Recent Reviews
           </Typography>
 
-          <Masonry columns={3} spacing={1}>
+          <Masonry columns={{ xs: 1, sm: 2, md: 3 }}>
             {dummyReviews.map((oneReview) => (
               <ReviewCard
                 key={oneReview.reviewerFullName}

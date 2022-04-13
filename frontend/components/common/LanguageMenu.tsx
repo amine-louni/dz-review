@@ -44,7 +44,7 @@ const LanguageMenu = ({ mode = "dark" }: ILanguageMenu) => {
   console.log(router.asPath);
 
   useEffect(() => {
-    router.push(router.asPath, router.asPath, { locale: "fr" });
+    router.push(router.asPath, router.asPath, { locale: language?.value });
   }, [language]);
   return (
     <Box
