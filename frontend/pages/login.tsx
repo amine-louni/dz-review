@@ -25,10 +25,12 @@ import useTranslation from "next-translate/useTranslation";
 import { NextPage } from "next";
 import ShowErrors from "../components/common/ShowErrors";
 
+import { IApiError } from "../@types";
+
 const Login: NextPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
-  const [apiError, setApiError] = useState(null);
+  const [apiError, setApiError] = useState<IApiError | null>(null);
   const router = useRouter();
   const { t } = useTranslation("auth");
   const { t: tCommon } = useTranslation("common");
@@ -57,7 +59,7 @@ const Login: NextPage = () => {
         router.replace("/");
       }
     } catch (error: any) {
-      setApiError(error?.response.data.code);
+      setApiError(error?.response.data);
     }
   };
 
@@ -114,7 +116,9 @@ const Login: NextPage = () => {
                 >
                   {({ handleChange, errors, isSubmitting }) => (
                     <Form>
-                      <ShowErrors apiErrors={apiError} screen="auth" />
+                      {apiError && (
+                        <ShowErrors apiErrors={apiError} screen="auth" />
+                      )}
 
                       <TextField
                         error={!!errors.email}

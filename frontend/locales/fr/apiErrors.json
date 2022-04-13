@@ -3,5 +3,6 @@
   "MIN_8": "8 caractères minimum.",
   "MIN_3": "3 caractères minimum.",
   "REQUIRED": "Champ obligatoire.",
-  "INVALID": "Format non valide"
+  "INVALID": "Format non valide",
+  "BAD_AUTH": "Mauvaises qualifications"
 }

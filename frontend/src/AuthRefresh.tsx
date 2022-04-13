@@ -15,7 +15,7 @@ const AuthRefresh = () => {
       refreshUserToken().then((data) => {
         dispatch(setUser(data));
       });
-    }, 7000);
+    }, 900000);
     return () => clearInterval(interval);
   }, [user?.accessToken]);
   return null;

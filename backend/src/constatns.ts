@@ -57,7 +57,7 @@ export const ALLOWED_USER_FIELDS_TO_UPDATE = [
 export const passwordRegExValidator = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
 // code erros
-export const BAD_AUTH = "bad_auth";
+export const BAD_AUTH = "BAD_AUTH";
 export const BAD_INPUT = "bad_input";
 export const NOT_FOUND = "not_found";
 export const USER_NOT_FOUND = "user_not_found";

@@ -3,5 +3,6 @@
   "MIN_8": "8 minimum characters.",
   "MIN_3": "3 minimum characters.",
   "REQUIRED": "Required field.",
-  "INVALID": "Invalid format"
+  "INVALID": "Invalid format",
+  "BAD_AUTH": "Wrong credentials"
 }

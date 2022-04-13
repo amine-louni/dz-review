@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async (
 
     return {
       props: {
-        userProfile: response?.data,
+        userProfile: response.data,
       },
     };
   } catch (e) {
@@ -39,11 +39,12 @@ type ProfileDetailsProps = {
 };
 
 export const Profile = ({ userProfile, notFound }: ProfileDetailsProps) => {
+  if (notFound) return <h1>Not found !</h1>;
   const {
     user: { userData },
   } = useAppSelector((state) => state);
   const theme = useTheme();
-  const { user } = userProfile;
+  const user = userProfile?.user ?? null;
 
   const dummyReviews = [
     {
@@ -95,7 +96,7 @@ export const Profile = ({ userProfile, notFound }: ProfileDetailsProps) => {
       image: "place holder",
     },
   ];
-  if (notFound) return <h1>Not found !</h1>;
+
   return (
     <>
       <Navbar position="relative" color="primary" />

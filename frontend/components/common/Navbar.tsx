@@ -219,114 +219,120 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
               </Box>
             )}
             {user.accessToken && (
-              <Box
-                sx={{
-                  display: { xs: "none", md: "flex" },
-                  alignItems: "center",
+              <Link
+                href={{
+                  pathname: `profile/${user?.userData?.userName}`,
                 }}
               >
                 <Box
                   sx={{
-                    padding: ".5rem .8rem",
-                    backgroundColor: theme.palette.primary.dark,
-                    borderRadius: 20,
-                    display: "flex",
-                    flexDirection: "row",
+                    display: { xs: "none", md: "flex" },
                     alignItems: "center",
                   }}
                 >
-                  <Avatar
-                    sx={{ height: 25, width: 25 }}
-                    alt={`${user?.userData?.firstName} ${user?.userData?.lastName}`}
-                    src={user?.userData?.profilePictureUrl}
-                  />
-                  <Typography
-                    variant="subtitle2"
+                  <Box
                     sx={{
-                      color: theme.palette.common.white,
-                      fontWeight: "semibold",
-                      marginLeft: "1rem",
+                      padding: ".5rem .8rem",
+                      backgroundColor: theme.palette.primary.dark,
+                      borderRadius: 20,
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
                     }}
-                  >{`${user?.userData?.firstName} ${user?.userData?.lastName}`}</Typography>
+                  >
+                    <Avatar
+                      sx={{ height: 25, width: 25 }}
+                      alt={`${user?.userData?.firstName} ${user?.userData?.lastName}`}
+                      src={user?.userData?.profilePictureUrl}
+                    />
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: theme.palette.common.white,
+                        fontWeight: "semibold",
+                        marginLeft: "1rem",
+                      }}
+                    >{`${user?.userData?.firstName} ${user?.userData?.lastName}`}</Typography>
+                  </Box>
+
+                  <Tooltip title="Notifications">
+                    <Typography
+                      onClick={handleOpenUserMenu}
+                      sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
+                    >
+                      <Box
+                        sx={{
+                          backgroundColor: theme.palette.primary.dark,
+                          height: 40,
+                          width: 40,
+                          borderRadius: 40,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <IoNotifications color={theme?.palette.common.white} />
+                      </Box>
+                    </Typography>
+                  </Tooltip>
+
+                  <Tooltip title="Open settings">
+                    <Typography
+                      onClick={handleOpenUserMenu}
+                      sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
+                    >
+                      <Box
+                        sx={{
+                          backgroundColor: theme.palette.primary.dark,
+                          height: 40,
+                          width: 40,
+                          borderRadius: 40,
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <IoChevronDown color={theme?.palette.common.white} />
+                      </Box>
+                    </Typography>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    <MenuItem>
+                      <ListItemIcon>
+                        <IoPerson />
+                      </ListItemIcon>
+                      <ListItemText>{tCommon("my-profile")}</ListItemText>
+                    </MenuItem>
+                    <MenuItem onClick={() => router.push("/business-form")}>
+                      <ListItemIcon>
+                        <IoAdd />
+                      </ListItemIcon>
+                      <ListItemText>{tCommon("create-business")}</ListItemText>
+                    </MenuItem>
+                    <MenuItem onClick={logoutHandler}>
+                      <ListItemIcon>
+                        <IoLogOut />
+                      </ListItemIcon>
+                      <ListItemText>{tCommon("logout")}</ListItemText>
+                    </MenuItem>
+                  </Menu>
                 </Box>
-
-                <Tooltip title="Notifications">
-                  <Typography
-                    onClick={handleOpenUserMenu}
-                    sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
-                  >
-                    <Box
-                      sx={{
-                        backgroundColor: theme.palette.primary.dark,
-                        height: 40,
-                        width: 40,
-                        borderRadius: 40,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <IoNotifications color={theme?.palette.common.white} />
-                    </Box>
-                  </Typography>
-                </Tooltip>
-
-                <Tooltip title="Open settings">
-                  <Typography
-                    onClick={handleOpenUserMenu}
-                    sx={{ p: 0, cursor: "pointer", marginLeft: "1rem" }}
-                  >
-                    <Box
-                      sx={{
-                        backgroundColor: theme.palette.primary.dark,
-                        height: 40,
-                        width: 40,
-                        borderRadius: 40,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <IoChevronDown color={theme?.palette.common.white} />
-                    </Box>
-                  </Typography>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem>
-                    <ListItemIcon>
-                      <IoPerson />
-                    </ListItemIcon>
-                    <ListItemText>{tCommon("my-profile")}</ListItemText>
-                  </MenuItem>
-                  <MenuItem onClick={() => router.push("/business-form")}>
-                    <ListItemIcon>
-                      <IoAdd />
-                    </ListItemIcon>
-                    <ListItemText>{tCommon("create-business")}</ListItemText>
-                  </MenuItem>
-                  <MenuItem onClick={logoutHandler}>
-                    <ListItemIcon>
-                      <IoLogOut />
-                    </ListItemIcon>
-                    <ListItemText>{tCommon("logout")}</ListItemText>
-                  </MenuItem>
-                </Menu>
-              </Box>
+              </Link>
             )}
           </Box>
         </Toolbar>

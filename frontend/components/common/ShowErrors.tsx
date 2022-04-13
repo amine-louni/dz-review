@@ -26,6 +26,14 @@ const ShowErrors = ({ apiErrors, screen }: IShowErrors) => {
       </>
     );
   }
+  if (!apiErrors?.errors) {
+    console.log("here errior");
+    return (
+      <Alert severity="error" sx={{ marginBlock: ".3rem" }}>
+        {tApiErrors(apiErrors?.code)}
+      </Alert>
+    );
+  }
   return (
     <>
       {apiErrors?.errors.map((oneError) => {
