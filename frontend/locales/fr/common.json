@@ -20,5 +20,6 @@
   "create-business": "Créer une entreprise",
   "logout": "Déconnexion",
   "sign-in": "Connexion",
-  "sign-up": "S’enregistrer"
+  "sign-up": "S’enregistrer",
+  "edit-profile": "Editer le profil"
 }

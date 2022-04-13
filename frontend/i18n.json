@@ -8,6 +8,7 @@
     "/register": ["auth"],
     "/forgot-password": ["auth"],
     "/pin-reset-password": ["auth"],
-    "/business-form": ["business"]
+    "/business-form": ["business"],
+    "/user/[username]": ["auth"]
   }
 }

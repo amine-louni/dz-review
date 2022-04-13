@@ -32,7 +32,7 @@ import { NextPage } from "next";
 import ShowErrors from "../components/common/ShowErrors";
 import LocationSelect from "../components/common/LocationSelect";
 
-const generateYears = (startYear: number = 1970): number[] => {
+export const generateYears = (startYear: number = 1970): number[] => {
   var currentYear = new Date().getFullYear(),
     years = [];
 

@@ -20,5 +20,6 @@
   "create-business": "Create a business",
   "logout": "Logout",
   "sign-in": "Sign in",
-  "sign-up": "Sign up"
+  "sign-up": "Sign up",
+  "edit-profile": "Edit profile"
 }

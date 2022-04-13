@@ -4,6 +4,8 @@ export interface IUser {
     lastName: string;
     userName: string;
     email: string;
+    city: string;
+    state: string;
     role: string;
     phoneNumber?: any;
     dob: string;
