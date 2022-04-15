@@ -293,13 +293,19 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
     } catch (error: any) {
       setApiError(error?.response.data);
       console.error(error);
+    } finally {
+      setApiError(null);
     }
+  };
+  const onClose = () => {
+    setApiError(null);
+    handleClose();
   };
 
   return (
     <Modal
       open={isOpen}
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby={tCommon("edit-profile")}
       aria-describedby={tCommon("edit-profile")}
       sx={{ overflow: "auto" }}
