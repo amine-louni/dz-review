@@ -17,7 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { IoCamera, IoPeople, IoStar } from "react-icons/io5";
+import { IoCamera, IoMap, IoPeople, IoStar } from "react-icons/io5";
 import { HiCake } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ReviewCard from "../../components/ReviewCard";
@@ -170,17 +170,18 @@ export const Profile = ({ userProfile, notFound }: ProfileDetailsProps) => {
               }}
             >
               <Box sx={{ alignItems: "center", display: "flex" }}>
-                <IoStar color="gold" />
+                <IoMap color={theme.palette?.primary.light} />
+                <Typography variant="caption" sx={{ marginLeft: "4px" }}>
+                  {user?.city}, {user?.state}
+                </Typography>
+              </Box>
+              <Box sx={{ alignItems: "center", display: "flex" }}>
+                <IoStar color={theme.palette?.primary.light} />
                 <Typography variant="caption" sx={{ marginLeft: "4px" }}>
                   20 reviews
                 </Typography>
               </Box>
-              <Box sx={{ alignItems: "center", display: "flex" }}>
-                <IoPeople color={theme.palette?.primary.light} />
-                <Typography variant="caption" sx={{ marginLeft: "4px" }}>
-                  450 friends
-                </Typography>
-              </Box>
+
               <Box sx={{ alignItems: "center", display: "flex" }}>
                 <IoCamera color={theme.palette?.primary.light} />
                 <Typography variant="caption" sx={{ marginLeft: "4px" }}>
@@ -321,208 +322,215 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
           padding: "2rem",
         }}
       >
-        <Typography id="modal-modal-title" variant="h5" component="h2">
-          {tCommon("edit-profile")}
-        </Typography>
-        <ShowErrors apiErrors={apiError} screen="auth" />
-        <Formik
-          enableReinitialize
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleEditUser}
-        >
-          {({
-            handleChange,
-            errors,
-            isSubmitting,
-            values,
-            touched,
-            setFieldValue,
-            handleBlur,
-          }) => (
-            <Form>
-              <TextField
-                value={values.userName}
-                error={touched.userName && !!errors.userName}
-                helperText={touched.userName && errors.userName}
-                size="small"
-                margin="dense"
-                onChange={handleChange}
-                fullWidth
-                id="userName"
-                label={tAuth("username")}
-                name="userName"
-                onBlur={handleBlur}
-              />
-
-              <TextField
-                value={values.firstName}
-                error={touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                size="small"
-                margin="dense"
-                onChange={handleChange}
-                fullWidth
-                id="firstName"
-                label={tAuth("firstname")}
-                name="firstName"
-              />
-
-              <TextField
-                value={values.lastName}
-                error={touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                size="small"
-                margin="dense"
-                onChange={handleChange}
-                fullWidth
-                id="lastName"
-                label={tAuth("lastname")}
-                name="lastName"
-              />
-
-              <TextField
-                value={values.email}
-                error={touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                size="small"
-                margin="dense"
-                onChange={handleChange}
-                fullWidth
-                id="email"
-                label={tAuth("email")}
-                name="email"
-              />
-
-              <FormControl sx={{ marginY: ".6rem" }} fullWidth>
-                <LocationSelect
-                  defaultWilayaValue={values.state}
-                  defaultCommuneValue={values.city}
-                  caption={errors.state || errors?.city}
-                  selectCommuneCb={(city) => setFieldValue("city", city)}
-                  selectWilayaCb={(state) => setFieldValue("state", state)}
+        <Container maxWidth="md">
+          <Typography
+            id="modal-modal-title"
+            sx={{ marginBottom: "2rem", fontWeight: "semibold" }}
+            variant="h5"
+            component="h2"
+          >
+            {tCommon("edit-profile")}
+          </Typography>
+          <ShowErrors apiErrors={apiError} screen="auth" />
+          <Formik
+            enableReinitialize
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleEditUser}
+          >
+            {({
+              handleChange,
+              errors,
+              isSubmitting,
+              values,
+              touched,
+              setFieldValue,
+              handleBlur,
+            }) => (
+              <Form>
+                <TextField
+                  value={values.userName}
+                  error={touched.userName && !!errors.userName}
+                  helperText={touched.userName && errors.userName}
+                  size="small"
+                  margin="dense"
+                  onChange={handleChange}
+                  fullWidth
+                  id="userName"
+                  label={tAuth("username")}
+                  name="userName"
+                  onBlur={handleBlur}
                 />
-              </FormControl>
-              {/* DOB composer */}
-              <Box
-                css={css`
-                  margin-top: 8px;
-                  margin-bottom: 4px;
-                `}
-              >
-                <InputLabel
-                  css={css`
-                    margin-bottom: 8px;
-                  `}
-                  id="day"
-                >
-                  {tAuth("date-of-birth")}
-                </InputLabel>
 
+                <TextField
+                  value={values.firstName}
+                  error={touched.firstName && !!errors.firstName}
+                  helperText={touched.firstName && errors.firstName}
+                  size="small"
+                  margin="dense"
+                  onChange={handleChange}
+                  fullWidth
+                  id="firstName"
+                  label={tAuth("firstname")}
+                  name="firstName"
+                />
+
+                <TextField
+                  value={values.lastName}
+                  error={touched.lastName && !!errors.lastName}
+                  helperText={touched.lastName && errors.lastName}
+                  size="small"
+                  margin="dense"
+                  onChange={handleChange}
+                  fullWidth
+                  id="lastName"
+                  label={tAuth("lastname")}
+                  name="lastName"
+                />
+
+                <TextField
+                  value={values.email}
+                  error={touched.email && !!errors.email}
+                  helperText={touched.email && errors.email}
+                  size="small"
+                  margin="dense"
+                  onChange={handleChange}
+                  fullWidth
+                  id="email"
+                  label={tAuth("email")}
+                  name="email"
+                />
+
+                <FormControl sx={{ marginY: ".6rem" }} fullWidth>
+                  <LocationSelect
+                    defaultWilayaValue={values.state}
+                    defaultCommuneValue={values.city}
+                    caption={errors.state || errors?.city}
+                    selectCommuneCb={(city) => setFieldValue("city", city)}
+                    selectWilayaCb={(state) => setFieldValue("state", state)}
+                  />
+                </FormControl>
+                {/* DOB composer */}
                 <Box
                   css={css`
-                    display: flex;
-                    justify-content: space-between;
+                    margin-top: 8px;
+                    margin-bottom: 4px;
                   `}
                 >
-                  <FormControl
-                    size="small"
+                  <InputLabel
                     css={css`
-                      margin-left: 4px;
-                      flex: 1;
+                      margin-bottom: 8px;
                     `}
+                    id="day"
                   >
-                    <InputLabel id="day">{tAuth("day")}</InputLabel>
-                    <Select
-                      name="day"
-                      labelId="day of birth"
-                      id="day"
-                      label={tAuth("day")}
-                      placeholder={tAuth("day")}
-                      onChange={handleChange}
-                      defaultValue={Number(values.day)}
-                    >
-                      {Array(31)
-                        .fill(1)
-                        .map((x, y) => x + y)
-                        .map((item) => (
-                          <MenuItem key={item} value={item}>
-                            {item}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
+                    {tAuth("date-of-birth")}
+                  </InputLabel>
 
-                  <FormControl
-                    size="small"
+                  <Box
                     css={css`
-                      margin-left: 4px;
-                      flex: 1;
+                      display: flex;
+                      justify-content: space-between;
                     `}
                   >
-                    <InputLabel id="month">{tAuth("month")}</InputLabel>
-                    <Select
-                      variant="outlined"
-                      name="month"
-                      labelId="month of birth"
-                      id="month"
-                      label={tAuth("month")}
-                      placeholder={tAuth("month")}
-                      onChange={handleChange}
-                      defaultValue={Number(values.month)}
-                    >
-                      {Array(12)
-                        .fill(1)
-                        .map((x, y) => x + y)
-                        .map((item) => (
-                          <MenuItem key={item} value={item}>
-                            {item}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                  <FormControl
-                    css={css`
-                      margin-left: 4px;
-                      flex: 2;
-                    `}
-                  >
-                    <InputLabel id="year">{tAuth("year")}</InputLabel>
-                    <Select
-                      variant="outlined"
+                    <FormControl
                       size="small"
-                      name="year"
-                      labelId="year of birth"
-                      id="year"
-                      defaultValue={values.year}
-                      value={values.year}
-                      label={tAuth("year")}
-                      placeholder={tAuth("year")}
-                      onChange={handleChange}
+                      css={css`
+                        margin-left: 4px;
+                        flex: 1;
+                      `}
                     >
-                      {generateYears().map((item) => (
-                        <MenuItem key={item} value={item}>
-                          {item}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </Box>
-              {/* DOB composer */}
+                      <InputLabel id="day">{tAuth("day")}</InputLabel>
+                      <Select
+                        name="day"
+                        labelId="day of birth"
+                        id="day"
+                        label={tAuth("day")}
+                        placeholder={tAuth("day")}
+                        onChange={handleChange}
+                        defaultValue={Number(values.day)}
+                      >
+                        {Array(31)
+                          .fill(1)
+                          .map((x, y) => x + y)
+                          .map((item) => (
+                            <MenuItem key={item} value={item}>
+                              {item}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
 
-              <Button
-                disabled={isSubmitting}
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                {tCommon("submit")}
-              </Button>
-            </Form>
-          )}
-        </Formik>
+                    <FormControl
+                      size="small"
+                      css={css`
+                        margin-left: 4px;
+                        flex: 1;
+                      `}
+                    >
+                      <InputLabel id="month">{tAuth("month")}</InputLabel>
+                      <Select
+                        variant="outlined"
+                        name="month"
+                        labelId="month of birth"
+                        id="month"
+                        label={tAuth("month")}
+                        placeholder={tAuth("month")}
+                        onChange={handleChange}
+                        defaultValue={Number(values.month)}
+                      >
+                        {Array(12)
+                          .fill(1)
+                          .map((x, y) => x + y)
+                          .map((item) => (
+                            <MenuItem key={item} value={item}>
+                              {item}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl
+                      css={css`
+                        margin-left: 4px;
+                        flex: 2;
+                      `}
+                    >
+                      <InputLabel id="year">{tAuth("year")}</InputLabel>
+                      <Select
+                        variant="outlined"
+                        size="small"
+                        name="year"
+                        labelId="year of birth"
+                        id="year"
+                        defaultValue={values.year}
+                        value={values.year}
+                        label={tAuth("year")}
+                        placeholder={tAuth("year")}
+                        onChange={handleChange}
+                      >
+                        {generateYears().map((item) => (
+                          <MenuItem key={item} value={item}>
+                            {item}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </Box>
+                {/* DOB composer */}
+
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {tCommon("submit")}
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </Container>
       </Card>
     </Modal>
   );
