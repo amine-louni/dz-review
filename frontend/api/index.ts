@@ -36,6 +36,7 @@ export const mediaHTTP = Axios.create({
 export const setAuthToken = (token: string) => {
     if (token) {
         Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        userHTTP.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         auth.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         domain.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         businessHTTP.defaults.headers.common['Authorization'] = `Bearer ${token}`;

@@ -19,18 +19,24 @@ interface ILocationSelect {
   selectWilayaCb: (state: string) => void;
   selectCommuneCb: (city: string | null) => void;
   caption: string | undefined;
+  defaultWilayaValue?: string;
+  defaultCommuneValue?: string;
 }
 
 const LocationSelect = ({
   selectWilayaCb,
   selectCommuneCb,
   caption,
+  defaultCommuneValue,
+  defaultWilayaValue,
 }: ILocationSelect) => {
   const { t } = useTranslation("common");
 
-  const [selectedWilaya, setSelectedWilaya] = useState<string | undefined>("");
+  const [selectedWilaya, setSelectedWilaya] = useState<string | undefined>(
+    defaultWilayaValue
+  );
   const [selectedCommune, setSelectedCommune] = useState<string | undefined>(
-    ""
+    defaultCommuneValue
   );
   const [communs, setCommuns] = useState<string[] | null>(null);
 

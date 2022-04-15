@@ -2,13 +2,6 @@
   "locales": ["en", "ar", "fr"],
   "defaultLocale": "en",
   "pages": {
-    "*": ["common", "apiErrors"],
-    "/": ["auth"],
-    "/login": ["auth"],
-    "/register": ["auth"],
-    "/forgot-password": ["auth"],
-    "/pin-reset-password": ["auth"],
-    "/business-form": ["business"],
-    "/user/[username]": ["auth"]
+    "*": ["common", "apiErrors", "auth", "business"]
   }
 }

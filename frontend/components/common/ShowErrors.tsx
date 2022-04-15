@@ -27,20 +27,21 @@ const ShowErrors = ({ apiErrors, screen }: IShowErrors) => {
     );
   }
   if (!apiErrors?.errors) {
-    console.log("here errior");
     return (
       <Alert severity="error" sx={{ marginBlock: ".3rem" }}>
         {tApiErrors(apiErrors?.code)}
       </Alert>
     );
   }
+
   return (
     <>
       {apiErrors?.errors.map((oneError) => {
         if ("field" in oneError)
           return (
             <Alert severity="error" sx={{ marginBlock: ".3rem" }}>
-              {tScreen(oneError?.field)} : {tApiErrors(oneError?.code)}
+              {tScreen(oneError?.field.replace(/"+/g, ""))} :{" "}
+              {tApiErrors(oneError?.code)}
             </Alert>
           );
       })}

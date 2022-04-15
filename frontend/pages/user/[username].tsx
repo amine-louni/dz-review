@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import * as yup from "yup";
-import { userHTTP } from "../../api";
+import { setAuthToken, userHTTP } from "../../api";
 import { css, useTheme } from "@emotion/react";
 import {
   Avatar,
@@ -19,19 +19,21 @@ import {
 import { Box } from "@mui/system";
 import { IoCamera, IoPeople, IoStar } from "react-icons/io5";
 import { HiCake } from "react-icons/hi";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ReviewCard from "../../components/ReviewCard";
 
 import { Masonry } from "@mui/lab";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 import useTranslation from "next-translate/useTranslation";
-import { useState } from "react";
-import { Form, Formik } from "formik";
+import { useEffect, useState } from "react";
+import { Form, Formik, FormikValues } from "formik";
 import ShowErrors from "../../components/common/ShowErrors";
 import LocationSelect from "../../components/common/LocationSelect";
 import { generateYears } from "../register";
 import Link from "../../src/Link";
+import { setUser } from "../../redux/slices/userSlice";
+import { IApiError } from "../../@types";
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
@@ -247,6 +249,8 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
   const { t: tCommon } = useTranslation("common");
   const { t: tAuth } = useTranslation("auth");
   const { user } = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const [apiError, setApiError] = useState<IApiError | null>(null);
 
   const initialValues = {
     userName: user.userData?.userName,
@@ -255,9 +259,9 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
     city: user.userData?.city,
     state: user.userData?.state,
     email: user.userData?.email,
-    day: user.userData?.dob.split("-")[0],
+    day: user.userData?.dob.split("-")[2],
     month: user.userData?.dob.split("-")[1],
-    year: user.userData?.dob.split("-")[2],
+    year: user.userData?.dob.split("-")[0],
   };
 
   const validationSchema = yup.object({
@@ -274,6 +278,23 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
     month: yup.number().required(tAuth("required")),
     year: yup.number().required(tAuth("required")),
   });
+
+  const handleEditUser = async (values: FormikValues) => {
+    try {
+      setApiError(null);
+      const response = await userHTTP.patch("/update-me", {
+        ...values,
+        dob: `${values.year}-${values.month}-${values.day}`,
+      });
+      if (response) {
+        dispatch(setUser(response.data));
+        handleClose();
+      }
+    } catch (error: any) {
+      setApiError(error?.response.data);
+      console.error(error);
+    }
+  };
 
   return (
     <Modal
@@ -297,12 +318,12 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
         <Typography id="modal-modal-title" variant="h5" component="h2">
           {tCommon("edit-profile")}
         </Typography>
-
+        <ShowErrors apiErrors={apiError} screen="auth" />
         <Formik
           enableReinitialize
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={() => console.log("edit")}
+          onSubmit={handleEditUser}
         >
           {({
             handleChange,
@@ -367,11 +388,15 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                 name="email"
               />
 
-              <LocationSelect
-                caption={errors.state || errors?.city}
-                selectCommuneCb={(city) => setFieldValue("city", city)}
-                selectWilayaCb={(state) => setFieldValue("state", state)}
-              />
+              <FormControl sx={{ marginY: ".6rem" }} fullWidth>
+                <LocationSelect
+                  defaultWilayaValue={values.state}
+                  defaultCommuneValue={values.city}
+                  caption={errors.state || errors?.city}
+                  selectCommuneCb={(city) => setFieldValue("city", city)}
+                  selectWilayaCb={(state) => setFieldValue("state", state)}
+                />
+              </FormControl>
               {/* DOB composer */}
               <Box
                 css={css`
@@ -395,6 +420,7 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                   `}
                 >
                   <FormControl
+                    size="small"
                     css={css`
                       margin-left: 4px;
                       flex: 1;
@@ -402,14 +428,13 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                   >
                     <InputLabel id="day">{tAuth("day")}</InputLabel>
                     <Select
-                      size="small"
                       name="day"
                       labelId="day of birth"
                       id="day"
-                      value={values.day}
                       label={tAuth("day")}
                       placeholder={tAuth("day")}
                       onChange={handleChange}
+                      defaultValue={Number(values.day)}
                     >
                       {Array(31)
                         .fill(1)
@@ -421,7 +446,9 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                         ))}
                     </Select>
                   </FormControl>
+
                   <FormControl
+                    size="small"
                     css={css`
                       margin-left: 4px;
                       flex: 1;
@@ -430,14 +457,13 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                     <InputLabel id="month">{tAuth("month")}</InputLabel>
                     <Select
                       variant="outlined"
-                      size="small"
                       name="month"
                       labelId="month of birth"
                       id="month"
-                      value={values.month}
                       label={tAuth("month")}
                       placeholder={tAuth("month")}
                       onChange={handleChange}
+                      defaultValue={Number(values.month)}
                     >
                       {Array(12)
                         .fill(1)
@@ -462,6 +488,7 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                       name="year"
                       labelId="year of birth"
                       id="year"
+                      defaultValue={values.year}
                       value={values.year}
                       label={tAuth("year")}
                       placeholder={tAuth("year")}

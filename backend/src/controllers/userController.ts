@@ -49,7 +49,7 @@ export const updateMe = catchAsync(async (req, res, next) => {
       ...body,
     },
     {}
-  ).catch((e) => next(new AppError(`error while updating : ${e}`, 500)));
+  )
 
   const updatedUser = await User.findOne({ uuid: req.currentUser?.uuid });
 
