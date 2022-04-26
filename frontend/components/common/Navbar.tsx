@@ -63,7 +63,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
+  console.log(user);
   const { logoutHandler } = useAuth();
   return (
     <AppBar position={position} color={color} elevation={0}>

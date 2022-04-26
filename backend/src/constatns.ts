@@ -23,7 +23,8 @@ export const ALLOWED_USER_FIELDS = [
   "id_verified_at",
   "isActive",
   "profilePictureUrl",
-  "role"
+  "role",
+  "emailValidateAt",
 ] as const;
 
 export const SECRET_USER_FIELDS = [
@@ -32,8 +33,6 @@ export const SECRET_USER_FIELDS = [
   "passwordResetToken",
   "passwordResetPin",
   "passwordResetPinExpiresAt",
-
-  "emailValidateAt",
   "emailValidationPin",
   "emailValidationPinExpiresAt",
 ] as const;

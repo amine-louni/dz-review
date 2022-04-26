@@ -9,6 +9,7 @@ export const getUser = catchAsync(async (req, res, next) => {
 
   // 1 ) find the user  &  check if exists
   const theUser = await User.findOne({ userName: username });
+  console.log(theUser, ' the user')
 
   if (!theUser) {
     return next(new AppError("user not found", 404, NOT_FOUND));
