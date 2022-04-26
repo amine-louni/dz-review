@@ -1,19 +1,20 @@
-import { css } from "@emotion/react";
-import { CircularProgress, Typography } from "@mui/material";
+import { css, useTheme } from "@emotion/react";
+import { Avatar, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { FormEvent, useState } from "react";
-import { IoCloudUploadOutline } from "react-icons/io5";
+import { IoPencil } from "react-icons/io5";
 import { mediaHTTP } from "../../api";
 
-interface IFileInput {
+interface IFileInputAvatar {
   getUrl: (url: string) => void;
-  label: string;
   caption?: string | null;
+  defaultUrl?: string | null;
 }
 
-const FileInput = ({ getUrl, label, caption }: IFileInput) => {
+const FileInputAvatar = ({ getUrl, caption, defaultUrl }: IFileInputAvatar) => {
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState<string | null>(null);
+  const theme = useTheme();
 
   const onFileChange = async (event: FormEvent<HTMLInputElement>) => {
     const element = event.currentTarget as HTMLInputElement;
@@ -36,28 +37,37 @@ const FileInput = ({ getUrl, label, caption }: IFileInput) => {
     }
   };
   return (
-    <>
-      <Typography variant="subtitle1">{label}</Typography>
+    <Box
+      sx={{
+        position: "relative",
+        borderRadius: "7rem",
+        overflow: "hidden",
+      }}
+    >
+      <Avatar src={url || defaultUrl!} sx={{ height: "7rem", width: "7rem" }} />
       <Box
         sx={{
-          backgroundImage: `url(${url})`,
-          position: "relative",
-          height: "9rem",
-          borderRadius: "4px",
+          position: "absolute",
+          height: "30%",
+          bottom: 0,
+          cursor: "pointer",
+          zIndex: 5,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          overflow: "hidden",
+          width: "100%",
+          background: theme.palette?.secondary.main,
+          ":hover": {
+            background: theme.palette?.secondary.dark,
+            cursor: "pointer",
+          },
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            height: " 100%",
-            width: " 100%",
-            backgroundColor: "rgba(225,0,0, 0.2)",
-          }}
-        />
+        {loading ? (
+          <CircularProgress size={15} color="success" />
+        ) : (
+          <IoPencil color={theme.palette?.common.white} size={15} />
+        )}
         <input
           accept="image/*"
           onChange={onFileChange}
@@ -70,21 +80,17 @@ const FileInput = ({ getUrl, label, caption }: IFileInput) => {
             opacity: 0;
             height: 100%;
             width: 100%;
-            cursor: pointer;
+            top: 0;
           `}
         />
-
-        {loading ? <CircularProgress /> : <IoCloudUploadOutline size={35} />}
       </Box>
       {caption && (
-        <>
-          <Typography variant="caption" color="red">
-            {caption}
-          </Typography>
-        </>
+        <Typography variant="caption" color="red">
+          {caption}
+        </Typography>
       )}
-    </>
+    </Box>
   );
 };
 
-export default FileInput;
+export default FileInputAvatar;

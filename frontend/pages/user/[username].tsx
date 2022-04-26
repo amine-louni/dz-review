@@ -8,7 +8,6 @@ import {
   Card,
   Container,
   FormControl,
-  Grid,
   InputLabel,
   MenuItem,
   Modal,
@@ -21,19 +20,18 @@ import { IoCamera, IoMap, IoPeople, IoStar } from "react-icons/io5";
 import { HiCake } from "react-icons/hi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import ReviewCard from "../../components/ReviewCard";
-
 import { Masonry } from "@mui/lab";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 import useTranslation from "next-translate/useTranslation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Form, Formik, FormikValues } from "formik";
 import ShowErrors from "../../components/common/ShowErrors";
 import LocationSelect from "../../components/common/LocationSelect";
 import { generateYears } from "../register";
-import Link from "../../src/Link";
 import { setUser } from "../../redux/slices/userSlice";
 import { IApiError } from "../../@types";
+import FileInputAvatar from "../../components/common/FileInputAvatar";
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
@@ -257,6 +255,9 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
     userName: user.userData?.userName,
     firstName: user.userData?.firstName,
     lastName: user.userData?.lastName,
+    bio: user.userData?.bio,
+    profilePictureUrl: user?.userData?.profilePictureUrl,
+    phoneNumber: user.userData?.phoneNumber,
     city: user.userData?.city,
     state: user.userData?.state,
     email: user.userData?.email,
@@ -266,9 +267,12 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
   };
 
   const validationSchema = yup.object({
+    profilePictureUrl: yup.string().required(tAuth("required")),
     userName: yup.string().required(tAuth("required")),
     firstName: yup.string().required(tAuth("required")),
     lastName: yup.string().required(tAuth("required")),
+    bio: yup.string().nullable(),
+    phoneNumber: yup.string().nullable(),
     city: yup.string().required(tAuth("required")).nullable(),
     state: yup.string().required(tAuth("required")),
     email: yup
@@ -348,6 +352,18 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
               handleBlur,
             }) => (
               <Form>
+                <Box
+                  sx={{
+                    padding: "1rem 0",
+                  }}
+                >
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <FileInputAvatar
+                      defaultUrl={user?.userData?.profilePictureUrl}
+                      getUrl={(url) => setFieldValue("profilePictureUrl", url)}
+                    />
+                  </Box>
+                </Box>
                 <TextField
                   value={values.userName}
                   error={touched.userName && !!errors.userName}
@@ -399,6 +415,34 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                   id="email"
                   label={tAuth("email")}
                   name="email"
+                />
+
+                <TextField
+                  multiline
+                  rows={3}
+                  value={values.bio}
+                  error={touched.bio && !!errors.bio}
+                  helperText={touched.bio && errors.bio}
+                  size="small"
+                  margin="dense"
+                  onChange={handleChange}
+                  fullWidth
+                  id="bio"
+                  label={tAuth("bio")}
+                  name="bio"
+                />
+
+                <TextField
+                  value={values.phoneNumber}
+                  error={touched.phoneNumber && !!errors.phoneNumber}
+                  helperText={touched.phoneNumber && errors.phoneNumber}
+                  size="small"
+                  margin="dense"
+                  onChange={handleChange}
+                  fullWidth
+                  id="phoneNumber"
+                  label={tCommon("phone-number")}
+                  name="phoneNumber"
                 />
 
                 <FormControl sx={{ marginY: ".6rem" }} fullWidth>

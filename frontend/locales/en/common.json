@@ -21,5 +21,6 @@
   "logout": "Logout",
   "sign-in": "Sign in",
   "sign-up": "Sign up",
-  "edit-profile": "Edit profile"
+  "edit-profile": "Edit profile",
+  "phone-number": "Phone number"
 }
