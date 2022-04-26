@@ -56,8 +56,15 @@ const EmailActivationNotice = () => {
           })
         );
       }
-    } catch (e) {
-      console.error(e);
+    } catch (error: any) {
+      console.error(error);
+      dispatch(
+        setToast({
+          open: true,
+          autoHideDuration: 5000,
+          message: error?.response.data?.code,
+        })
+      );
     } finally {
       setLoading(false);
     }
@@ -80,82 +87,70 @@ const EmailActivationNotice = () => {
           }}
         >
           <Box />
-          {pinInputOpen && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <TextField
-                size="small"
-                margin="none"
-                placeholder="Enter the pin"
-                onChange={handlePinChange}
-              />
 
-              <Button
-                onClick={() => validateEmail(pin)}
-                size="small"
-                variant="contained"
-                color="primary"
-                sx={{ marginLeft: ".4rem" }}
-              >
-                Validate
-              </Button>
-              <Button
-                onClick={() => setPinInputOpen(false)}
-                size="small"
-                variant="text"
-                color="inherit"
-                sx={{ marginLeft: ".4rem", color: theme.palette?.common.white }}
-              >
-                Didn't get the code
-              </Button>
-            </Box>
-          )}
-          {!pinInputOpen && (
-            <Box
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          ></Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Typography
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                color: theme.palette?.common.white,
+                fontWeight: "semibold",
               }}
+              variant="caption"
             >
-              <Typography
-                sx={{
-                  color: theme.palette?.common.white,
-                  fontWeight: "semibold",
-                }}
-                variant="caption"
-              >
-                You email is not verified can you please check your email and
-                confirm your account at{" "}
-                <Box component="span" sx={{ fontWeight: "bold" }}>
-                  {user?.userData?.email}
-                </Box>
-              </Typography>
-              <Button
-                onClick={resendPin}
-                size="small"
-                variant="text"
-                color="inherit"
-                sx={{ marginLeft: ".4rem", color: theme.palette?.common.white }}
-              >
-                Resend
-              </Button>
-              <Button
-                onClick={() => setPinInputOpen(true)}
-                size="small"
-                variant="contained"
-                color="primary"
-                sx={{ marginLeft: ".4rem" }}
-              >
-                You get the code ?
-              </Button>
-            </Box>
-          )}
+              check your email and confirm your account at{" "}
+              <Box component="span" sx={{ fontWeight: "bold" }}>
+                {user?.userData?.email}
+              </Box>
+            </Typography>
+            <Button
+              onClick={resendPin}
+              size="small"
+              variant="text"
+              color="inherit"
+              sx={{ marginX: ".2rem", color: theme.palette?.common.white }}
+            >
+              Not your email?
+            </Button>
+            <Button
+              onClick={resendPin}
+              size="small"
+              variant="text"
+              color="inherit"
+              sx={{ marginX: ".2rem", color: theme.palette?.common.white }}
+            >
+              Resend
+            </Button>
+            <TextField
+              sx={{ width: "10rem" }}
+              size="small"
+              margin="none"
+              placeholder="Enter the pin"
+              onChange={handlePinChange}
+            />
+
+            <Button
+              onClick={() => validateEmail(pin)}
+              size="small"
+              variant="contained"
+              color="primary"
+              sx={{ marginLeft: ".4rem" }}
+            >
+              Validate
+            </Button>
+          </Box>
 
           {loading ? (
             <CircularProgress
