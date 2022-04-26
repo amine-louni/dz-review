@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,9 +15,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import useTranslation from "next-translate/useTranslation";
 import LanguageMenu from "./LanguageMenu";
 import Link from "../../src/Link";
-import theme from "../../src/theme";
-import { refreshUserToken } from "../../utils/authed";
-import { setUser } from "../../redux/slices/userSlice";
+import EmailActivationNotice from "./EmailActivationNotice";
+
 import { useAuth } from "../../hooks/useAuth";
 import { ListItemIcon, ListItemText, MenuList } from "@mui/material";
 
@@ -29,7 +28,7 @@ import {
   IoPerson,
 } from "react-icons/io5";
 import { useRouter } from "next/router";
-import { ArrowDownward } from "@mui/icons-material";
+import { useTheme } from "@emotion/react";
 
 interface INavbar {
   color?: "transparent" | "primary";
@@ -46,8 +45,9 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
 
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state);
-  const { t: tAuth } = useTranslation("auth");
+
   const { t: tCommon } = useTranslation("common");
+  const theme = useTheme();
   const router = useRouter();
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -63,10 +63,11 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  console.log(user);
+
   const { logoutHandler } = useAuth();
   return (
     <AppBar position={position} color={color} elevation={0}>
+      <EmailActivationNotice />
       <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Link href="/">
@@ -88,7 +89,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
           <Box
             sx={{
               display: { xs: "flex", md: "none" },
-              color: theme.palette.common.white,
+              color: theme.palette?.common.white,
             }}
           >
             <IconButton
@@ -180,7 +181,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
               display: {
                 xs: "flex",
                 md: "none",
-                color: theme.palette.common.white,
+                color: theme?.palette?.common.white,
               },
             }}
           >
@@ -234,7 +235,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                   <Box
                     sx={{
                       padding: ".5rem .8rem",
-                      backgroundColor: theme.palette.primary.dark,
+                      backgroundColor: theme.palette?.primary.dark,
                       borderRadius: 20,
                       display: "flex",
                       flexDirection: "row",
@@ -249,7 +250,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                     <Typography
                       variant="subtitle2"
                       sx={{
-                        color: theme.palette.common.white,
+                        color: theme.palette?.common.white,
                         fontWeight: "semibold",
                         marginLeft: "1rem",
                       }}
@@ -263,7 +264,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                   >
                     <Box
                       sx={{
-                        backgroundColor: theme.palette.primary.dark,
+                        backgroundColor: theme.palette?.primary.dark,
                         height: 40,
                         width: 40,
                         borderRadius: 40,
@@ -272,7 +273,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                         alignItems: "center",
                       }}
                     >
-                      <IoNotifications color={theme?.palette.common.white} />
+                      <IoNotifications color={theme?.palette?.common.white} />
                     </Box>
                   </Typography>
                 </Tooltip>
@@ -284,7 +285,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                   >
                     <Box
                       sx={{
-                        backgroundColor: theme.palette.primary.dark,
+                        backgroundColor: theme.palette?.primary.dark,
                         height: 40,
                         width: 40,
                         borderRadius: 40,
@@ -293,7 +294,7 @@ const Navbar = ({ color = "transparent", position = "absolute" }: INavbar) => {
                         alignItems: "center",
                       }}
                     >
-                      <IoChevronDown color={theme?.palette.common.white} />
+                      <IoChevronDown color={theme?.palette?.common.white} />
                     </Box>
                   </Typography>
                 </Tooltip>

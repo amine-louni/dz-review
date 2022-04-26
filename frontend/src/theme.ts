@@ -68,14 +68,36 @@ const theme = createTheme({
         }
       }
     },
+
+
+
     MuiTextField: {
+
+
+      variants: [
+        {
+          props: { size: "small" },
+          style: {
+            '& input': {
+              padding: "4px 8px"
+            }
+          }
+        },
+        {
+          props: { size: "medium" },
+          style: {}
+        }
+      ],
+
       styleOverrides: {
         root: {
-          background: "#F4F5F4",
+          "& input": {
+            background: "#F4F5F4",
+            borderRadius: '4px'
+          },
+
           ":webkit-autofill": {
             boxShadow: '0 0 0 30px white inset'
-
-
           },
 
         }
@@ -83,17 +105,12 @@ const theme = createTheme({
     },
     MuiSelect: {
       styleOverrides: {
-
         outlined: {
           background: "#F4F5F4",
-
         }
-
       }
-
     }
   }
-
 });
 
 export default theme;

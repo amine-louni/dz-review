@@ -1,6 +1,6 @@
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import * as yup from "yup";
-import { setAuthToken, userHTTP } from "../../api";
+import { userHTTP } from "../../api";
 import { css, useTheme } from "@emotion/react";
 import {
   Avatar,
@@ -365,6 +365,7 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                   </Box>
                 </Box>
                 <TextField
+                  disabled
                   value={values.userName}
                   error={touched.userName && !!errors.userName}
                   helperText={touched.userName && errors.userName}
@@ -405,6 +406,7 @@ const EditProfileModal = ({ isOpen, handleClose }: EditPrfileProps) => {
                 />
 
                 <TextField
+                  disabled
                   value={values.email}
                   error={touched.email && !!errors.email}
                   helperText={touched.email && errors.email}

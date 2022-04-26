@@ -134,21 +134,41 @@ export const validateEmail = catchAsync(async (req, res, next) => {
     );
   }
 
-  // return res.json({
-  //     status: 'testign yo'
-  // })
-  //  3 )  validate the email 👌
 
-  const updatedUser = User.update(theUser.uuid, {
-    emailValidationPin: undefined,
-    emailValidationPinExpiresAt: undefined,
-    emailValidateAt: new Date(),
-  });
+  //  3 )  validate the email 👌
+  theUser.emailValidateAt = new Date();
+  theUser.emailValidationPin = null;
+  theUser.emailValidationPinExpiresAt = null;
+
+  theUser.save()
 
   res.status(201).json({
-    user: updatedUser,
+    status: 'success',
+    user: theUser
   });
 });
+
+export const resendValidationEmail = catchAsync(async (req, res, next) => {
+
+  const theUser = await User.findOne({ uuid: req.currentUser?.uuid });
+
+
+  if (!theUser) {
+    return next(new AppError("user not found", 404, NOT_FOUND));
+  }
+
+  const pin = crypto.randomBytes(4).toString("hex");
+  theUser.emailValidationPin = await crypt.hash(pin, 12);
+  theUser.emailValidationPinExpiresAt = await new Date(
+    new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
+  );
+  theUser.save();
+  new EmailSender(theUser, "", pin).sendValidationEmail();
+  res.json({
+    status: "success",
+
+  })
+})
 
 export const forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email

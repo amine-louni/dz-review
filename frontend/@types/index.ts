@@ -13,6 +13,7 @@ export interface IUser {
     isActive: boolean;
     id_verified_at?: any;
     profilePictureUrl: string;
+    emailValidateAt: boolean;
 }
 
 export interface IDomain {
