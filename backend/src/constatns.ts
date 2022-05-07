@@ -58,10 +58,11 @@ export const passwordRegExValidator = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 // code erros
 export const BAD_AUTH = "BAD_AUTH";
 export const BAD_INPUT = "bad_input";
-export const NOT_FOUND = "not_found";
+export const NOT_FOUND = "NOT_FOUND";
 export const USER_NOT_FOUND = "user_not_found";
 export const EMAIL_NOT_FOUND = "email_not_found";
-export const NOT_AUTHORIZED = "not_authorized";
+export const NOT_AUTHORIZED = "NOT_AUTHORIZED";
+export const OFF_LIMIT = "OFF_LIMIT";
 export const INVALID_TOKEN = "invalid_token";
 export const EXPIRED_TOKEN = "expired_token";
 export const VALIDATION_FAILED = "validation_failed";

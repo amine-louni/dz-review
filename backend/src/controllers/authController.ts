@@ -162,8 +162,12 @@ export const resendValidationEmail = catchAsync(async (req, res, next) => {
   theUser.emailValidationPinExpiresAt = await new Date(
     new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
   );
-  theUser.save();
-  new EmailSender(theUser, "", pin).sendValidationEmail();
+  await theUser.save();
+  try {
+    new EmailSender(theUser, "", pin).sendValidationEmail();
+  } catch (e) {
+    console.log(e)
+  }
   res.json({
     status: "success",
 
@@ -332,9 +336,10 @@ export const updateEmail = catchAsync(async (req, res, next) => {
   theUser.emailValidationPinExpiresAt = await new Date(
     new Date().getTime() + EMAIL_PIN_EXPIRATION_IN_MINUTES * 60000
   );
-  new EmailSender(theUser, "", pin).sendValidationChangedEmail();
 
   const updatedUser = await User.findOne({ uuid: theUser.uuid });
+  if (updatedUser)
+    new EmailSender(updatedUser, "", pin).sendValidationChangedEmail();
 
   // 5) Ok !
   return res.json({
