@@ -22,6 +22,8 @@ const FileInput = ({ getUrl, label, caption }: IFileInput) => {
       setLoading(true);
       const formData = new FormData();
 
+      if (!fileList[0]) return;
+
       formData.append("file", fileList[0], fileList[0].name);
 
       try {

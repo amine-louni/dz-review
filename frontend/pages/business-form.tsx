@@ -142,7 +142,6 @@ const BusinessForm: NextPage = () => {
                       <TextField
                         error={touched.name && !!errors.name}
                         helperText={touched.name && errors.name}
-                        size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
@@ -158,7 +157,6 @@ const BusinessForm: NextPage = () => {
                         rows={4}
                         error={touched.about && !!errors.about}
                         helperText={touched.about && errors.about}
-                        size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
@@ -188,7 +186,6 @@ const BusinessForm: NextPage = () => {
                         rows={4}
                         error={touched.phone && !!errors.phone}
                         helperText={touched.phone && errors.phone}
-                        size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
@@ -203,7 +200,6 @@ const BusinessForm: NextPage = () => {
                       <TextField
                         error={touched.website && !!errors.website}
                         helperText={touched.website && errors.website}
-                        size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
@@ -218,7 +214,6 @@ const BusinessForm: NextPage = () => {
                       <TextField
                         error={touched.email && !!errors.email}
                         helperText={touched.email && errors.email}
-                        size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
@@ -235,7 +230,6 @@ const BusinessForm: NextPage = () => {
                         helperText={
                           touched.googleMapsUrl && errors.googleMapsUrl
                         }
-                        size="small"
                         margin="dense"
                         onChange={handleChange}
                         fullWidth
@@ -247,7 +241,6 @@ const BusinessForm: NextPage = () => {
                     </FormControl>
 
                     <FormControl
-                      size="small"
                       fullWidth
                       css={css`
                         margin: 8px 0px 4px 0px;
