@@ -10,6 +10,7 @@ import {
   ALLOWED_USER_FIELDS,
   BAD_AUTH,
   BAD_INPUT,
+  DUPLICATED,
   EMAIL_ALREADY_VALIDATED,
   EMAIL_NOT_FOUND,
   EMAIL_PIN_EXPIRATION_IN_MINUTES,
@@ -89,6 +90,24 @@ export const login = catchAsync(async (req, res, next) => {
   // 2 ) Every thing is okay !
   createSendToken(theUser, 200, req, res);
 });
+
+export const checkUserName = catchAsync(async (req, res, next) => {
+  const { userName } = req.body;
+
+  // 1 ) Check if user & password exits
+
+  const theUser = await User.findOne({ userName });
+
+  if (theUser) {
+    return next(new AppError("User name exists", 401, DUPLICATED));
+  }
+
+  return res.json({
+    status: 'success',
+    available: true
+  })
+});
+
 
 export const validateEmail = catchAsync(async (req, res, next) => {
   const { pin } = req.body;

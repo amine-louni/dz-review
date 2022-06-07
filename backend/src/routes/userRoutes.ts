@@ -1,7 +1,7 @@
 
 import express, { Router } from 'express';
 import { updateEmailValidator, updatePasswordValidator, userForgotPassword, userLoginValidator, userRegisterValidator, userResetPassword, userValidateEmailValidator } from '../middlewares/validators/authValidators';
-import { forgotPassword, login, logoutHandler, protect, refreshAccessToken, register, resendValidationEmail, resetPassword, updateEmail, updatePassword, validateEmail } from '../controllers/authController'
+import { checkUserName, forgotPassword, login, logoutHandler, protect, refreshAccessToken, register, resendValidationEmail, resetPassword, updateEmail, updatePassword, validateEmail } from '../controllers/authController'
 import { getUser, updateMe } from '../controllers/userController';
 
 const router: Router = express.Router();
@@ -16,6 +16,7 @@ router.patch('/auth/forgot-password', userForgotPassword, forgotPassword);
 router.patch('/auth/reset-password', userResetPassword, resetPassword);
 router.patch('/auth/update-password', updatePasswordValidator, protect, updatePassword)
 router.patch('/auth/update-email', updateEmailValidator, protect, updateEmail)
+router.get('/auth/username', checkUserName)
 router.get('/auth/logout', logoutHandler)
 
 
